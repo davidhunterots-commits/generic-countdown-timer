@@ -1,0 +1,1125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Countdown</title>
+<link rel="icon" type="image/png" sizes="32x32" href="icon-32.png">
+<link rel="apple-touch-icon" sizes="180x180" href="icon-180.png">
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#13294b">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Countdown">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;900&family=Crimson+Text:ital,wght@0,400;0,600;1,400&family=Special+Elite&family=Space+Grotesk:wght@400;500;600;700&family=Archivo+Black&family=DM+Mono:wght@400;500&display=swap');
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { height: 100%; }
+
+  body {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 28px 16px;
+    font-family: 'Space Grotesk', sans-serif;
+    transition: background 0.5s ease;
+  }
+
+  /* ===================== THEME: PIRATE ===================== */
+  body[data-theme="pirate"] {
+    --bg1: #e8dcc0;
+    --bg2: #d4c4a0;
+    --ink: #2b1f15;
+    --ink-faded: #4a3a28;
+    --accent: #8b2e1f;
+    --accent-dark: #6b2015;
+    --gold: #a8823a;
+    --gold-light: #c9a456;
+    --panel-bg: #0c0a08;
+    --display-font: 'Cinzel', serif;
+    --body-font: 'Crimson Text', serif;
+    --label-font: 'Special Elite', cursive;
+    background:
+      radial-gradient(ellipse at top left, rgba(139,46,31,0.08), transparent 50%),
+      radial-gradient(ellipse at bottom right, rgba(26,58,58,0.12), transparent 50%),
+      linear-gradient(135deg, var(--bg1) 0%, var(--bg2) 100%);
+    color: var(--ink);
+  }
+
+  /* ===================== THEME: MODERN (editorial) ===================== */
+  body[data-theme="modern"] {
+    --bg1: #f7f5f1;
+    --bg2: #f7f5f1;
+    --ink: #14130f;
+    --ink-faded: #7a766c;
+    --accent: #d23f2f;
+    --accent-dark: #a82d20;
+    --gold: #14130f;
+    --gold-light: #14130f;
+    --panel-bg: #14130f;
+    --display-font: 'Space Grotesk', sans-serif;
+    --body-font: 'Space Grotesk', sans-serif;
+    --label-font: 'Space Grotesk', sans-serif;
+    background: var(--bg1);
+    color: var(--ink);
+  }
+
+  /* ===================== THEME: BOARDING PASS (sunset) ===================== */
+  body[data-theme="beach"] {
+    --bg1: #fff1e0;
+    --bg2: #ffd9b3;
+    --ink: #3a2a1c;
+    --ink-faded: #8a7259;
+    --accent: #e8633a;
+    --accent-dark: #c44a25;
+    --gold: #e8633a;
+    --gold-light: #f0a04b;
+    --panel-bg: #fffaf3;
+    --display-font: 'Space Grotesk', sans-serif;
+    --body-font: 'Space Grotesk', sans-serif;
+    --label-font: 'DM Mono', monospace;
+    background: linear-gradient(180deg, #ffd9b3 0%, #fff1e0 60%);
+    color: var(--ink);
+  }
+
+  .wrap {
+    width: 100%;
+    max-width: 520px;
+  }
+
+  /* ============ FORM (setup view) ============ */
+  .setup-card {
+    border-radius: 12px;
+    padding: 34px 28px;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.1);
+  }
+  body[data-theme="pirate"] .setup-card,
+  body[data-theme="beach"] .setup-card {
+    background: rgba(255,255,255,0.35);
+    border: 2px solid var(--gold);
+  }
+
+  .setup-eyebrow {
+    font-family: var(--label-font);
+    font-size: 0.72rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink-faded);
+    margin-bottom: 6px;
+  }
+
+  .setup-title {
+    font-family: var(--display-font);
+    font-weight: 700;
+    font-size: 1.7rem;
+    margin-bottom: 24px;
+  }
+
+  .field {
+    margin-bottom: 18px;
+  }
+
+  .field label {
+    display: block;
+    font-size: 0.82rem;
+    font-weight: 600;
+    margin-bottom: 6px;
+    color: var(--ink-faded);
+  }
+
+  .field input {
+    width: 100%;
+    padding: 11px 13px;
+    border-radius: 7px;
+    border: 1px solid rgba(128,128,128,0.35);
+    background: rgba(255,255,255,0.6);
+    color: var(--ink);
+    font-family: var(--body-font);
+    font-size: 1rem;
+  }
+  body[data-theme="modern"] .field input {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.15);
+    color: var(--ink);
+  }
+  .field input:focus {
+    outline: 2px solid var(--accent);
+    outline-offset: 1px;
+  }
+
+  .theme-row {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 14px;
+  }
+
+  .theme-swatch {
+    flex: 1;
+    padding: 10px 8px;
+    border-radius: 8px;
+    border: 2px solid transparent;
+    cursor: pointer;
+    text-align: center;
+    font-size: 0.78rem;
+    font-weight: 600;
+    background: rgba(128,128,128,0.12);
+    color: var(--ink-faded);
+  }
+  .theme-swatch.active {
+    border-color: var(--accent);
+    color: var(--ink);
+  }
+
+  /* Live theme preview */
+  .theme-preview {
+    border-radius: 10px;
+    overflow: hidden;
+    margin-top: 10px;
+    margin-bottom: 26px;
+    height: 92px;
+    position: relative;
+    transition: background 0.3s ease;
+  }
+
+  .tp-view {
+    height: 100%;
+    width: 100%;
+  }
+
+  /* Pirate preview: dark flag chip, gold border, overlaid number */
+  .theme-preview.preview-pirate {
+    background: radial-gradient(ellipse at 30% 20%, #232019, #0c0a08 75%);
+    border: 2px solid #a8823a;
+  }
+  .tp-view-pirate {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  }
+  .tp-view-pirate .tp-num {
+    font-family: 'Cinzel', serif;
+    font-weight: 800;
+    font-size: 2.4rem;
+    line-height: 1;
+    color: #c9a456;
+    -webkit-text-stroke: 1px #2b1f15;
+    text-shadow: 0 0 10px rgba(0,0,0,0.8);
+    position: relative;
+    z-index: 1;
+  }
+  .tp-view-pirate .tp-skull {
+    position: absolute;
+    width: 70px; height: 70px;
+    opacity: 0.35;
+    top: 50%; left: 50%;
+    transform: translate(-50%,-50%);
+  }
+  .tp-view-pirate .tp-label {
+    position: absolute;
+    bottom: 8px;
+    left: 0; right: 0;
+    text-align: center;
+    font-size: 0.6rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #e8dcc0;
+    z-index: 1;
+  }
+
+  /* Modern preview: editorial bold red/black */
+  .theme-preview.preview-modern {
+    background: #f7f5f1;
+    border: 1px solid rgba(20,19,15,0.12);
+  }
+  .tp-view-modern {
+    padding: 14px 16px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .tp-view-modern .tp-eyebrow {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.6rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #d23f2f;
+    margin-bottom: 4px;
+  }
+  .tp-view-modern .tp-num {
+    font-family: 'Archivo Black', sans-serif;
+    font-size: 2.6rem;
+    line-height: 1;
+    color: #d23f2f;
+  }
+  .tp-view-modern .tp-suffix {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    font-size: 0.9rem;
+    color: #14130f;
+    text-transform: uppercase;
+    margin-left: 6px;
+  }
+
+  /* Boarding pass preview: ticket strip */
+  .theme-preview.preview-beach {
+    background: #fffaf3;
+    border: 1px solid rgba(58,42,28,0.15);
+  }
+  .tp-view-beach {
+    display: flex !important;
+    align-items: stretch;
+  }
+  .tp-view-beach .tp-ticket-main {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    font-family: 'Space Grotesk', sans-serif;
+    color: #3a2a1c;
+    font-weight: 600;
+    font-size: 0.95rem;
+    position: relative;
+  }
+  .tp-view-beach .tp-ticket-main::after {
+    content: "";
+    position: absolute;
+    right: 0; top: 0; bottom: 0;
+    border-right: 2px dashed rgba(58,42,28,0.25);
+  }
+  .tp-view-beach .tp-stub {
+    width: 70px;
+    background: #e8633a;
+    color: #fffaf3;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  .tp-view-beach .tp-stub .tp-num {
+    font-family: 'Archivo Black', sans-serif;
+    font-size: 1.5rem;
+  }
+  .tp-view-beach .tp-stub .tp-label {
+    font-size: 0.5rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .start-btn {
+    width: 100%;
+    padding: 13px;
+    border-radius: 8px;
+    border: none;
+    background: var(--accent);
+    color: white;
+    font-family: var(--body-font);
+    font-weight: 600;
+    font-size: 1.02rem;
+    cursor: pointer;
+    transition: opacity 0.2s;
+  }
+  .start-btn:hover { opacity: 0.88; }
+  .start-btn:active { opacity: 0.75; }
+
+  .error-msg {
+    color: var(--accent);
+    font-size: 0.82rem;
+    margin-top: -10px;
+    margin-bottom: 14px;
+    display: none;
+  }
+
+  /* ============ COUNTDOWN (display view) ============ */
+  .countdown-card {
+    display: none;
+  }
+
+  .edit-link {
+    display: block;
+    text-align: center;
+    margin-top: 18px;
+    font-size: 0.82rem;
+    color: var(--ink-faded);
+    text-decoration: underline;
+    cursor: pointer;
+    background: none;
+    border: none;
+    font-family: var(--body-font);
+  }
+
+  /* ====== PIRATE: flag panel + ship's log (unchanged) ====== */
+  #pirate-layout { display: none; }
+  body[data-theme="pirate"] #pirate-layout { display: block; }
+
+  body[data-theme="pirate"] .countdown-card {
+    border: 2px solid var(--gold);
+    outline: 1px solid rgba(75,58,40,0.4);
+    outline-offset: 6px;
+    padding: 40px 32px 34px;
+    background: rgba(232, 220, 192, 0.4);
+    box-shadow: 0 18px 50px rgba(26,20,12,0.35), inset 0 0 90px rgba(139,46,31,0.06);
+  }
+
+  .cd-eyebrow {
+    font-family: var(--label-font);
+    font-size: 0.72rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--ink-faded);
+    text-align: center;
+    margin-bottom: 8px;
+  }
+
+  .cd-title {
+    font-family: var(--display-font);
+    font-weight: 900;
+    text-align: center;
+    font-size: clamp(1.6rem, 6vw, 2.3rem);
+    margin-bottom: 28px;
+    color: var(--accent-dark);
+  }
+
+  .visual-wrap {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 26px;
+  }
+
+  .pirate-panel {
+    position: relative;
+    width: 100%;
+    max-width: 420px;
+    aspect-ratio: 4/3;
+    border-radius: 4px;
+    overflow: hidden;
+    background: radial-gradient(ellipse at 30% 20%, #232019, #0c0a08 75%);
+    box-shadow: 0 14px 30px rgba(26,20,12,0.55), inset 0 0 50px rgba(0,0,0,0.6), inset 0 0 0 1px rgba(168,130,58,0.15);
+    display: flex; align-items: center; justify-content: center;
+    border: 3px solid var(--gold);
+  }
+  .pirate-panel svg { width: 90%; height: 90%; color: #e9e1cf; opacity: 0.55; }
+  .panel-num-overlay {
+    position: absolute; top: 46%; left: 50%; transform: translate(-50%,-50%);
+    text-align: center; pointer-events: none;
+  }
+  .panel-num-overlay .num {
+    font-family: 'Cinzel', serif; font-weight: 900; font-size: 4rem; line-height: 1;
+    color: var(--gold-light); -webkit-text-stroke: 1.5px #2b1f15;
+    text-shadow: 0 0 14px rgba(0,0,0,0.85), 0 0 28px rgba(0,0,0,0.6), 2px 2px 0 rgba(0,0,0,0.5);
+  }
+  .panel-num-overlay .lbl {
+    font-family: 'Special Elite', cursive; font-size: 0.74rem; letter-spacing: 0.2em; text-transform: uppercase;
+    color: #e8dcc0; text-shadow: 0 0 8px rgba(0,0,0,0.9), 0 2px 3px rgba(0,0,0,0.8);
+  }
+
+  .log {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin-bottom: 26px;
+  }
+  body[data-theme="pirate"] .log-entry {
+    text-align: center;
+    border-radius: 8px;
+    padding: 13px 6px 11px;
+    border: 1px solid rgba(75,58,40,0.35);
+    background: rgba(255,255,255,0.15);
+  }
+  body[data-theme="pirate"] .log-entry .val {
+    font-family: var(--display-font);
+    font-weight: 700;
+    font-size: clamp(1.4rem, 5vw, 1.9rem);
+    font-variant-numeric: tabular-nums;
+  }
+  body[data-theme="pirate"] .log-entry .lbl {
+    font-family: var(--label-font);
+    font-size: 0.6rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-faded);
+    margin-top: 3px;
+  }
+
+  .destination-line {
+    text-align: center;
+    font-family: var(--body-font);
+    font-size: 0.88rem;
+    color: var(--ink-faded);
+    border-top: 1px solid rgba(128,128,128,0.25);
+    padding-top: 16px;
+  }
+  .destination-line strong { color: var(--accent-dark); }
+
+  .arrived-msg {
+    text-align: center;
+    font-family: var(--display-font);
+    font-weight: 700;
+    font-size: clamp(1.5rem, 6vw, 2.1rem);
+    color: var(--accent-dark);
+    padding: 24px 0;
+  }
+
+  /* ====== MODERN: oversized editorial type ====== */
+  .editorial-card {
+    display: none;
+    padding: 0;
+  }
+  body[data-theme="modern"] .wrap { max-width: 600px; }
+  body[data-theme="modern"] .editorial-card { display: block; }
+
+  .ed-eyebrow {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.78rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 6px;
+    display: flex;
+    justify-content: space-between;
+    border-top: 3px solid var(--ink);
+    padding-top: 10px;
+  }
+
+  .ed-dest {
+    font-family: 'Archivo Black', sans-serif;
+    font-size: clamp(2.2rem, 9vw, 3.6rem);
+    line-height: 0.96;
+    letter-spacing: -0.01em;
+    margin-bottom: 18px;
+    text-transform: uppercase;
+  }
+
+  .ed-days-row {
+    display: flex;
+    align-items: baseline;
+    gap: 18px;
+    margin: 8px 0 6px;
+    border-bottom: 1px solid rgba(20,19,15,0.15);
+    padding-bottom: 18px;
+  }
+  .ed-days-num {
+    font-family: 'Archivo Black', sans-serif;
+    font-size: clamp(5rem, 28vw, 9.5rem);
+    line-height: 0.85;
+    color: var(--accent);
+    letter-spacing: -0.02em;
+  }
+  .ed-days-label {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 600;
+    font-size: 1.05rem;
+    color: var(--ink-faded);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    padding-bottom: 0.6rem;
+  }
+
+  .ed-subrow {
+    display: flex;
+    justify-content: space-between;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.95rem;
+    color: var(--ink-faded);
+    margin: 18px 0 22px;
+  }
+  .ed-subrow span b {
+    color: var(--ink);
+    font-weight: 500;
+  }
+
+  .ed-footer {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.88rem;
+    color: var(--ink-faded);
+    border-top: 3px solid var(--ink);
+    padding-top: 10px;
+  }
+  .ed-footer strong { color: var(--ink); }
+
+  .ed-arrived {
+    font-family: 'Archivo Black', sans-serif;
+    font-size: clamp(2.4rem, 10vw, 4rem);
+    line-height: 1;
+    color: var(--accent);
+    text-transform: uppercase;
+    padding: 20px 0;
+  }
+
+  /* ====== BOARDING PASS: ticket layout ====== */
+  .ticket-card {
+    display: none;
+  }
+  body[data-theme="beach"] .wrap { max-width: 580px; }
+  body[data-theme="beach"] .ticket-card { display: block; }
+
+  .ticket {
+    position: relative;
+    background: var(--panel-bg);
+    border-radius: 14px;
+    box-shadow: 0 16px 36px rgba(90,46,26,0.18);
+    display: flex;
+    overflow: visible;
+  }
+
+  .ticket-main {
+    flex: 1;
+    padding: 26px 24px;
+    position: relative;
+  }
+
+  .ticket-stub {
+    width: 130px;
+    flex-shrink: 0;
+    padding: 26px 16px;
+    background: var(--accent);
+    color: #fffaf3;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    border-radius: 0 14px 14px 0;
+    position: relative;
+  }
+
+  /* perforation between main and stub */
+  .ticket-main::after {
+    content: "";
+    position: absolute;
+    top: 0; right: 0;
+    width: 0;
+    height: 100%;
+    border-right: 2.5px dashed rgba(58,42,28,0.25);
+  }
+  /* notches */
+  .ticket::before, .ticket::after {
+    content: "";
+    position: absolute;
+    right: 122px;
+    width: 22px;
+    height: 22px;
+    background: var(--bg2);
+    border-radius: 50%;
+    z-index: 2;
+  }
+  .ticket::before { top: -11px; }
+  .ticket::after { bottom: -11px; }
+
+  .tk-route {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 22px;
+  }
+  .tk-from, .tk-to {
+    font-family: 'Space Grotesk', sans-serif;
+  }
+  .tk-from .code, .tk-to .code {
+    font-family: 'Archivo Black', sans-serif;
+    font-size: 1.7rem;
+    color: var(--ink);
+  }
+  .tk-from .city, .tk-to .city {
+    font-size: 0.68rem;
+    color: var(--ink-faded);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  .tk-plane {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--accent);
+    position: relative;
+  }
+  .tk-plane::before {
+    content: "";
+    position: absolute;
+    left: 0; right: 0;
+    border-top: 1.5px dashed rgba(58,42,28,0.3);
+  }
+  .tk-plane span { background: var(--panel-bg); padding: 0 8px; font-size: 1.1rem; position: relative; }
+
+  .tk-field-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    margin-bottom: 16px;
+  }
+  .tk-field .lbl {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.62rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-faded);
+    margin-bottom: 2px;
+  }
+  .tk-field .val {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 600;
+    font-size: 0.95rem;
+    color: var(--ink);
+  }
+
+  .tk-clock-row {
+    display: flex;
+    gap: 18px;
+    margin-top: 18px;
+    padding-top: 16px;
+    border-top: 1px dashed rgba(58,42,28,0.25);
+  }
+  .tk-clock {
+    text-align: center;
+  }
+  .tk-clock .val {
+    font-family: 'DM Mono', monospace;
+    font-weight: 500;
+    font-size: 1.3rem;
+    color: var(--ink);
+    font-variant-numeric: tabular-nums;
+  }
+  .tk-clock .lbl {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.58rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink-faded);
+  }
+
+  .stub-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    opacity: 0.85;
+    margin-bottom: 6px;
+  }
+  .stub-days {
+    font-family: 'Archivo Black', sans-serif;
+    font-size: 2.6rem;
+    line-height: 1;
+  }
+  .stub-days-lbl {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.62rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-top: 4px;
+    opacity: 0.9;
+  }
+  .stub-barcode {
+    margin-top: 16px;
+    width: 100%;
+    height: 32px;
+    background: repeating-linear-gradient(90deg, #fffaf3 0, #fffaf3 2px, transparent 2px, transparent 5px);
+    opacity: 0.85;
+  }
+
+  .ticket-arrived {
+    padding: 30px 24px;
+    text-align: center;
+    font-family: 'Archivo Black', sans-serif;
+    font-size: clamp(1.5rem, 6vw, 2.1rem);
+    color: var(--accent-dark);
+    text-transform: uppercase;
+  }
+
+  :focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+</style>
+</head>
+<body data-theme="pirate">
+
+<div class="wrap">
+
+  <!-- SETUP VIEW -->
+  <div class="setup-card" id="setup-view">
+    <div class="setup-eyebrow">New Countdown</div>
+    <div class="setup-title" id="setup-heading">Set your destination</div>
+
+    <div class="field">
+      <label for="dest-input">Destination or event name</label>
+      <input type="text" id="dest-input" placeholder="e.g. Myrtle Beach, Mom's Birthday, Tokyo Trip" maxlength="60">
+    </div>
+
+    <div class="field">
+      <label for="date-input">Target date</label>
+      <input type="date" id="date-input">
+    </div>
+    <div class="error-msg" id="error-msg">Please enter a destination and a future date.</div>
+
+    <div class="field">
+      <label>Theme</label>
+      <div class="theme-row">
+        <div class="theme-swatch active" data-theme-choice="pirate">🏴‍☠️ Pirate</div>
+        <div class="theme-swatch" data-theme-choice="modern">⬛ Modern</div>
+        <div class="theme-swatch" data-theme-choice="beach">🎫 Boarding Pass</div>
+      </div>
+
+      <div class="theme-preview preview-pirate" id="theme-preview" data-active="pirate">
+        <!-- pirate preview -->
+        <div class="tp-view tp-view-pirate">
+          <svg class="tp-skull" viewBox="0 0 200 160" aria-hidden="true">
+            <g transform="translate(100,100) rotate(-38)"><rect x="-78" y="-7" width="156" height="14" rx="7" fill="#e9e1cf"/></g>
+            <g transform="translate(100,100) rotate(38)"><rect x="-78" y="-7" width="156" height="14" rx="7" fill="#e9e1cf"/></g>
+            <circle cx="100" cy="72" r="44" fill="#e9e1cf"/>
+          </svg>
+          <div class="tp-num">84</div>
+          <div class="tp-label">Days to Go</div>
+        </div>
+        <!-- modern preview -->
+        <div class="tp-view tp-view-modern" style="display:none;">
+          <div class="tp-eyebrow">Countdown</div>
+          <span class="tp-num">84</span><span class="tp-suffix">days to go</span>
+        </div>
+        <!-- boarding pass preview -->
+        <div class="tp-view tp-view-beach" style="display:none;">
+          <div class="tp-ticket-main">✈ &nbsp;YOU → DST</div>
+          <div class="tp-stub">
+            <div class="tp-num">84</div>
+            <div class="tp-label">days</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <button class="start-btn" id="start-btn">Start Countdown</button>
+  </div>
+
+  <!-- COUNTDOWN VIEW -->
+  <div class="countdown-card" id="countdown-view">
+
+    <!-- ===== PIRATE LAYOUT ===== -->
+    <div id="pirate-layout">
+      <div class="cd-eyebrow">Counting down to</div>
+      <div class="cd-title" id="cd-title-pirate">Destination</div>
+
+      <div id="pirate-active">
+        <div class="visual-wrap">
+          <div class="pirate-panel">
+            <svg viewBox="0 0 200 160" aria-hidden="true">
+              <defs>
+                <linearGradient id="boneShade" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stop-color="#f5efe0"/><stop offset="100%" stop-color="#cfc4a8"/>
+                </linearGradient>
+                <radialGradient id="skullShade2" cx="38%" cy="25%" r="75%">
+                  <stop offset="0%" stop-color="#f7f1e3"/><stop offset="100%" stop-color="#d4c8aa"/>
+                </radialGradient>
+              </defs>
+              <g>
+                <g transform="translate(100,100) rotate(-38)">
+                  <rect x="-78" y="-7" width="156" height="14" rx="7" fill="url(#boneShade)" stroke="#3a3122" stroke-width="1.5"/>
+                  <circle cx="-78" cy="0" r="13" fill="url(#boneShade)" stroke="#3a3122" stroke-width="1.5"/>
+                  <circle cx="78" cy="0" r="13" fill="url(#boneShade)" stroke="#3a3122" stroke-width="1.5"/>
+                  <circle cx="-83" cy="-6" r="6" fill="url(#boneShade)" stroke="#3a3122" stroke-width="1.2"/>
+                  <circle cx="-83" cy="6" r="6" fill="url(#boneShade)" stroke="#3a3122" stroke-width="1.2"/>
+                  <circle cx="83" cy="-6" r="6" fill="url(#boneShade)" stroke="#3a3122" stroke-width="1.2"/>
+                  <circle cx="83" cy="6" r="6" fill="url(#boneShade)" stroke="#3a3122" stroke-width="1.2"/>
+                </g>
+                <g transform="translate(100,100) rotate(38)">
+                  <rect x="-78" y="-7" width="156" height="14" rx="7" fill="url(#boneShade)" stroke="#3a3122" stroke-width="1.5"/>
+                  <circle cx="-78" cy="0" r="13" fill="url(#boneShade)" stroke="#3a3122" stroke-width="1.5"/>
+                  <circle cx="78" cy="0" r="13" fill="url(#boneShade)" stroke="#3a3122" stroke-width="1.5"/>
+                  <circle cx="-83" cy="-6" r="6" fill="url(#boneShade)" stroke="#3a3122" stroke-width="1.2"/>
+                  <circle cx="-83" cy="6" r="6" fill="url(#boneShade)" stroke="#3a3122" stroke-width="1.2"/>
+                  <circle cx="83" cy="-6" r="6" fill="url(#boneShade)" stroke="#3a3122" stroke-width="1.2"/>
+                  <circle cx="83" cy="6" r="6" fill="url(#boneShade)" stroke="#3a3122" stroke-width="1.2"/>
+                </g>
+              </g>
+              <g transform="translate(100,72)">
+                <path d="M0 -54 C-28 -54 -44 -34 -44 -10 C-44 8 -36 20 -25 29 L-25 44 C-25 49 -21 53 -16 53 L-11 53 L-11 61 C-11 65.5 -7.5 69 -3 69 L3 69 C7.5 69 11 65.5 11 61 L11 53 L16 53 C21 53 25 49 25 44 L25 29 C36 20 44 8 44 -10 C44 -34 28 -54 0 -54 Z" fill="url(#skullShade2)" stroke="#352b1d" stroke-width="2.2"/>
+                <path d="M-20 -46 C-30 -36 -33 -22 -29 -8" fill="none" stroke="#b8a983" stroke-width="1.4" opacity="0.7"/>
+                <path d="M14 -50 C 22 -42 27 -28 25 -14" fill="none" stroke="#b8a983" stroke-width="1.4" opacity="0.5"/>
+                <path d="M-30 -8 C-31 -18 -23 -27 -12 -27 C-15 -21 -16 -13 -12 -5 C-19 -1 -28 -2 -30 -8 Z" fill="#241c12"/>
+                <path d="M30 -8 C31 -18 23 -27 12 -27 C15 -21 16 -13 12 -5 C19 -1 28 -2 30 -8 Z" fill="#241c12"/>
+                <circle cx="-19" cy="-13" r="2.2" fill="#0c0905"/>
+                <circle cx="19" cy="-13" r="2.2" fill="#0c0905"/>
+                <path d="M0 -4 L-7 12 C-4 15 4 15 7 12 Z" fill="#241c12"/>
+                <path d="M-30 8 C-26 14 -20 18 -15 19" fill="none" stroke="#5a4c34" stroke-width="1.3"/>
+                <path d="M30 8 C26 14 20 18 15 19" fill="none" stroke="#5a4c34" stroke-width="1.3"/>
+                <path d="M-16 29 L16 29" stroke="#352b1d" stroke-width="1.3"/>
+                <path d="M-13 29 L-13 38 M-7.5 29 L-7.5 39 M-2.5 29 L-2.5 40 M2.5 29 L2.5 40 M7.5 29 L7.5 39 M13 29 L13 38" stroke="#352b1d" stroke-width="1.3"/>
+              </g>
+            </svg>
+            <div class="panel-num-overlay">
+              <div class="num" id="days-num-pirate">--</div>
+              <div class="lbl">Days to Go</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="log">
+          <div class="log-entry"><div class="val" id="hours-pirate">00</div><div class="lbl">Hours</div></div>
+          <div class="log-entry"><div class="val" id="minutes-pirate">00</div><div class="lbl">Minutes</div></div>
+          <div class="log-entry"><div class="val" id="seconds-pirate">00</div><div class="lbl">Seconds</div></div>
+        </div>
+
+        <div class="destination-line">Destination: <strong id="dest-line-pirate">—</strong> &mdash; arriving <strong id="date-line-pirate">—</strong></div>
+      </div>
+
+      <div id="pirate-arrived" style="display:none;">
+        <div class="arrived-msg" id="arrived-msg-pirate">🎉 The day has come! 🎉</div>
+      </div>
+    </div>
+
+    <!-- ===== EDITORIAL (MODERN) LAYOUT ===== -->
+    <div class="editorial-card" id="editorial-layout">
+      <div id="editorial-active">
+        <div class="ed-eyebrow"><span>Countdown</span><span id="ed-today"></span></div>
+        <div class="ed-dest" id="cd-title-editorial">Destination</div>
+
+        <div class="ed-days-row">
+          <div class="ed-days-num" id="days-num-editorial">--</div>
+          <div class="ed-days-label">days<br>to go</div>
+        </div>
+
+        <div class="ed-subrow">
+          <span><b id="hours-editorial">00</b>h</span>
+          <span><b id="minutes-editorial">00</b>m</span>
+          <span><b id="seconds-editorial">00</b>s</span>
+        </div>
+
+        <div class="ed-footer">Arriving <strong id="date-line-editorial">—</strong></div>
+      </div>
+
+      <div id="editorial-arrived" style="display:none;">
+        <div class="ed-eyebrow"><span>Countdown</span><span></span></div>
+        <div class="ed-arrived" id="arrived-msg-editorial">You're there.</div>
+      </div>
+    </div>
+
+    <!-- ===== BOARDING PASS LAYOUT ===== -->
+    <div class="ticket-card" id="ticket-layout">
+      <div class="ticket" id="ticket-active">
+        <div class="ticket-main">
+          <div class="tk-route">
+            <div class="tk-from">
+              <div class="code">YOU</div>
+              <div class="city">Here</div>
+            </div>
+            <div class="tk-plane"><span>✈</span></div>
+            <div class="tk-to">
+              <div class="code" id="tk-dest-code">DST</div>
+              <div class="city" id="tk-dest-city">Destination</div>
+            </div>
+          </div>
+
+          <div class="tk-field-row">
+            <div class="tk-field">
+              <div class="lbl">Passenger</div>
+              <div class="val">You</div>
+            </div>
+            <div class="tk-field">
+              <div class="lbl">Date</div>
+              <div class="val" id="tk-date">—</div>
+            </div>
+          </div>
+
+          <div class="tk-clock-row">
+            <div class="tk-clock"><div class="val" id="hours-ticket">00</div><div class="lbl">Hrs</div></div>
+            <div class="tk-clock"><div class="val" id="minutes-ticket">00</div><div class="lbl">Min</div></div>
+            <div class="tk-clock"><div class="val" id="seconds-ticket">00</div><div class="lbl">Sec</div></div>
+          </div>
+        </div>
+
+        <div class="ticket-stub">
+          <div class="stub-label">Boarding in</div>
+          <div class="stub-days" id="days-num-ticket">--</div>
+          <div class="stub-days-lbl">days</div>
+          <div class="stub-barcode"></div>
+        </div>
+      </div>
+
+      <div class="ticket" id="ticket-arrived" style="display:none;">
+        <div class="ticket-arrived" id="arrived-msg-ticket">Welcome aboard!</div>
+      </div>
+    </div>
+
+    <button class="edit-link" id="edit-btn">Change destination or date</button>
+  </div>
+
+</div>
+
+<script>
+  const STORAGE_KEY = 'countdown-settings';
+  let timerInterval = null;
+
+  const setupView = document.getElementById('setup-view');
+  const countdownView = document.getElementById('countdown-view');
+  const destInput = document.getElementById('dest-input');
+  const dateInput = document.getElementById('date-input');
+  const errorMsg = document.getElementById('error-msg');
+  const startBtn = document.getElementById('start-btn');
+  const editBtn = document.getElementById('edit-btn');
+  const swatches = document.querySelectorAll('.theme-swatch');
+  const themePreview = document.getElementById('theme-preview');
+
+  let selectedTheme = 'pirate';
+
+  function setPreview(theme) {
+    themePreview.classList.remove('preview-pirate', 'preview-modern', 'preview-beach');
+    themePreview.classList.add('preview-' + theme);
+    document.querySelector('.tp-view-pirate').style.display = theme === 'pirate' ? 'flex' : 'none';
+    document.querySelector('.tp-view-modern').style.display = theme === 'modern' ? 'flex' : 'none';
+    document.querySelector('.tp-view-beach').style.display = theme === 'beach' ? 'flex' : 'none';
+  }
+
+  swatches.forEach(sw => {
+    sw.addEventListener('click', () => {
+      swatches.forEach(s => s.classList.remove('active'));
+      sw.classList.add('active');
+      selectedTheme = sw.dataset.themeChoice;
+      setPreview(selectedTheme);
+    });
+  });
+
+  function loadSettings() {
+    try {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if (!raw) return null;
+      return JSON.parse(raw);
+    } catch (e) {
+      return null;
+    }
+  }
+
+  function saveSettings(settings) {
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(settings));
+    } catch (e) { /* ignore */ }
+  }
+
+  function clearSettings() {
+    try { localStorage.removeItem(STORAGE_KEY); } catch (e) {}
+  }
+
+  function showSetup(prefill) {
+    if (timerInterval) clearInterval(timerInterval);
+    setupView.style.display = 'block';
+    countdownView.style.display = 'none';
+    if (prefill) {
+      destInput.value = prefill.destination || '';
+      dateInput.value = prefill.date || '';
+      selectedTheme = prefill.theme || 'pirate';
+      swatches.forEach(s => s.classList.toggle('active', s.dataset.themeChoice === selectedTheme));
+    }
+    setPreview(selectedTheme);
+  }
+
+  function showCountdown(settings) {
+    setupView.style.display = 'none';
+    countdownView.style.display = 'block';
+
+    document.body.dataset.theme = settings.theme;
+
+    const targetDate = new Date(settings.date + 'T00:00:00');
+    const dateStr = targetDate.toLocaleDateString(undefined, { year: 'numeric', month: 'long', day: 'numeric' });
+    const shortDateStr = targetDate.toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' });
+    const destCode = settings.destination.replace(/[^A-Za-z]/g, '').slice(0, 3).toUpperCase() || 'TRP';
+
+    // Pirate fields
+    document.getElementById('cd-title-pirate').textContent = settings.destination;
+    document.getElementById('dest-line-pirate').textContent = settings.destination;
+    document.getElementById('date-line-pirate').textContent = dateStr;
+    document.getElementById('arrived-msg-pirate').textContent = `🎉 You've arrived: ${settings.destination}! 🎉`;
+
+    // Editorial fields
+    document.getElementById('cd-title-editorial').textContent = settings.destination;
+    document.getElementById('date-line-editorial').textContent = dateStr;
+    document.getElementById('ed-today').textContent = new Date().toLocaleDateString(undefined, { month: 'short', day: 'numeric' });
+    document.getElementById('arrived-msg-editorial').textContent = `${settings.destination} — you're there.`;
+
+    // Ticket fields
+    document.getElementById('tk-dest-code').textContent = destCode;
+    document.getElementById('tk-dest-city').textContent = settings.destination;
+    document.getElementById('tk-date').textContent = shortDateStr;
+    document.getElementById('arrived-msg-ticket').textContent = `Welcome to ${settings.destination}!`;
+
+    function setAllDisplays(activeDisplay, arrivedDisplay) {
+      document.getElementById('pirate-active').style.display = activeDisplay === null ? 'none' : 'block';
+      document.getElementById('pirate-arrived').style.display = arrivedDisplay === null ? 'none' : 'block';
+      document.getElementById('editorial-active').style.display = activeDisplay === null ? 'none' : 'block';
+      document.getElementById('editorial-arrived').style.display = arrivedDisplay === null ? 'none' : 'block';
+      document.getElementById('ticket-active').style.display = activeDisplay === null ? 'none' : 'flex';
+      document.getElementById('ticket-arrived').style.display = arrivedDisplay === null ? 'none' : 'flex';
+    }
+
+    function tick() {
+      const now = new Date();
+      const diff = targetDate - now;
+
+      if (diff <= 0) {
+        setAllDisplays(null, true);
+        clearInterval(timerInterval);
+        return;
+      }
+
+      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+      const minutes = Math.floor((diff / (1000 * 60)) % 60);
+      const seconds = Math.floor((diff / 1000) % 60);
+      const hh = String(hours).padStart(2, '0');
+      const mm = String(minutes).padStart(2, '0');
+      const ss = String(seconds).padStart(2, '0');
+
+      document.getElementById('days-num-pirate').textContent = days;
+      document.getElementById('hours-pirate').textContent = hh;
+      document.getElementById('minutes-pirate').textContent = mm;
+      document.getElementById('seconds-pirate').textContent = ss;
+
+      document.getElementById('days-num-editorial').textContent = days;
+      document.getElementById('hours-editorial').textContent = hh;
+      document.getElementById('minutes-editorial').textContent = mm;
+      document.getElementById('seconds-editorial').textContent = ss;
+
+      document.getElementById('days-num-ticket').textContent = days;
+      document.getElementById('hours-ticket').textContent = hh;
+      document.getElementById('minutes-ticket').textContent = mm;
+      document.getElementById('seconds-ticket').textContent = ss;
+    }
+
+    setAllDisplays(true, null);
+    tick();
+    timerInterval = setInterval(tick, 1000);
+  }
+
+  startBtn.addEventListener('click', () => {
+    const destination = destInput.value.trim();
+    const date = dateInput.value;
+
+    const todayStr = new Date().toISOString().split('T')[0];
+    if (!destination || !date || date < todayStr) {
+      errorMsg.style.display = 'block';
+      return;
+    }
+    errorMsg.style.display = 'none';
+
+    const settings = { destination, date, theme: selectedTheme };
+    saveSettings(settings);
+    showCountdown(settings);
+  });
+
+  editBtn.addEventListener('click', () => {
+    const settings = loadSettings();
+    showSetup(settings);
+  });
+
+  // init
+  const existing = loadSettings();
+  if (existing && existing.destination && existing.date) {
+    showCountdown(existing);
+  } else {
+    showSetup(null);
+    // default date input to 30 days out as a hint
+    const d = new Date();
+    d.setDate(d.getDate() + 30);
+    dateInput.min = new Date().toISOString().split('T')[0];
+  }
+</script>
+
+</body>
+</html>
