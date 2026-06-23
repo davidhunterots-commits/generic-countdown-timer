@@ -11,7 +11,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="Countdown">
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;900&family=Crimson+Text:ital,wght@0,400;0,600;1,400&family=Special+Elite&family=Space+Grotesk:wght@400;500;600;700&family=Archivo+Black&family=DM+Mono:wght@400;500&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;900&family=Crimson+Text:ital,wght@0,400;0,600;1,400&family=Special+Elite&family=Space+Grotesk:wght@400;500;600;700&family=Archivo+Black&family=DM+Mono:wght@400;500&family=Great+Vibes&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&display=swap');
 
   * { box-sizing: border-box; margin: 0; padding: 0; }
   html, body { height: 100%; }
@@ -83,6 +83,70 @@
     color: var(--ink);
   }
 
+  /* ===================== THEME: SCI-FI HUD ===================== */
+  body[data-theme="scifi"] {
+    --bg1: #040d06;
+    --bg2: #040d06;
+    --ink: #d4ffb0;
+    --ink-faded: #4a8a3a;
+    --accent: #39ff14;
+    --accent-dark: #28cc0f;
+    --gold: #39ff14;
+    --gold-light: #a8ff6e;
+    --panel-bg: #050f1a;
+    --display-font: 'DM Mono', monospace;
+    --body-font: 'Space Grotesk', sans-serif;
+    --label-font: 'DM Mono', monospace;
+    background:
+      repeating-linear-gradient(0deg, rgba(57,255,20,0.015) 0px, transparent 2px, transparent 4px),
+      radial-gradient(ellipse at 30% 20%, #071a07, #040d06 70%);
+    color: var(--ink);
+  }
+
+  /* ===================== THEME: COMIC BOOK ===================== */
+  body[data-theme="comic"] {
+    --bg1: #f5f5f5;
+    --bg2: #e8e8e8;
+    --ink: #111111;
+    --ink-faded: #444444;
+    --accent: #e8231a;
+    --accent-dark: #b81a12;
+    --gold: #f5c800;
+    --gold-light: #fad940;
+    --panel-bg: #ffffff;
+    --display-font: 'Archivo Black', sans-serif;
+    --body-font: 'Space Grotesk', sans-serif;
+    --label-font: 'Archivo Black', sans-serif;
+    /* halftone dot pattern background */
+    background:
+      radial-gradient(circle, #0088cc 1.5px, transparent 1.5px),
+      #e0f0ff;
+    background-size: 16px 16px;
+    color: var(--ink);
+  }
+
+  /* ===================== THEME: WEDDING / CALLIGRAPHY ===================== */
+  body[data-theme="wedding"] {
+    --bg1: #f5efe0;
+    --bg2: #ede4ce;
+    --ink: #1a3d2b;
+    --ink-faded: #4a7a5a;
+    --accent: #1a6b3c;
+    --accent-dark: #114d2b;
+    --gold: #b8963e;
+    --gold-light: #d4af6a;
+    --panel-bg: #faf5eb;
+    --display-font: 'Great Vibes', cursive;
+    --body-font: 'Cormorant Garamond', serif;
+    --label-font: 'Cormorant Garamond', serif;
+    background:
+      radial-gradient(ellipse at top left, rgba(26,61,43,0.06), transparent 55%),
+      radial-gradient(ellipse at bottom right, rgba(184,150,62,0.08), transparent 55%),
+      radial-gradient(ellipse at center, transparent 60%, rgba(26,61,43,0.08) 100%),
+      linear-gradient(135deg, #f5efe0 0%, #ede4ce 100%);
+    color: var(--ink);
+  }
+
   .wrap {
     width: 100%;
     max-width: 520px;
@@ -99,6 +163,19 @@
   body[data-theme="beach"] .setup-card {
     background: rgba(255,255,255,0.35);
     border: 2px solid var(--gold);
+  }
+
+  body[data-theme="comic"] .setup-card {
+    background: #ffffff;
+    border: 4px solid #111111;
+    box-shadow: 5px 5px 0 #111111;
+    border-radius: 4px;
+  }
+
+  body[data-theme="scifi"] .setup-card {
+    background: rgba(57,255,20,0.04);
+    border: 1px solid rgba(57,255,20,0.3);
+    box-shadow: 0 0 30px rgba(57,255,20,0.08), inset 0 0 40px rgba(0,0,0,0.4);
   }
 
   .setup-eyebrow {
@@ -150,7 +227,8 @@
   }
 
   .theme-row {
-    display: flex;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
     gap: 10px;
     margin-bottom: 14px;
   }
@@ -307,6 +385,45 @@
     font-size: 0.5rem;
     letter-spacing: 0.08em;
     text-transform: uppercase;
+  }
+
+  .theme-preview.preview-scifi {
+    background: radial-gradient(ellipse at 30% 20%, #071a07, #040d06 70%);
+    border: 1px solid rgba(57,255,20,0.35);
+  }
+  .tp-view-scifi {
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+  }
+
+  .theme-preview.preview-comic {
+    background:
+      radial-gradient(circle, #0088cc 1.2px, transparent 1.2px),
+      #e0f0ff;
+    background-size: 12px 12px;
+    border: 3px solid #111111;
+    box-shadow: 4px 4px 0 #111111;
+    overflow: hidden;
+  }
+  .tp-view-comic {
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+  }
+
+  .theme-preview.preview-wedding {
+    background: linear-gradient(135deg, #f5efe0 0%, #ede4ce 100%);
+    border: 1px solid rgba(184,150,62,0.5);
+    box-shadow: 0 2px 8px rgba(26,61,43,0.1);
+  }
+  .tp-view-wedding {
+    display: flex !important;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
   }
 
   .start-btn {
@@ -729,7 +846,692 @@
     text-transform: uppercase;
   }
 
+  /* ====== SCI-FI HUD layout ====== */
+  .scifi-card { display: none; }
+  body[data-theme="scifi"] .scifi-card { display: block; }
+  body[data-theme="scifi"] .wrap { max-width: 560px; }
+
+  body[data-theme="scifi"] .countdown-card {
+    background: rgba(0,10,20,0.85);
+    border: 1px solid rgba(57,255,20,0.4);
+    border-radius: 4px;
+    padding: 32px 28px;
+    box-shadow:
+      0 0 0 1px rgba(57,255,20,0.1),
+      0 0 40px rgba(57,255,20,0.08),
+      inset 0 0 60px rgba(0,0,0,0.5);
+    position: relative;
+    overflow: hidden;
+  }
+
+  body[data-theme="scifi"] .countdown-card::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(0deg, rgba(57,255,20,0.018) 0px, transparent 2px, transparent 4px);
+    pointer-events: none;
+  }
+
+  .hud-corners::before, .hud-corners::after,
+  .hud-corners-b::before, .hud-corners-b::after {
+    content: "";
+    position: absolute;
+    width: 18px; height: 18px;
+    border-color: #39ff14;
+    border-style: solid;
+  }
+  .hud-corners::before { top: 8px; left: 8px; border-width: 2px 0 0 2px; }
+  .hud-corners::after  { top: 8px; right: 8px; border-width: 2px 2px 0 0; }
+  .hud-corners-b::before { bottom: 8px; left: 8px; border-width: 0 0 2px 2px; }
+  .hud-corners-b::after  { bottom: 8px; right: 8px; border-width: 0 2px 2px 0; }
+
+  .hud-eyebrow {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.62rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: #39ff14;
+    text-align: center;
+    margin-bottom: 6px;
+    opacity: 0.8;
+  }
+
+  .hud-title {
+    font-family: 'DM Mono', monospace;
+    font-weight: 500;
+    font-size: clamp(1rem, 4vw, 1.4rem);
+    text-align: center;
+    color: #d4ffb0;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 24px;
+    text-shadow: 0 0 12px rgba(57,255,20,0.5);
+  }
+
+  .hud-days-block {
+    text-align: center;
+    margin-bottom: 24px;
+    position: relative;
+  }
+  .hud-days-num {
+    font-family: 'DM Mono', monospace;
+    font-weight: 500;
+    font-size: clamp(5rem, 26vw, 8rem);
+    line-height: 0.9;
+    color: #39ff14;
+    text-shadow: 0 0 20px rgba(57,255,20,0.7), 0 0 60px rgba(57,255,20,0.3);
+    font-variant-numeric: tabular-nums;
+    letter-spacing: -0.02em;
+  }
+  .hud-days-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: #4a8a3a;
+    margin-top: 6px;
+  }
+
+  .hud-divider {
+    border: none;
+    border-top: 1px solid rgba(57,255,20,0.2);
+    margin: 20px 0;
+    position: relative;
+  }
+  .hud-divider::before {
+    content: "◆";
+    position: absolute;
+    top: -8px; left: 50%;
+    transform: translateX(-50%);
+    font-size: 0.6rem;
+    color: #39ff14;
+    background: #040d06;
+    padding: 0 6px;
+  }
+
+  .hud-log {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin-bottom: 22px;
+  }
+  .hud-entry {
+    text-align: center;
+    border: 1px solid rgba(57,255,20,0.2);
+    background: rgba(57,255,20,0.04);
+    padding: 10px 4px 8px;
+  }
+  .hud-entry .val {
+    font-family: 'DM Mono', monospace;
+    font-size: clamp(1.3rem, 5vw, 1.8rem);
+    color: #d4ffb0;
+    font-variant-numeric: tabular-nums;
+    text-shadow: 0 0 8px rgba(57,255,20,0.4);
+  }
+  .hud-entry .lbl {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.55rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: #4a8a3a;
+    margin-top: 3px;
+  }
+
+  .hud-footer {
+    text-align: center;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.72rem;
+    color: #4a8a3a;
+    letter-spacing: 0.08em;
+  }
+  .hud-footer strong { color: #d4ffb0; }
+
+  .hud-arrived {
+    text-align: center;
+    font-family: 'DM Mono', monospace;
+    font-size: clamp(1.2rem, 5vw, 1.8rem);
+    color: #39ff14;
+    text-shadow: 0 0 20px rgba(57,255,20,0.7);
+    letter-spacing: 0.1em;
+    padding: 28px 0;
+    text-transform: uppercase;
+  }
+
+  /* ====== COMIC BOOK layout ====== */
+  .comic-card { display: none; }
+  body[data-theme="comic"] .comic-card { display: block; }
+  body[data-theme="comic"] .wrap { max-width: 520px; }
+
+  body[data-theme="comic"] .countdown-card {
+    background: #ffffff;
+    border: 4px solid #111111;
+    box-shadow: 7px 7px 0 #111111;
+    padding: 0;
+    overflow: hidden;
+    border-radius: 4px;
+  }
+
+  /* yellow header band */
+  .comic-header {
+    background: #f5c800;
+    border-bottom: 4px solid #111111;
+    padding: 10px 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .comic-header-title {
+    font-family: 'Archivo Black', sans-serif;
+    font-size: 1rem;
+    color: #111111;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  /* destination in red speed-line panel */
+  .comic-dest {
+    font-family: 'Archivo Black', sans-serif;
+    font-size: clamp(1.5rem, 6vw, 2rem);
+    color: #ffffff;
+    text-transform: uppercase;
+    text-align: center;
+    padding: 16px 20px 14px;
+    line-height: 1.1;
+    background: #e8231a;
+    border-bottom: 4px solid #111111;
+    position: relative;
+    overflow: hidden;
+    -webkit-text-stroke: 1.5px #111111;
+    text-shadow: 3px 3px 0 #111111;
+  }
+  .comic-dest::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: repeating-conic-gradient(
+      from 0deg at 50% 150%,
+      rgba(255,255,255,0.1) 0deg 3deg,
+      transparent 3deg 6deg
+    );
+    pointer-events: none;
+  }
+
+  .comic-body { padding: 14px 16px 18px; background: #ffffff; }
+
+  /* halftone orange dot panel behind burst */
+  .comic-starburst-wrap {
+    display: flex;
+    justify-content: center;
+    margin: 4px 0 14px;
+    position: relative;
+    padding: 10px;
+    background:
+      radial-gradient(circle, #ff9900 1.2px, transparent 1.2px);
+    background-size: 10px 10px;
+    border: 3px solid #111111;
+    border-radius: 4px;
+  }
+
+  .comic-starburst {
+    position: relative;
+    width: 190px;
+    height: 190px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    z-index: 1;
+    animation: comicPop 0.7s ease-in-out infinite alternate;
+  }
+  @keyframes comicPop {
+    0%   { transform: scale(1) rotate(-1.5deg); filter: drop-shadow(4px 4px 0 #111); }
+    100% { transform: scale(1.05) rotate(1.5deg); filter: drop-shadow(6px 6px 0 #111); }
+  }
+  .comic-starburst svg {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+  }
+  .comic-starburst .sb-num {
+    font-family: 'Archivo Black', sans-serif;
+    font-size: 5rem;
+    line-height: 1;
+    color: #e8231a;
+    font-weight: 900;
+    -webkit-text-stroke: 3px #111111;
+    text-shadow:
+      2px 2px 0 #8b0f0f,
+      4px 4px 0 rgba(0,0,0,0.2);
+    display: block;
+  }
+  .comic-starburst .sb-label {
+    font-family: 'Archivo Black', sans-serif;
+    font-size: 0.72rem;
+    color: #111111;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    white-space: nowrap;
+    -webkit-text-stroke: 0.3px #111;
+    display: block;
+    margin-top: 2px;
+  }
+  /* centered container that sits over the burst SVG */
+  .sb-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    pointer-events: none;
+  }
+
+  /* action word — animated WHAM style */
+  .comic-action-word {
+    text-align: center;
+    font-family: 'Archivo Black', sans-serif;
+    font-size: clamp(1.8rem, 8vw, 2.6rem);
+    color: #0088cc;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+    margin: 0 0 14px;
+    -webkit-text-stroke: 0px;
+    text-shadow: none;
+    animation: actionWobble 1.1s ease-in-out infinite alternate;
+    display: block;
+    font-weight: 900;
+  }
+  @keyframes actionWobble {
+    0%   { transform: skewX(-4deg) scale(1); }
+    100% { transform: skewX(4deg) scale(1.04); }
+  }
+
+  /* hrs/min/sec — alternating colored panels */
+  .comic-log {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+    border: 3px solid #111111;
+    margin-bottom: 14px;
+    border-radius: 3px;
+    overflow: hidden;
+  }
+  .comic-entry {
+    text-align: center;
+    padding: 10px 4px 8px;
+    border-right: 3px solid #111111;
+  }
+  .comic-entry:nth-child(1) { background: #cce8ff; }
+  .comic-entry:nth-child(2) { background: #fff3b0; }
+  .comic-entry:nth-child(3) { background: #ffd0d0; border-right: none; }
+  .comic-entry .val {
+    font-family: 'Archivo Black', sans-serif;
+    font-size: clamp(1.5rem, 5vw, 2rem);
+    color: #111111;
+    font-variant-numeric: tabular-nums;
+    text-shadow: 2px 2px 0 rgba(0,0,0,0.15);
+  }
+  .comic-entry .lbl {
+    font-family: 'Archivo Black', sans-serif;
+    font-size: 0.55rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #444444;
+    margin-top: 2px;
+  }
+
+  /* speech bubble caption */
+  .comic-caption {
+    position: relative;
+    background: #ffffff;
+    border: 3px solid #111111;
+    border-radius: 18px;
+    padding: 9px 16px;
+    font-family: 'Archivo Black', sans-serif;
+    font-size: 0.82rem;
+    color: #111111;
+    text-align: center;
+    text-transform: uppercase;
+    box-shadow: 3px 3px 0 #111111;
+    margin-top: 8px;
+  }
+  .comic-caption::before {
+    content: "";
+    position: absolute;
+    top: -14px; left: 28px;
+    border-left: 10px solid transparent;
+    border-right: 6px solid transparent;
+    border-bottom: 14px solid #111111;
+  }
+  .comic-caption::after {
+    content: "";
+    position: absolute;
+    top: -10px; left: 30px;
+    border-left: 8px solid transparent;
+    border-right: 5px solid transparent;
+    border-bottom: 11px solid #ffffff;
+  }
+
+  .comic-arrived {
+    text-align: center;
+    font-family: 'Archivo Black', sans-serif;
+    font-size: clamp(2rem, 8vw, 3rem);
+    color: #e8231a;
+    text-transform: uppercase;
+    padding: 32px 20px;
+    -webkit-text-stroke: 2px #111111;
+    text-shadow:
+      3px 3px 0 #f5c800,
+      5px 5px 0 #e8a000,
+      7px 7px 0 #111111;
+    animation: actionWobble 1s ease-in-out infinite alternate;
+  }
+
+  body[data-theme="wedding"] .setup-card {
+    background: rgba(250,245,235,0.7);
+    border: 1px solid rgba(184,150,62,0.5);
+    box-shadow: 0 4px 24px rgba(26,61,43,0.08), inset 0 0 40px rgba(184,150,62,0.06);
+  }
+
+  /* ====== WEDDING / CALLIGRAPHY layout ====== */
+  .wedding-card { display: none; }
+  body[data-theme="wedding"] .wedding-card { display: block; }
+  body[data-theme="wedding"] .wrap { max-width: 520px; }
+
+  body[data-theme="wedding"] .countdown-card {
+    background: var(--panel-bg);
+    border: 1px solid rgba(184,150,62,0.45);
+    outline: 1px solid rgba(184,150,62,0.2);
+    outline-offset: 5px;
+    padding: 40px 32px 36px;
+    box-shadow:
+      0 16px 48px rgba(26,61,43,0.1),
+      inset 0 0 80px rgba(184,150,62,0.05);
+    position: relative;
+  }
+
+  /* corner flourish marks */
+  .wedding-corner {
+    position: absolute;
+    width: 28px; height: 28px;
+    border-color: var(--gold);
+    border-style: solid;
+    opacity: 0.6;
+  }
+  .wedding-corner.tl { top: 10px; left: 10px; border-width: 1px 0 0 1px; }
+  .wedding-corner.tr { top: 10px; right: 10px; border-width: 1px 1px 0 0; }
+  .wedding-corner.bl { bottom: 10px; left: 10px; border-width: 0 0 1px 1px; }
+  .wedding-corner.br { bottom: 10px; right: 10px; border-width: 0 1px 1px 0; }
+
+  /* eyebrow */
+  .wedding-eyebrow {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 0.82rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--gold);
+    text-align: center;
+    margin-bottom: 6px;
+  }
+
+  /* flourish divider using CSS */
+  .wedding-rule {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 10px 0 22px;
+    color: var(--gold);
+    opacity: 0.7;
+  }
+  .wedding-rule .line {
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  }
+  .wedding-rule .diamond { font-size: 0.5rem; }
+
+  /* destination in Great Vibes script */
+  .wedding-dest {
+    font-family: 'Great Vibes', cursive;
+    font-size: clamp(2.4rem, 9vw, 3.4rem);
+    color: var(--accent);
+    text-align: center;
+    line-height: 1.2;
+    margin-bottom: 6px;
+    text-shadow: 1px 1px 2px rgba(26,61,43,0.15);
+  }
+
+  /* big day count */
+  .wedding-days-wrap {
+    text-align: center;
+    margin: 20px 0 6px;
+  }
+  .wedding-days-num {
+    font-family: 'Great Vibes', cursive;
+    font-size: clamp(5.5rem, 24vw, 8rem);
+    line-height: 0.9;
+    color: var(--accent);
+    text-shadow:
+      1px 1px 0 rgba(26,61,43,0.2),
+      2px 2px 6px rgba(26,61,43,0.1);
+  }
+  .wedding-days-label {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 1rem;
+    letter-spacing: 0.18em;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-top: 4px;
+  }
+
+  /* hrs/min/sec — elegant inline row */
+  .wedding-time-row {
+    display: flex;
+    justify-content: center;
+    align-items: baseline;
+    gap: 6px;
+    margin: 18px 0 20px;
+    font-family: 'Cormorant Garamond', serif;
+  }
+  .wedding-time-unit {
+    text-align: center;
+  }
+  .wedding-time-unit .val {
+    font-size: clamp(1.6rem, 6vw, 2.2rem);
+    font-weight: 600;
+    color: var(--accent);
+    font-variant-numeric: tabular-nums;
+    line-height: 1;
+  }
+  .wedding-time-unit .lbl {
+    font-style: italic;
+    font-size: 0.65rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-faded);
+    margin-top: 2px;
+  }
+  .wedding-time-sep {
+    font-size: 1.4rem;
+    color: var(--gold);
+    opacity: 0.6;
+    align-self: center;
+    padding-bottom: 6px;
+  }
+
+  /* bottom footer */
+  .wedding-footer {
+    text-align: center;
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 0.88rem;
+    color: var(--ink-faded);
+    letter-spacing: 0.05em;
+    border-top: 1px solid rgba(184,150,62,0.3);
+    padding-top: 16px;
+  }
+  .wedding-footer strong {
+    font-style: normal;
+    color: var(--accent-dark);
+    font-weight: 600;
+  }
+
+  .wedding-arrived {
+    text-align: center;
+    font-family: 'Great Vibes', cursive;
+    font-size: clamp(2.4rem, 10vw, 3.6rem);
+    color: var(--accent);
+    padding: 28px 0;
+    text-shadow: 1px 1px 2px rgba(26,61,43,0.2);
+  }
+
   :focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+  /* ====== FLOATING ACTION BAR ====== */
+  .fab-bar {
+    position: fixed;
+    bottom: 24px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    z-index: 100;
+  }
+
+  .fab-btn {
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.25), 0 2px 4px rgba(0,0,0,0.15);
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+    font-size: 1.3rem;
+    flex-shrink: 0;
+  }
+  .fab-btn:hover { transform: scale(1.08); box-shadow: 0 6px 18px rgba(0,0,0,0.3); }
+  .fab-btn:active { transform: scale(0.95); }
+
+  .fab-theme-btn {
+    background: #13294b;
+    border: 2px solid #4a6fa5;
+  }
+  .fab-theme-btn svg {
+    width: 26px;
+    height: 26px;
+  }
+
+  .fab-share-btn {
+    background: #ffffff;
+    border: 2px solid rgba(0,0,0,0.1);
+    color: #13294b;
+    font-size: 1.2rem;
+  }
+
+  /* theme picker popup */
+  .theme-popup {
+    position: fixed;
+    bottom: 88px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #ffffff;
+    border-radius: 16px;
+    padding: 10px 8px;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.2), 0 2px 8px rgba(0,0,0,0.1);
+    display: none;
+    flex-direction: column;
+    gap: 4px;
+    min-width: 180px;
+    z-index: 99;
+    border: 1px solid rgba(0,0,0,0.08);
+  }
+  .theme-popup.open {
+    display: flex;
+    animation: popupIn 0.18s ease-out;
+  }
+  @keyframes popupIn {
+    from { opacity: 0; transform: translateX(-50%) translateY(8px) scale(0.96); }
+    to   { opacity: 1; transform: translateX(-50%) translateY(0) scale(1); }
+  }
+
+  /* little arrow pointing down */
+  .theme-popup::after {
+    content: "";
+    position: absolute;
+    bottom: -8px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0; height: 0;
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+    border-top: 8px solid #ffffff;
+    filter: drop-shadow(0 2px 2px rgba(0,0,0,0.1));
+  }
+
+  .theme-popup-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 9px 12px;
+    border-radius: 10px;
+    border: none;
+    background: none;
+    cursor: pointer;
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: #1a1a1a;
+    text-align: left;
+    transition: background 0.1s;
+    width: 100%;
+  }
+  .theme-popup-item:hover { background: #f4f4f4; }
+  .theme-popup-item.active {
+    background: #eef4ff;
+    color: #13294b;
+  }
+  .theme-popup-item .dot {
+    width: 22px; height: 22px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    border: 2px solid rgba(0,0,0,0.15);
+  }
+
+  /* share toast */
+  .share-toast {
+    position: fixed;
+    bottom: 90px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(20,20,20,0.88);
+    color: #ffffff;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.85rem;
+    padding: 8px 18px;
+    border-radius: 20px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.25s;
+    white-space: nowrap;
+    z-index: 101;
+  }
+  .share-toast.show { opacity: 1; }
+
+  /* hide FAB on setup screen */
+  #fab-container { display: none; }
 </style>
 </head>
 <body data-theme="pirate">
@@ -758,6 +1560,9 @@
         <div class="theme-swatch active" data-theme-choice="pirate">🏴‍☠️ Pirate</div>
         <div class="theme-swatch" data-theme-choice="modern">⬛ Modern</div>
         <div class="theme-swatch" data-theme-choice="beach">🎫 Boarding Pass</div>
+        <div class="theme-swatch" data-theme-choice="scifi">🛸 Sci-Fi</div>
+        <div class="theme-swatch" data-theme-choice="comic">📰 Comic</div>
+        <div class="theme-swatch" data-theme-choice="wedding">💍 Wedding</div>
       </div>
 
       <div class="theme-preview preview-pirate" id="theme-preview" data-active="pirate">
@@ -783,6 +1588,26 @@
             <div class="tp-num">84</div>
             <div class="tp-label">days</div>
           </div>
+        </div>
+        <!-- sci-fi preview -->
+        <div class="tp-view tp-view-scifi" style="display:none; align-items:center; justify-content:center; flex-direction:column;">
+          <div style="font-family:'DM Mono',monospace; font-size:2.4rem; color:#39ff14; text-shadow:0 0 14px rgba(57,255,20,0.8); line-height:1;">84</div>
+          <div style="font-family:'DM Mono',monospace; font-size:0.58rem; letter-spacing:0.24em; text-transform:uppercase; color:#4a8a3a; margin-top:4px;">DAYS REMAINING</div>
+        </div>
+        <!-- comic preview -->
+        <div class="tp-view tp-view-comic" style="display:none; align-items:center; justify-content:center; gap:10px;">
+          <div style="position:relative; width:54px; height:54px; display:flex; align-items:center; justify-content:center;">
+            <svg viewBox="0 0 190 190" style="position:absolute;inset:0;width:100%;height:100%;" aria-hidden="true">
+              <polygon points="95,5 108,68 140,20 130,78 175,52 148,100 185,108 148,128 172,165 128,142 130,185 95,155 60,185 62,142 18,165 42,128 5,108 42,100 15,52 60,78 50,20 82,68" fill="#f5c800" stroke="#111" stroke-width="4" stroke-linejoin="round"/>
+            </svg>
+            <span style="font-family:'Archivo Black',sans-serif; font-size:1.1rem; color:#e8231a; position:relative; z-index:1; -webkit-text-stroke:0.5px #111;">84</span>
+          </div>
+          <div style="font-family:'Archivo Black',sans-serif; font-size:1rem; color:#0088cc; text-transform:uppercase; -webkit-text-stroke:1px #111; text-shadow:2px 2px 0 #111;">WHAM!</div>
+        </div>
+        <!-- wedding preview -->
+        <div class="tp-view tp-view-wedding" style="display:none; flex-direction:column; align-items:center; justify-content:center; gap:4px;">
+          <div style="font-family:'Great Vibes',cursive; font-size:2.6rem; color:#1a6b3c; line-height:1; text-shadow:1px 1px 2px rgba(26,61,43,0.15);">84</div>
+          <div style="font-family:'Cormorant Garamond',serif; font-style:italic; font-size:0.72rem; letter-spacing:0.18em; text-transform:uppercase; color:#b8963e;">Days to Go</div>
         </div>
       </div>
     </div>
@@ -939,10 +1764,186 @@
       </div>
     </div>
 
+    <!-- ===== SCI-FI HUD LAYOUT ===== -->
+    <div class="scifi-card" id="scifi-layout">
+      <div class="hud-corners"></div>
+      <div class="hud-corners-b"></div>
+
+      <div id="scifi-active">
+        <div class="hud-eyebrow">⬡ TARGET LOCKED ⬡</div>
+        <div class="hud-title" id="cd-title-scifi">DESTINATION</div>
+
+        <div class="hud-days-block">
+          <div class="hud-days-num" id="days-num-scifi">--</div>
+          <div class="hud-days-label">EARTH DAYS REMAINING</div>
+        </div>
+
+        <hr class="hud-divider">
+
+        <div class="hud-log">
+          <div class="hud-entry"><div class="val" id="hours-scifi">00</div><div class="lbl">Hours</div></div>
+          <div class="hud-entry"><div class="val" id="minutes-scifi">00</div><div class="lbl">Minutes</div></div>
+          <div class="hud-entry"><div class="val" id="seconds-scifi">00</div><div class="lbl">Seconds</div></div>
+        </div>
+
+        <div class="hud-footer">ARRIVAL: <strong id="date-line-scifi">—</strong></div>
+      </div>
+
+      <div id="scifi-arrived" style="display:none;">
+        <div class="hud-arrived" id="arrived-msg-scifi">TARGET REACHED</div>
+      </div>
+    </div>
+
+    <!-- ===== COMIC BOOK LAYOUT ===== -->
+    <div class="comic-card" id="comic-layout">
+      <div class="comic-header">
+        <div class="comic-header-title">⚡ COUNTDOWN!</div>
+        <div class="comic-header-title" id="date-line-comic">—</div>
+      </div>
+
+      <div id="comic-active">
+        <div class="comic-dest" id="cd-title-comic">DESTINATION</div>
+
+        <div class="comic-body">
+          <div class="comic-starburst-wrap">
+            <div class="comic-starburst">
+              <svg viewBox="0 0 190 190" aria-hidden="true">
+                <!-- comic action burst shape -->
+                <polygon points="
+                  95,5 108,68 140,20 130,78 175,52 148,100
+                  185,108 148,128 172,165 128,142 130,185
+                  95,155 60,185 62,142 18,165 42,128
+                  5,108 42,100 15,52 60,78 50,20
+                  82,68"
+                  fill="#f5c800" stroke="#111111" stroke-width="4" stroke-linejoin="round"/>
+              </svg>
+              <div class="sb-content">
+                <span class="sb-num" id="days-num-comic">--</span>
+                <span class="sb-label">Days to Go!</span>
+              </div>
+            </div>
+          </div>
+
+          <span class="comic-action-word" id="comic-action-text">WHAM!</span>
+
+          <div class="comic-log">
+            <div class="comic-entry"><div class="val" id="hours-comic">00</div><div class="lbl">Hours</div></div>
+            <div class="comic-entry"><div class="val" id="minutes-comic">00</div><div class="lbl">Minutes</div></div>
+            <div class="comic-entry"><div class="val" id="seconds-comic">00</div><div class="lbl">Seconds</div></div>
+          </div>
+
+          <div class="comic-caption">Destination: <strong id="dest-line-comic">—</strong></div>
+        </div>
+      </div>
+
+      <div id="comic-arrived" style="display:none;">
+        <div class="comic-arrived" id="arrived-msg-comic">POW! YOU'RE THERE!</div>
+      </div>
+    </div>
+
+    <!-- ===== WEDDING / CALLIGRAPHY LAYOUT ===== -->
+    <div class="wedding-card" id="wedding-layout">
+      <span class="wedding-corner tl"></span>
+      <span class="wedding-corner tr"></span>
+      <span class="wedding-corner bl"></span>
+      <span class="wedding-corner br"></span>
+
+      <div id="wedding-active">
+        <div class="wedding-eyebrow">A Celebration Awaits</div>
+        <div class="wedding-rule"><span class="line"></span><span class="diamond">✦</span><span class="line"></span></div>
+
+        <div class="wedding-dest" id="cd-title-wedding">Destination</div>
+
+        <div class="wedding-days-wrap">
+          <div class="wedding-days-num" id="days-num-wedding">--</div>
+          <div class="wedding-days-label">Days to Go</div>
+        </div>
+
+        <div class="wedding-time-row">
+          <div class="wedding-time-unit">
+            <div class="val" id="hours-wedding">00</div>
+            <div class="lbl">Hours</div>
+          </div>
+          <span class="wedding-time-sep">·</span>
+          <div class="wedding-time-unit">
+            <div class="val" id="minutes-wedding">00</div>
+            <div class="lbl">Minutes</div>
+          </div>
+          <span class="wedding-time-sep">·</span>
+          <div class="wedding-time-unit">
+            <div class="val" id="seconds-wedding">00</div>
+            <div class="lbl">Seconds</div>
+          </div>
+        </div>
+
+        <div class="wedding-rule"><span class="line"></span><span class="diamond">✦</span><span class="line"></span></div>
+        <div class="wedding-footer">Arriving <strong id="date-line-wedding">—</strong></div>
+      </div>
+
+      <div id="wedding-arrived" style="display:none;">
+        <div class="wedding-arrived" id="arrived-msg-wedding">The day has come!</div>
+      </div>
+    </div>
+
     <button class="edit-link" id="edit-btn">Change destination or date</button>
   </div>
 
 </div>
+
+<!-- Floating action bar — visible only on countdown screen -->
+<div id="fab-container">
+  <!-- Theme picker popup -->
+  <div class="theme-popup" id="theme-popup">
+    <button class="theme-popup-item" data-theme-switch="pirate">
+      <span class="dot" style="background:#2b1f15; border-color:#a8823a;"></span> 🏴‍☠️ Pirate
+    </button>
+    <button class="theme-popup-item" data-theme-switch="modern">
+      <span class="dot" style="background:#f7f5f1; border-color:#d23f2f;"></span> ⬛ Modern
+    </button>
+    <button class="theme-popup-item" data-theme-switch="beach">
+      <span class="dot" style="background:#fffaf3; border-color:#e8633a;"></span> 🎫 Boarding Pass
+    </button>
+    <button class="theme-popup-item" data-theme-switch="scifi">
+      <span class="dot" style="background:#040d06; border-color:#39ff14;"></span> 🛸 Sci-Fi
+    </button>
+    <button class="theme-popup-item" data-theme-switch="comic">
+      <span class="dot" style="background:#e0f0ff; border-color:#0088cc;"></span> 💥 Comic
+    </button>
+    <button class="theme-popup-item" data-theme-switch="wedding">
+      <span class="dot" style="background:#f5efe0; border-color:#b8963e;"></span> 💍 Wedding
+    </button>
+  </div>
+
+  <!-- FAB buttons -->
+  <div class="fab-bar">
+    <button class="fab-btn fab-share-btn" id="fab-share" title="Share countdown">
+      ↗
+    </button>
+    <button class="fab-btn fab-theme-btn" id="fab-theme" title="Change theme">
+      <!-- navy hourglass SVG -->
+      <svg viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="fabSand" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stop-color="#ff6a3d"/>
+            <stop offset="100%" stop-color="#e8472a"/>
+          </linearGradient>
+        </defs>
+        <g stroke="#f2f2f2" stroke-width="50" stroke-linejoin="round" fill="none">
+          <path d="M130 60 L382 60 L256 256 L382 452 L130 452 L256 256 Z"/>
+        </g>
+        <rect x="108" y="38" width="296" height="40" rx="20" fill="#f2f2f2"/>
+        <rect x="108" y="434" width="296" height="40" rx="20" fill="#f2f2f2"/>
+        <path d="M168 100 L344 100 L256 220 Z" fill="url(#fabSand)"/>
+        <path d="M200 410 L312 410 L330 360 L182 360 Z" fill="url(#fabSand)"/>
+        <rect x="250" y="222" width="12" height="136" fill="#ff6a3d"/>
+      </svg>
+    </button>
+    <button class="fab-btn fab-share-btn" id="fab-edit" title="Edit countdown" style="font-size:1rem;">✏️</button>
+  </div>
+</div>
+
+<!-- Share toast -->
+<div class="share-toast" id="share-toast">Link copied!</div>
 
 <script>
   const STORAGE_KEY = 'countdown-settings';
@@ -961,11 +1962,14 @@
   let selectedTheme = 'pirate';
 
   function setPreview(theme) {
-    themePreview.classList.remove('preview-pirate', 'preview-modern', 'preview-beach');
+    themePreview.classList.remove('preview-pirate', 'preview-modern', 'preview-beach', 'preview-scifi', 'preview-comic', 'preview-wedding');
     themePreview.classList.add('preview-' + theme);
-    document.querySelector('.tp-view-pirate').style.display = theme === 'pirate' ? 'flex' : 'none';
-    document.querySelector('.tp-view-modern').style.display = theme === 'modern' ? 'flex' : 'none';
-    document.querySelector('.tp-view-beach').style.display = theme === 'beach' ? 'flex' : 'none';
+    document.querySelector('.tp-view-pirate').style.display  = theme === 'pirate'  ? 'flex' : 'none';
+    document.querySelector('.tp-view-modern').style.display  = theme === 'modern'  ? 'flex' : 'none';
+    document.querySelector('.tp-view-beach').style.display   = theme === 'beach'   ? 'flex' : 'none';
+    document.querySelector('.tp-view-scifi').style.display   = theme === 'scifi'   ? 'flex' : 'none';
+    document.querySelector('.tp-view-comic').style.display   = theme === 'comic'   ? 'flex' : 'none';
+    document.querySelector('.tp-view-wedding').style.display = theme === 'wedding' ? 'flex' : 'none';
   }
 
   swatches.forEach(sw => {
@@ -1039,6 +2043,22 @@
     document.getElementById('tk-date').textContent = shortDateStr;
     document.getElementById('arrived-msg-ticket').textContent = `Welcome to ${settings.destination}!`;
 
+    // Sci-Fi fields
+    document.getElementById('cd-title-scifi').textContent = settings.destination.toUpperCase();
+    document.getElementById('date-line-scifi').textContent = dateStr.toUpperCase();
+    document.getElementById('arrived-msg-scifi').textContent = `TARGET REACHED: ${settings.destination.toUpperCase()}`;
+
+    // Comic fields
+    document.getElementById('cd-title-comic').textContent = settings.destination.toUpperCase();
+    document.getElementById('date-line-comic').textContent = shortDateStr;
+    document.getElementById('dest-line-comic').textContent = settings.destination;
+    document.getElementById('arrived-msg-comic').textContent = `POW! Welcome to ${settings.destination}!`;
+
+    // Wedding fields
+    document.getElementById('cd-title-wedding').textContent = settings.destination;
+    document.getElementById('date-line-wedding').textContent = dateStr;
+    document.getElementById('arrived-msg-wedding').textContent = `The day has come — ${settings.destination}!`;
+
     function setAllDisplays(activeDisplay, arrivedDisplay) {
       document.getElementById('pirate-active').style.display = activeDisplay === null ? 'none' : 'block';
       document.getElementById('pirate-arrived').style.display = arrivedDisplay === null ? 'none' : 'block';
@@ -1046,6 +2066,12 @@
       document.getElementById('editorial-arrived').style.display = arrivedDisplay === null ? 'none' : 'block';
       document.getElementById('ticket-active').style.display = activeDisplay === null ? 'none' : 'flex';
       document.getElementById('ticket-arrived').style.display = arrivedDisplay === null ? 'none' : 'flex';
+      document.getElementById('scifi-active').style.display = activeDisplay === null ? 'none' : 'block';
+      document.getElementById('scifi-arrived').style.display = arrivedDisplay === null ? 'none' : 'block';
+      document.getElementById('comic-active').style.display = activeDisplay === null ? 'none' : 'block';
+      document.getElementById('comic-arrived').style.display = arrivedDisplay === null ? 'none' : 'block';
+      document.getElementById('wedding-active').style.display = activeDisplay === null ? 'none' : 'block';
+      document.getElementById('wedding-arrived').style.display = arrivedDisplay === null ? 'none' : 'block';
     }
 
     function tick() {
@@ -1080,6 +2106,21 @@
       document.getElementById('hours-ticket').textContent = hh;
       document.getElementById('minutes-ticket').textContent = mm;
       document.getElementById('seconds-ticket').textContent = ss;
+
+      document.getElementById('days-num-scifi').textContent = days;
+      document.getElementById('hours-scifi').textContent = hh;
+      document.getElementById('minutes-scifi').textContent = mm;
+      document.getElementById('seconds-scifi').textContent = ss;
+
+      document.getElementById('days-num-comic').textContent = days;
+      document.getElementById('hours-comic').textContent = hh;
+      document.getElementById('minutes-comic').textContent = mm;
+      document.getElementById('seconds-comic').textContent = ss;
+
+      document.getElementById('days-num-wedding').textContent = days;
+      document.getElementById('hours-wedding').textContent = hh;
+      document.getElementById('minutes-wedding').textContent = mm;
+      document.getElementById('seconds-wedding').textContent = ss;
     }
 
     setAllDisplays(true, null);
@@ -1101,22 +2142,102 @@
     const settings = { destination, date, theme: selectedTheme };
     saveSettings(settings);
     showCountdown(settings);
+    showFab();
+    updatePopupActive(selectedTheme);
   });
 
   editBtn.addEventListener('click', () => {
     const settings = loadSettings();
+    hideFab();
     showSetup(settings);
   });
 
-  // init
+  // ====== FAB logic ======
+  const fabContainer = document.getElementById('fab-container');
+  const fabThemeBtn  = document.getElementById('fab-theme');
+  const fabShareBtn  = document.getElementById('fab-share');
+  const fabEditBtn   = document.getElementById('fab-edit');
+  const themePopup   = document.getElementById('theme-popup');
+  const shareToast   = document.getElementById('share-toast');
+  const popupItems   = document.querySelectorAll('[data-theme-switch]');
+
+  function showFab() { fabContainer.style.display = 'block'; }
+  function hideFab() { fabContainer.style.display = 'none'; themePopup.classList.remove('open'); }
+
+  function updatePopupActive(theme) {
+    popupItems.forEach(item => {
+      item.classList.toggle('active', item.dataset.themeSwitch === theme);
+    });
+  }
+
+  fabThemeBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    themePopup.classList.toggle('open');
+  });
+
+  popupItems.forEach(item => {
+    item.addEventListener('click', () => {
+      const newTheme = item.dataset.themeSwitch;
+      const settings = loadSettings();
+      if (settings) {
+        settings.theme = newTheme;
+        saveSettings(settings);
+        showCountdown(settings);
+        updatePopupActive(newTheme);
+      }
+      themePopup.classList.remove('open');
+    });
+  });
+
+  // close popup if clicking outside
+  document.addEventListener('click', (e) => {
+    if (!themePopup.contains(e.target) && e.target !== fabThemeBtn) {
+      themePopup.classList.remove('open');
+    }
+  });
+
+  fabShareBtn.addEventListener('click', async () => {
+    const settings = loadSettings();
+    const url = window.location.href;
+    const title = settings ? `Countdown to ${settings.destination}` : 'My Countdown';
+    const text = settings ? `${settings.destination} is coming up — check out my countdown!` : 'Check out my countdown!';
+
+    if (navigator.share) {
+      try {
+        await navigator.share({ title, text, url });
+      } catch (err) {
+        // user cancelled or error — fall through silently
+      }
+    } else {
+      // fallback: copy to clipboard
+      try {
+        await navigator.clipboard.writeText(url);
+        shareToast.textContent = 'Link copied!';
+        shareToast.classList.add('show');
+        setTimeout(() => shareToast.classList.remove('show'), 2200);
+      } catch (err) {
+        shareToast.textContent = 'Copy the URL from your browser!';
+        shareToast.classList.add('show');
+        setTimeout(() => shareToast.classList.remove('show'), 2200);
+      }
+    }
+  });
+
+  fabEditBtn.addEventListener('click', () => {
+    const settings = loadSettings();
+    hideFab();
+    showSetup(settings);
+  });
+
+  // ====== init ======
   const existing = loadSettings();
   if (existing && existing.destination && existing.date) {
     showCountdown(existing);
+    showFab();
+    updatePopupActive(existing.theme || 'pirate');
   } else {
     showSetup(null);
-    // default date input to 30 days out as a hint
-    const d = new Date();
-    d.setDate(d.getDate() + 30);
+    hideFab();
     dateInput.min = new Date().toISOString().split('T')[0];
   }
 </script>
