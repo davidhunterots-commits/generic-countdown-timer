@@ -11,6 +11,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="Countdown">
 <style>
+
   @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;900&family=Crimson+Text:ital,wght@0,400;0,600;1,400&family=Special+Elite&family=Space+Grotesk:wght@400;500;600;700&family=Archivo+Black&family=DM+Mono:wght@400;500&family=Great+Vibes&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&display=swap');
 
   * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -1520,26 +1521,257 @@
     color: #ffffff;
     font-family: 'Space Grotesk', sans-serif;
     font-size: 0.85rem;
-    padding: 8px 18px;
+    padding: 10px 20px;
     border-radius: 20px;
     opacity: 0;
     pointer-events: none;
     transition: opacity 0.25s;
     white-space: nowrap;
-    z-index: 101;
+    z-index: 200;
+    max-width: 90vw;
   }
-  .share-toast.show { opacity: 1; }
+  .share-toast.show {
+    opacity: 1;
+    pointer-events: auto;
+  }
 
   /* hide FAB on setup screen */
+  #fab-container { display: none; }
+
+
+  /* ====== MULTI-COUNTDOWN SWIPER ====== */
+  .swiper-outer {
+    position: fixed;
+    inset: 0;
+    overflow: hidden;
+    display: none;
+  }
+
+  .swiper-track {
+    display: flex;
+    height: 100%;
+    transition: transform 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    will-change: transform;
+  }
+
+  .swiper-slide {
+    flex-shrink: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 28px 16px 100px;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .swiper-slide .wrap {
+    width: 100%;
+  }
+
+  /* dot indicators */
+  .swiper-dots {
+    position: fixed;
+    bottom: 96px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 8px;
+    z-index: 90;
+    display: none;
+  }
+  .swiper-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.4);
+    border: 1px solid rgba(255,255,255,0.6);
+    transition: all 0.2s;
+    cursor: pointer;
+  }
+  .swiper-dot.active {
+    width: 22px;
+    border-radius: 4px;
+    background: rgba(255,255,255,0.9);
+  }
+  /* dark dots for light themes */
+  body[data-theme="modern"] .swiper-dot,
+  body[data-theme="beach"] .swiper-dot,
+  body[data-theme="comic"] .swiper-dot,
+  body[data-theme="wedding"] .swiper-dot {
+    background: rgba(0,0,0,0.2);
+    border-color: rgba(0,0,0,0.3);
+  }
+  body[data-theme="modern"] .swiper-dot.active,
+  body[data-theme="beach"] .swiper-dot.active,
+  body[data-theme="comic"] .swiper-dot.active,
+  body[data-theme="wedding"] .swiper-dot.active {
+    background: rgba(0,0,0,0.6);
+  }
+
+  /* card delete button */
+  .card-delete-btn {
+    position: absolute;
+    top: 12px; right: 12px;
+    width: 28px; height: 28px;
+    border-radius: 50%;
+    background: rgba(0,0,0,0.2);
+    border: none;
+    color: rgba(255,255,255,0.8);
+    font-size: 0.9rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+    transition: background 0.15s;
+  }
+  .card-delete-btn:hover { background: rgba(220,50,50,0.7); }
+  body[data-theme="modern"] .card-delete-btn,
+  body[data-theme="beach"] .card-delete-btn,
+  body[data-theme="comic"] .card-delete-btn,
+  body[data-theme="wedding"] .card-delete-btn {
+    background: rgba(0,0,0,0.12);
+    color: rgba(0,0,0,0.5);
+  }
+
+  /* card counter badge */
+  .card-counter {
+    position: absolute;
+    top: 12px; left: 12px;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.72rem;
+    color: rgba(255,255,255,0.6);
+    z-index: 10;
+  }
+  body[data-theme="modern"] .card-counter,
+  body[data-theme="beach"] .card-counter,
+  body[data-theme="comic"] .card-counter,
+  body[data-theme="wedding"] .card-counter {
+    color: rgba(0,0,0,0.3);
+  }
+
+  /* + add button in FAB bar */
+  .fab-add-btn {
+    width: 52px; height: 52px;
+    border-radius: 50%;
+    border: none;
+    background: #ffffff;
+    color: #13294b;
+    font-size: 1.6rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.25);
+    transition: transform 0.15s ease;
+    flex-shrink: 0;
+  }
+  .fab-add-btn:hover { transform: scale(1.08); }
+  .fab-add-btn:active { transform: scale(0.95); }
+
+  /* empty state */
+  .empty-state {
+    text-align: center;
+    padding: 60px 32px;
+    color: rgba(255,255,255,0.6);
+    display: none;
+  }
+  .empty-state .empty-icon { font-size: 3rem; margin-bottom: 16px; }
+  .empty-state .empty-title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: rgba(255,255,255,0.8);
+    margin-bottom: 8px;
+  }
+  .empty-state .empty-sub {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.88rem;
+    line-height: 1.5;
+  }
+
+  /* setup overlay */
+  .setup-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.5);
+    z-index: 200;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+  }
+  .setup-overlay.open {
+    display: flex;
+  }
+  .setup-overlay .wrap {
+    width: 100%;
+    max-width: 520px;
+  }
+  .setup-overlay .setup-card {
+    background: #ffffff !important;
+    border: 1px solid rgba(0,0,0,0.1) !important;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.3) !important;
+    color: #1a1a1a;
+  }
+  .setup-overlay .setup-card .setup-eyebrow,
+  .setup-overlay .setup-card .setup-title,
+  .setup-overlay .setup-card label,
+  .setup-overlay .setup-card .field input {
+    color: #1a1a1a !important;
+  }
+  .setup-overlay .setup-card .field input {
+    background: #f5f5f5 !important;
+    border-color: rgba(0,0,0,0.2) !important;
+  }
+  .setup-overlay .setup-card .theme-swatch {
+    color: #555 !important;
+    background: rgba(0,0,0,0.06) !important;
+  }
+  .setup-overlay .setup-card .theme-swatch.active {
+    border-color: #13294b !important;
+    color: #13294b !important;
+  }
+  .setup-overlay .close-setup-btn {
+    width: 100%;
+    padding: 10px;
+    margin-top: 10px;
+    border-radius: 8px;
+    border: 1px solid rgba(0,0,0,0.15);
+    background: none;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.9rem;
+    cursor: pointer;
+    color: #666;
+  }
+
   #fab-container { display: none; }
 </style>
 </head>
 <body data-theme="pirate">
 
-<div class="wrap">
+<!-- EMPTY STATE (shown when no countdowns) -->
+<div class="empty-state" id="empty-state">
+  <div class="empty-icon">⏳</div>
+  <div class="empty-title">No countdowns yet</div>
+  <div class="empty-sub">Tap the + button below<br>to add your first countdown</div>
+</div>
 
-  <!-- SETUP VIEW -->
-  <div class="setup-card" id="setup-view">
+<!-- SWIPER -->
+<div class="swiper-outer" id="swiper-outer">
+  <div class="swiper-track" id="swiper-track">
+    <!-- slides injected by JS -->
+  </div>
+</div>
+
+<!-- DOT INDICATORS -->
+<div class="swiper-dots" id="swiper-dots"></div>
+
+<!-- SETUP OVERLAY -->
+<div class="setup-overlay" id="setup-overlay">
+  <div class="wrap">
+    <div class="setup-card" id="setup-view">
     <div class="setup-eyebrow">New Countdown</div>
     <div class="setup-title" id="setup-heading">Set your destination</div>
 
@@ -1614,11 +1846,15 @@
 
     <button class="start-btn" id="start-btn">Start Countdown</button>
   </div>
+    <button class="close-setup-btn" id="close-setup-btn">Cancel</button>
+  </div>
+</div>
 
-  <!-- COUNTDOWN VIEW -->
-  <div class="countdown-card" id="countdown-view">
-
-    <!-- ===== PIRATE LAYOUT ===== -->
+<!-- COUNTDOWN TEMPLATE (hidden, cloned per card) -->
+<template id="countdown-template">
+  <div class="countdown-card" style="display:block; position:relative;">
+    <button class="card-delete-btn" data-action="delete">×</button>
+    <div class="card-counter"></div>
     <div id="pirate-layout">
       <div class="cd-eyebrow">Counting down to</div>
       <div class="cd-title" id="cd-title-pirate">Destination</div>
@@ -1884,11 +2120,9 @@
         <div class="wedding-arrived" id="arrived-msg-wedding">The day has come!</div>
       </div>
     </div>
-
-    <button class="edit-link" id="edit-btn">Change destination or date</button>
+    <button class="edit-link" data-action="edit">Change destination or date</button>
   </div>
-
-</div>
+</template>
 
 <!-- Floating action bar — visible only on countdown screen -->
 <div id="fab-container">
@@ -1938,7 +2172,8 @@
         <rect x="250" y="222" width="12" height="136" fill="#ff6a3d"/>
       </svg>
     </button>
-    <button class="fab-btn fab-share-btn" id="fab-edit" title="Edit countdown" style="font-size:1rem;">✏️</button>
+    <button class="fab-btn fab-edit-btn" id="fab-edit" title="Edit countdown" style="font-size:1rem;">✏️</button>
+    <button class="fab-add-btn" id="fab-add" title="Add countdown">+</button>
   </div>
 </div>
 
@@ -1946,23 +2181,318 @@
 <div class="share-toast" id="share-toast">Link copied!</div>
 
 <script>
-  const STORAGE_KEY = 'countdown-settings';
-  let timerInterval = null;
+  // ====== STORAGE ======
+  const STORAGE_KEY = 'countdowns-v2';
 
-  const setupView = document.getElementById('setup-view');
-  const countdownView = document.getElementById('countdown-view');
-  const destInput = document.getElementById('dest-input');
-  const dateInput = document.getElementById('date-input');
-  const errorMsg = document.getElementById('error-msg');
-  const startBtn = document.getElementById('start-btn');
-  const editBtn = document.getElementById('edit-btn');
-  const swatches = document.querySelectorAll('.theme-swatch');
+  function loadAll() {
+    try {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if (!raw) return [];
+      return JSON.parse(raw);
+    } catch(e) { return []; }
+  }
+
+  function saveAll(list) {
+    try { localStorage.setItem(STORAGE_KEY, JSON.stringify(list)); } catch(e) {}
+  }
+
+  function genId() {
+    return Date.now().toString(36) + Math.random().toString(36).slice(2, 6);
+  }
+
+  // ====== THEME HELPERS ======
+  const THEMES = ['pirate','modern','beach','scifi','comic','wedding'];
+
+  function applyTheme(theme) {
+    document.body.dataset.theme = theme || 'pirate';
+  }
+
+  // ====== SWIPER STATE ======
+  let countdowns = [];
+  let activeIdx = 0;
+  let timers = {};
+  let editingId = null;
+
+  const swiperOuter = document.getElementById('swiper-outer');
+  const swiperTrack = document.getElementById('swiper-track');
+  const swiperDots  = document.getElementById('swiper-dots');
+  const emptyState  = document.getElementById('empty-state');
+  const fabContainer = document.getElementById('fab-container');
+  const shareToast  = document.getElementById('share-toast');
+
+  // ====== RENDER SLIDES ======
+  function renderSlides() {
+    // Clear timers
+    Object.values(timers).forEach(t => clearInterval(t));
+    timers = {};
+
+    swiperTrack.innerHTML = '';
+    swiperDots.innerHTML = '';
+
+    if (countdowns.length === 0) {
+      swiperOuter.style.display = 'none';
+      swiperDots.style.display = 'none';
+      emptyState.style.display = 'block';
+      fabContainer.style.display = 'block';
+      applyTheme('pirate');
+      return;
+    }
+
+    emptyState.style.display = 'none';
+    swiperOuter.style.display = 'block';
+    swiperDots.style.display = 'flex';
+    fabContainer.style.display = 'block';
+
+    countdowns.forEach((cd, i) => {
+      // Clone template
+      const tmpl = document.getElementById('countdown-template');
+      const slide = document.createElement('div');
+      slide.className = 'swiper-slide';
+      slide.dataset.idx = i;
+      const clone = tmpl.content.cloneNode(true);
+      slide.appendChild(clone);
+
+      // Set counter label
+      const counter = slide.querySelector('.card-counter');
+      counter.textContent = countdowns.length > 1 ? `${i+1} / ${countdowns.length}` : '';
+
+      // Wire delete
+      slide.querySelector('[data-action="delete"]').addEventListener('click', () => deleteCountdown(cd.id));
+      slide.querySelector('[data-action="edit"]').addEventListener('click', () => openEdit(cd.id));
+
+      // Populate fields
+      populateSlide(slide, cd);
+
+      swiperTrack.appendChild(slide);
+
+      // Dot
+      const dot = document.createElement('button');
+      dot.className = 'swiper-dot' + (i === activeIdx ? ' active' : '');
+      dot.addEventListener('click', () => goTo(i));
+      swiperDots.appendChild(dot);
+    });
+
+    // Position track
+    swiperTrack.style.transition = 'none';
+    swiperTrack.style.transform = `translateX(${-activeIdx * 100}%)`;
+
+    // Apply active theme
+    if (countdowns[activeIdx]) applyTheme(countdowns[activeIdx].theme);
+
+    // Start timers for all slides
+    countdowns.forEach((cd, i) => {
+      startTimer(i, cd);
+    });
+
+    updatePopupActive(countdowns[activeIdx]?.theme);
+  }
+
+  function populateSlide(slide, cd) {
+    const target = new Date(cd.date + 'T00:00:00');
+    const dateStr = target.toLocaleDateString(undefined, {year:'numeric', month:'long', day:'numeric'});
+    const shortDateStr = target.toLocaleDateString(undefined, {month:'short', day:'numeric', year:'numeric'});
+    const destCode = cd.destination.replace(/[^A-Za-z]/g,'').slice(0,3).toUpperCase() || 'TRP';
+
+    // Helper to safely set text
+    const set = (sel, val) => { const el = slide.querySelector(sel); if (el) el.textContent = val; };
+
+    set('#cd-title-pirate',    cd.destination);
+    set('#dest-line-pirate',   cd.destination);
+    set('#date-line-pirate',   dateStr);
+    set('#arrived-msg-pirate', `🎉 You've arrived: ${cd.destination}! 🎉`);
+
+    set('#cd-title-editorial',    cd.destination);
+    set('#date-line-editorial',   dateStr);
+    set('#arrived-msg-editorial', `${cd.destination} — you're there.`);
+    const edToday = slide.querySelector('#ed-today');
+    if (edToday) edToday.textContent = new Date().toLocaleDateString(undefined, {month:'short', day:'numeric'});
+
+    set('#tk-dest-code',   destCode);
+    set('#tk-dest-city',   cd.destination);
+    set('#tk-date',        shortDateStr);
+    set('#arrived-msg-ticket', `Welcome to ${cd.destination}!`);
+
+    set('#cd-title-scifi',    cd.destination.toUpperCase());
+    set('#date-line-scifi',   dateStr.toUpperCase());
+    set('#arrived-msg-scifi', `TARGET REACHED: ${cd.destination.toUpperCase()}`);
+
+    set('#cd-title-comic',    cd.destination.toUpperCase());
+    set('#date-line-comic',   shortDateStr);
+    set('#dest-line-comic',   cd.destination);
+    set('#arrived-msg-comic', `POW! Welcome to ${cd.destination}!`);
+
+    set('#cd-title-wedding',    cd.destination);
+    set('#date-line-wedding',   dateStr);
+    set('#arrived-msg-wedding', `The day has come — ${cd.destination}!`);
+  }
+
+  function startTimer(idx, cd) {
+    const slide = swiperTrack.children[idx];
+    if (!slide) return;
+
+    const target = new Date(cd.date + 'T00:00:00');
+
+    function tick() {
+      const now = new Date();
+      const diff = target - now;
+
+      if (diff <= 0) {
+        // Show arrived
+        ['pirate','editorial','scifi','comic','wedding'].forEach(t => {
+          const a = slide.querySelector(`#${t}-active`);
+          const r = slide.querySelector(`#${t}-arrived`);
+          if (a) a.style.display = 'none';
+          if (r) r.style.display = 'block';
+        });
+        const ta = slide.querySelector('#ticket-active');
+        const tr = slide.querySelector('#ticket-arrived');
+        if (ta) ta.style.display = 'none';
+        if (tr) tr.style.display = 'flex';
+        clearInterval(timers[cd.id]);
+        return;
+      }
+
+      const days    = Math.floor(diff / (1000*60*60*24));
+      const hours   = Math.floor((diff / (1000*60*60)) % 24);
+      const minutes = Math.floor((diff / (1000*60)) % 60);
+      const seconds = Math.floor((diff / 1000) % 60);
+      const hh = String(hours).padStart(2,'0');
+      const mm = String(minutes).padStart(2,'0');
+      const ss = String(seconds).padStart(2,'0');
+
+      const set = (sel, val) => { const el = slide.querySelector(sel); if (el) el.textContent = val; };
+
+      set('#days-num-pirate', days); set('#hours-pirate', hh); set('#minutes-pirate', mm); set('#seconds-pirate', ss);
+      set('#days-num-editorial', days); set('#hours-editorial', hh); set('#minutes-editorial', mm); set('#seconds-editorial', ss);
+      set('#days-num-ticket', days); set('#hours-ticket', hh); set('#minutes-ticket', mm); set('#seconds-ticket', ss);
+      set('#days-num-scifi', days); set('#hours-scifi', hh); set('#minutes-scifi', mm); set('#seconds-scifi', ss);
+      set('#days-num-comic', days); set('#hours-comic', hh); set('#minutes-comic', mm); set('#seconds-comic', ss);
+      set('#days-num-wedding', days); set('#hours-wedding', hh); set('#minutes-wedding', mm); set('#seconds-wedding', ss);
+    }
+
+    tick();
+    timers[cd.id] = setInterval(tick, 1000);
+  }
+
+  // ====== NAVIGATION ======
+  function goTo(idx, animate = true) {
+    if (idx < 0 || idx >= countdowns.length) return;
+    activeIdx = idx;
+
+    if (!animate) swiperTrack.style.transition = 'none';
+    else swiperTrack.style.transition = 'transform 0.35s cubic-bezier(0.25,0.46,0.45,0.94)';
+
+    swiperTrack.style.transform = `translateX(${-idx * 100}%)`;
+
+    document.querySelectorAll('.swiper-dot').forEach((d,i) => d.classList.toggle('active', i === idx));
+
+    applyTheme(countdowns[idx].theme);
+    updatePopupActive(countdowns[idx].theme);
+  }
+
+  // ====== TOUCH SWIPE ======
+  let touchStartX = 0, touchStartY = 0, isDragging = false;
+
+  swiperOuter.addEventListener('touchstart', e => {
+    touchStartX = e.touches[0].clientX;
+    touchStartY = e.touches[0].clientY;
+    isDragging = false;
+  }, {passive: true});
+
+  swiperOuter.addEventListener('touchmove', e => {
+    const dx = e.touches[0].clientX - touchStartX;
+    const dy = e.touches[0].clientY - touchStartY;
+    if (!isDragging && Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 8) isDragging = true;
+    if (isDragging) {
+      swiperTrack.style.transition = 'none';
+      const base = -activeIdx * window.innerWidth;
+      swiperTrack.style.transform = `translateX(${base + dx}px)`;
+    }
+  }, {passive: true});
+
+  swiperOuter.addEventListener('touchend', e => {
+    const dx = e.changedTouches[0].clientX - touchStartX;
+    if (isDragging) {
+      if (dx < -50 && activeIdx < countdowns.length - 1) goTo(activeIdx + 1);
+      else if (dx > 50 && activeIdx > 0) goTo(activeIdx - 1);
+      else goTo(activeIdx);
+    }
+    isDragging = false;
+  });
+
+  // ====== ADD / EDIT / DELETE ======
+  function openAdd() {
+    if (countdowns.length >= 10) {
+      shareToast.style.background = '';
+      shareToast.textContent = 'Max 10 countdowns reached. Delete one first.';
+      shareToast.classList.add('show');
+      setTimeout(() => shareToast.classList.remove('show'), 2500);
+      return;
+    }
+    editingId = null;
+    setupOverlay.classList.add('open');
+    document.getElementById('dest-input').value = '';
+    document.getElementById('date-input').value = '';
+    document.getElementById('error-msg').style.display = 'none';
+    // reset swatch to pirate
+    selectedTheme = 'pirate';
+    document.querySelectorAll('.theme-swatch').forEach(s => s.classList.toggle('active', s.dataset.themeChoice === 'pirate'));
+    setPreview('pirate');
+  }
+
+  function openEdit(id) {
+    const cd = countdowns.find(c => c.id === id);
+    if (!cd) return;
+    editingId = id;
+    setupOverlay.classList.add('open');
+    document.getElementById('dest-input').value = cd.destination;
+    document.getElementById('date-input').value = cd.date;
+    document.getElementById('error-msg').style.display = 'none';
+    selectedTheme = cd.theme || 'pirate';
+    document.querySelectorAll('.theme-swatch').forEach(s => s.classList.toggle('active', s.dataset.themeChoice === selectedTheme));
+    setPreview(selectedTheme);
+  }
+
+  function deleteCountdown(id) {
+    // confirm() is blocked on iOS in some contexts — use a custom mini-confirm instead
+    const cd = countdowns.find(c => c.id === id);
+    if (!cd) return;
+    const toast = document.getElementById('share-toast');
+    toast.textContent = `Delete "${cd.destination}"?`;
+    toast.style.background = 'rgba(200,30,30,0.92)';
+    toast.innerHTML = `Delete "${cd.destination}"? <button id="confirm-del" style="margin-left:10px;background:#fff;color:#c00;border:none;padding:2px 10px;border-radius:10px;cursor:pointer;font-weight:700;">Yes</button>`;
+    toast.classList.add('show');
+    document.getElementById('confirm-del').addEventListener('click', () => {
+      toast.classList.remove('show');
+      toast.style.background = '';
+      toast.textContent = 'Link copied!';
+      Object.values(timers).forEach(t => clearInterval(t));
+      timers = {};
+      countdowns = countdowns.filter(c => c.id !== id);
+      saveAll(countdowns);
+      activeIdx = Math.min(activeIdx, Math.max(0, countdowns.length - 1));
+      renderSlides();
+    });
+    // Auto-dismiss after 4s if no action
+    setTimeout(() => {
+      toast.classList.remove('show');
+      toast.style.background = '';
+      toast.textContent = 'Link copied!';
+    }, 4000);
+  }
+
+  // ====== SETUP FORM ======
+  const setupOverlay = document.getElementById('setup-overlay');
+  const destInput    = document.getElementById('dest-input');
+  const dateInput    = document.getElementById('date-input');
+  const errorMsg     = document.getElementById('error-msg');
+  const startBtn     = document.getElementById('start-btn');
+  const swatches     = document.querySelectorAll('.theme-swatch');
   const themePreview = document.getElementById('theme-preview');
-
   let selectedTheme = 'pirate';
 
   function setPreview(theme) {
-    themePreview.classList.remove('preview-pirate', 'preview-modern', 'preview-beach', 'preview-scifi', 'preview-comic', 'preview-wedding');
+    themePreview.classList.remove('preview-pirate','preview-modern','preview-beach','preview-scifi','preview-comic','preview-wedding');
     themePreview.classList.add('preview-' + theme);
     document.querySelector('.tp-view-pirate').style.display  = theme === 'pirate'  ? 'flex' : 'none';
     document.querySelector('.tp-view-modern').style.display  = theme === 'modern'  ? 'flex' : 'none';
@@ -1981,157 +2511,9 @@
     });
   });
 
-  function loadSettings() {
-    try {
-      const raw = localStorage.getItem(STORAGE_KEY);
-      if (!raw) return null;
-      return JSON.parse(raw);
-    } catch (e) {
-      return null;
-    }
-  }
-
-  function saveSettings(settings) {
-    try {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(settings));
-    } catch (e) { /* ignore */ }
-  }
-
-  function clearSettings() {
-    try { localStorage.removeItem(STORAGE_KEY); } catch (e) {}
-  }
-
-  function showSetup(prefill) {
-    if (timerInterval) clearInterval(timerInterval);
-    setupView.style.display = 'block';
-    countdownView.style.display = 'none';
-    if (prefill) {
-      destInput.value = prefill.destination || '';
-      dateInput.value = prefill.date || '';
-      selectedTheme = prefill.theme || 'pirate';
-      swatches.forEach(s => s.classList.toggle('active', s.dataset.themeChoice === selectedTheme));
-    }
-    setPreview(selectedTheme);
-  }
-
-  function showCountdown(settings) {
-    setupView.style.display = 'none';
-    countdownView.style.display = 'block';
-
-    document.body.dataset.theme = settings.theme;
-
-    const targetDate = new Date(settings.date + 'T00:00:00');
-    const dateStr = targetDate.toLocaleDateString(undefined, { year: 'numeric', month: 'long', day: 'numeric' });
-    const shortDateStr = targetDate.toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' });
-    const destCode = settings.destination.replace(/[^A-Za-z]/g, '').slice(0, 3).toUpperCase() || 'TRP';
-
-    // Pirate fields
-    document.getElementById('cd-title-pirate').textContent = settings.destination;
-    document.getElementById('dest-line-pirate').textContent = settings.destination;
-    document.getElementById('date-line-pirate').textContent = dateStr;
-    document.getElementById('arrived-msg-pirate').textContent = `🎉 You've arrived: ${settings.destination}! 🎉`;
-
-    // Editorial fields
-    document.getElementById('cd-title-editorial').textContent = settings.destination;
-    document.getElementById('date-line-editorial').textContent = dateStr;
-    document.getElementById('ed-today').textContent = new Date().toLocaleDateString(undefined, { month: 'short', day: 'numeric' });
-    document.getElementById('arrived-msg-editorial').textContent = `${settings.destination} — you're there.`;
-
-    // Ticket fields
-    document.getElementById('tk-dest-code').textContent = destCode;
-    document.getElementById('tk-dest-city').textContent = settings.destination;
-    document.getElementById('tk-date').textContent = shortDateStr;
-    document.getElementById('arrived-msg-ticket').textContent = `Welcome to ${settings.destination}!`;
-
-    // Sci-Fi fields
-    document.getElementById('cd-title-scifi').textContent = settings.destination.toUpperCase();
-    document.getElementById('date-line-scifi').textContent = dateStr.toUpperCase();
-    document.getElementById('arrived-msg-scifi').textContent = `TARGET REACHED: ${settings.destination.toUpperCase()}`;
-
-    // Comic fields
-    document.getElementById('cd-title-comic').textContent = settings.destination.toUpperCase();
-    document.getElementById('date-line-comic').textContent = shortDateStr;
-    document.getElementById('dest-line-comic').textContent = settings.destination;
-    document.getElementById('arrived-msg-comic').textContent = `POW! Welcome to ${settings.destination}!`;
-
-    // Wedding fields
-    document.getElementById('cd-title-wedding').textContent = settings.destination;
-    document.getElementById('date-line-wedding').textContent = dateStr;
-    document.getElementById('arrived-msg-wedding').textContent = `The day has come — ${settings.destination}!`;
-
-    function setAllDisplays(activeDisplay, arrivedDisplay) {
-      document.getElementById('pirate-active').style.display = activeDisplay === null ? 'none' : 'block';
-      document.getElementById('pirate-arrived').style.display = arrivedDisplay === null ? 'none' : 'block';
-      document.getElementById('editorial-active').style.display = activeDisplay === null ? 'none' : 'block';
-      document.getElementById('editorial-arrived').style.display = arrivedDisplay === null ? 'none' : 'block';
-      document.getElementById('ticket-active').style.display = activeDisplay === null ? 'none' : 'flex';
-      document.getElementById('ticket-arrived').style.display = arrivedDisplay === null ? 'none' : 'flex';
-      document.getElementById('scifi-active').style.display = activeDisplay === null ? 'none' : 'block';
-      document.getElementById('scifi-arrived').style.display = arrivedDisplay === null ? 'none' : 'block';
-      document.getElementById('comic-active').style.display = activeDisplay === null ? 'none' : 'block';
-      document.getElementById('comic-arrived').style.display = arrivedDisplay === null ? 'none' : 'block';
-      document.getElementById('wedding-active').style.display = activeDisplay === null ? 'none' : 'block';
-      document.getElementById('wedding-arrived').style.display = arrivedDisplay === null ? 'none' : 'block';
-    }
-
-    function tick() {
-      const now = new Date();
-      const diff = targetDate - now;
-
-      if (diff <= 0) {
-        setAllDisplays(null, true);
-        clearInterval(timerInterval);
-        return;
-      }
-
-      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-      const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
-      const minutes = Math.floor((diff / (1000 * 60)) % 60);
-      const seconds = Math.floor((diff / 1000) % 60);
-      const hh = String(hours).padStart(2, '0');
-      const mm = String(minutes).padStart(2, '0');
-      const ss = String(seconds).padStart(2, '0');
-
-      document.getElementById('days-num-pirate').textContent = days;
-      document.getElementById('hours-pirate').textContent = hh;
-      document.getElementById('minutes-pirate').textContent = mm;
-      document.getElementById('seconds-pirate').textContent = ss;
-
-      document.getElementById('days-num-editorial').textContent = days;
-      document.getElementById('hours-editorial').textContent = hh;
-      document.getElementById('minutes-editorial').textContent = mm;
-      document.getElementById('seconds-editorial').textContent = ss;
-
-      document.getElementById('days-num-ticket').textContent = days;
-      document.getElementById('hours-ticket').textContent = hh;
-      document.getElementById('minutes-ticket').textContent = mm;
-      document.getElementById('seconds-ticket').textContent = ss;
-
-      document.getElementById('days-num-scifi').textContent = days;
-      document.getElementById('hours-scifi').textContent = hh;
-      document.getElementById('minutes-scifi').textContent = mm;
-      document.getElementById('seconds-scifi').textContent = ss;
-
-      document.getElementById('days-num-comic').textContent = days;
-      document.getElementById('hours-comic').textContent = hh;
-      document.getElementById('minutes-comic').textContent = mm;
-      document.getElementById('seconds-comic').textContent = ss;
-
-      document.getElementById('days-num-wedding').textContent = days;
-      document.getElementById('hours-wedding').textContent = hh;
-      document.getElementById('minutes-wedding').textContent = mm;
-      document.getElementById('seconds-wedding').textContent = ss;
-    }
-
-    setAllDisplays(true, null);
-    tick();
-    timerInterval = setInterval(tick, 1000);
-  }
-
   startBtn.addEventListener('click', () => {
     const destination = destInput.value.trim();
     const date = dateInput.value;
-
     const todayStr = new Date().toISOString().split('T')[0];
     if (!destination || !date || date < todayStr) {
       errorMsg.style.display = 'block';
@@ -2139,38 +2521,48 @@
     }
     errorMsg.style.display = 'none';
 
-    const settings = { destination, date, theme: selectedTheme };
-    saveSettings(settings);
-    showCountdown(settings);
-    showFab();
-    updatePopupActive(selectedTheme);
+    if (editingId) {
+      const cd = countdowns.find(c => c.id === editingId);
+      if (cd) { cd.destination = destination; cd.date = date; cd.theme = selectedTheme; }
+    } else {
+      const newCd = { id: genId(), destination, date, theme: selectedTheme };
+      countdowns.push(newCd);
+    }
+
+    // Sort by date ascending — soonest first
+    countdowns.sort((a, b) => new Date(a.date) - new Date(b.date));
+    activeIdx = editingId
+      ? countdowns.findIndex(c => c.id === editingId)
+      : countdowns.findIndex(c => c.destination === destination && c.date === date);
+    if (activeIdx < 0) activeIdx = 0;
+
+    saveAll(countdowns);
+    setupOverlay.classList.remove('open');
+    renderSlides();
   });
 
-  editBtn.addEventListener('click', () => {
-    const settings = loadSettings();
-    hideFab();
-    showSetup(settings);
+  document.getElementById('close-setup-btn').addEventListener('click', () => {
+    setupOverlay.classList.remove('open');
   });
 
-  // ====== FAB logic ======
-  const fabContainer = document.getElementById('fab-container');
-  const fabThemeBtn  = document.getElementById('fab-theme');
-  const fabShareBtn  = document.getElementById('fab-share');
-  const fabEditBtn   = document.getElementById('fab-edit');
-  const themePopup   = document.getElementById('theme-popup');
-  const shareToast   = document.getElementById('share-toast');
-  const popupItems   = document.querySelectorAll('[data-theme-switch]');
+  // Close overlay on background tap
+  setupOverlay.addEventListener('click', e => {
+    if (e.target === setupOverlay) setupOverlay.classList.remove('open');
+  });
 
-  function showFab() { fabContainer.style.display = 'block'; }
-  function hideFab() { fabContainer.style.display = 'none'; themePopup.classList.remove('open'); }
+  // ====== FAB ======
+  const fabThemeBtn = document.getElementById('fab-theme');
+  const fabShareBtn = document.getElementById('fab-share');
+  const fabEditBtn  = document.getElementById('fab-edit');
+  const fabAddBtn   = document.getElementById('fab-add');
+  const themePopup  = document.getElementById('theme-popup');
+  const popupItems  = document.querySelectorAll('[data-theme-switch]');
 
   function updatePopupActive(theme) {
-    popupItems.forEach(item => {
-      item.classList.toggle('active', item.dataset.themeSwitch === theme);
-    });
+    popupItems.forEach(item => item.classList.toggle('active', item.dataset.themeSwitch === theme));
   }
 
-  fabThemeBtn.addEventListener('click', (e) => {
+  fabThemeBtn.addEventListener('click', e => {
     e.stopPropagation();
     themePopup.classList.toggle('open');
   });
@@ -2178,45 +2570,49 @@
   popupItems.forEach(item => {
     item.addEventListener('click', () => {
       const newTheme = item.dataset.themeSwitch;
-      const settings = loadSettings();
-      if (settings) {
-        settings.theme = newTheme;
-        saveSettings(settings);
-        showCountdown(settings);
+      if (countdowns[activeIdx]) {
+        countdowns[activeIdx].theme = newTheme;
+        saveAll(countdowns);
+        applyTheme(newTheme);
         updatePopupActive(newTheme);
       }
       themePopup.classList.remove('open');
     });
   });
 
-  // close popup if clicking outside
-  document.addEventListener('click', (e) => {
+  document.addEventListener('click', e => {
     if (!themePopup.contains(e.target) && e.target !== fabThemeBtn) {
       themePopup.classList.remove('open');
     }
   });
 
   fabShareBtn.addEventListener('click', async () => {
-    const settings = loadSettings();
+    const cd = countdowns[activeIdx];
     const url = window.location.href;
-    const title = settings ? `Countdown to ${settings.destination}` : 'My Countdown';
-    const text = settings ? `${settings.destination} is coming up — check out my countdown!` : 'Check out my countdown!';
+    const title = cd ? `Countdown to ${cd.destination}` : 'My Countdown';
+    const text  = cd ? `${cd.destination} is coming up — check out my countdown!` : 'Check out my countdown!';
+
+    // Reset toast style in case delete used it
+    shareToast.style.background = '';
+    shareToast.textContent = 'Link copied!';
 
     if (navigator.share) {
       try {
         await navigator.share({ title, text, url });
-      } catch (err) {
-        // user cancelled or error — fall through silently
+        shareToast.textContent = 'Shared! ✓';
+        shareToast.classList.add('show');
+        setTimeout(() => shareToast.classList.remove('show'), 2000);
+      } catch(e) {
+        // User cancelled — no feedback needed
       }
     } else {
-      // fallback: copy to clipboard
       try {
         await navigator.clipboard.writeText(url);
-        shareToast.textContent = 'Link copied!';
+        shareToast.textContent = 'Link copied! ✓';
         shareToast.classList.add('show');
         setTimeout(() => shareToast.classList.remove('show'), 2200);
-      } catch (err) {
-        shareToast.textContent = 'Copy the URL from your browser!';
+      } catch(e) {
+        shareToast.textContent = 'Copy the URL from your browser';
         shareToast.classList.add('show');
         setTimeout(() => shareToast.classList.remove('show'), 2200);
       }
@@ -2224,22 +2620,32 @@
   });
 
   fabEditBtn.addEventListener('click', () => {
-    const settings = loadSettings();
-    hideFab();
-    showSetup(settings);
+    if (countdowns[activeIdx]) openEdit(countdowns[activeIdx].id);
   });
 
-  // ====== init ======
-  const existing = loadSettings();
-  if (existing && existing.destination && existing.date) {
-    showCountdown(existing);
-    showFab();
-    updatePopupActive(existing.theme || 'pirate');
-  } else {
-    showSetup(null);
-    hideFab();
-    dateInput.min = new Date().toISOString().split('T')[0];
-  }
+  fabAddBtn.addEventListener('click', () => openAdd());
+
+  // ====== INIT ======
+  countdowns = loadAll();
+  countdowns.sort((a, b) => new Date(a.date) - new Date(b.date));
+
+  // Migrate old single-countdown format
+  try {
+    const old = localStorage.getItem('countdown-settings');
+    if (old && countdowns.length === 0) {
+      const parsed = JSON.parse(old);
+      if (parsed.destination && parsed.date) {
+        countdowns = [{ id: genId(), destination: parsed.destination, date: parsed.date, theme: parsed.theme || 'pirate' }];
+        saveAll(countdowns);
+      }
+    }
+  } catch(e) {}
+
+  dateInput.min = new Date().toISOString().split('T')[0];
+  setPreview('pirate');
+  renderSlides();
+
+  if (countdowns.length === 0) openAdd();
 </script>
 
 </body>
