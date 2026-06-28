@@ -148,6 +148,67 @@
     color: var(--ink);
   }
 
+  /* ===================== THEME: BIRTHDAY ===================== */
+  body[data-theme="birthday"] {
+    --bg1: #fff9f0;
+    --bg2: #fff0f8;
+    --ink: #2a1a3e;
+    --ink-faded: #7a5a8a;
+    --accent: #e8297a;
+    --accent-dark: #c01a60;
+    --gold: #ffb800;
+    --gold-light: #ffd54f;
+    --panel-bg: #ffffff;
+    --display-font: 'Archivo Black', sans-serif;
+    --body-font: 'Space Grotesk', sans-serif;
+    --label-font: 'Space Grotesk', sans-serif;
+    background:
+      radial-gradient(circle at 15% 25%, rgba(232,41,122,0.12) 0%, transparent 40%),
+      radial-gradient(circle at 85% 15%, rgba(255,184,0,0.15) 0%, transparent 40%),
+      radial-gradient(circle at 50% 85%, rgba(88,130,255,0.1) 0%, transparent 40%),
+      linear-gradient(160deg, #fff9f0 0%, #fff0f8 100%);
+    color: var(--ink);
+  }
+
+  /* ===================== THEME: ANNIVERSARY ===================== */
+  body[data-theme="anniversary"] {
+    --bg1: #1a0810;
+    --bg2: #0f0508;
+    --ink: #f5e6d0;
+    --ink-faded: #c4a882;
+    --accent: #c8345a;
+    --accent-dark: #a02448;
+    --gold: #d4a843;
+    --gold-light: #e8c47a;
+    --panel-bg: #1a0810;
+    --display-font: 'Cormorant Garamond', serif;
+    --body-font: 'Cormorant Garamond', serif;
+    --label-font: 'Cormorant Garamond', serif;
+    background:
+      radial-gradient(ellipse at 30% 20%, rgba(200,52,90,0.18), transparent 55%),
+      radial-gradient(ellipse at 70% 80%, rgba(212,168,67,0.1), transparent 55%),
+      linear-gradient(160deg, #1a0810 0%, #0f0508 100%);
+    color: var(--ink);
+  }
+
+  /* ===================== THEME: BEACH TRIP ===================== */
+  body[data-theme="beachtrip"] {
+    --bg1: #fff1e0;
+    --bg2: #ffd9b3;
+    --ink: #1a2840;
+    --ink-faded: #4a6080;
+    --accent: #e85d20;
+    --accent-dark: #c44010;
+    --gold: #f0b429;
+    --gold-light: #f5c94a;
+    --panel-bg: #ffffff;
+    --display-font: 'Archivo Black', sans-serif;
+    --body-font: 'Space Grotesk', sans-serif;
+    --label-font: 'Space Grotesk', sans-serif;
+    background: linear-gradient(180deg, #1a4060 0%, #2a6080 35%, #e85d20 65%, #f0b429 85%, #ffd9b3 100%);
+    color: var(--ink);
+  }
+
   .wrap {
     width: 100%;
     max-width: 520px;
@@ -427,6 +488,43 @@
     justify-content: center;
   }
 
+  .theme-preview.preview-birthday {
+    background: linear-gradient(135deg, #fff9f0 0%, #fff0f8 100%);
+    border: 2px solid #ffb800;
+    box-shadow: 3px 3px 0 rgba(232,41,122,0.2);
+  }
+  .tp-view-birthday {
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+  }
+
+  .theme-preview.preview-anniversary {
+    background: linear-gradient(135deg, #1a0810 0%, #0f0508 100%);
+    border: 1px solid rgba(200,52,90,0.4);
+  }
+  .tp-view-anniversary {
+    display: flex !important;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+  }
+
+  .theme-preview.preview-beachtrip {
+    background: linear-gradient(180deg, #1a4060 0%, #2a7090 40%, #e85d20 70%, #f0b429 100%);
+    border: 3px solid #1a2840;
+    box-shadow: 3px 3px 0 #1a2840;
+  }
+  .tp-view-beachtrip {
+    display: flex !important;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2px;
+  }
+
   .start-btn {
     width: 100%;
     padding: 13px;
@@ -480,6 +578,30 @@
     padding: 40px 32px 34px;
     background: rgba(232, 220, 192, 0.4);
     box-shadow: 0 18px 50px rgba(26,20,12,0.35), inset 0 0 90px rgba(139,46,31,0.06);
+  }
+
+  .pirate-rule {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 8px 0 18px;
+    color: var(--gold);
+  }
+  .pirate-rule .line {
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  }
+  .pirate-rule .skull-mark { font-size: 1.2rem; }
+
+  .cd-subtitle {
+    font-family: 'Crimson Text', serif;
+    font-style: italic;
+    font-size: 1.1rem;
+    color: var(--ink-faded);
+    text-align: center;
+    margin-bottom: 24px;
+    line-height: 1.4;
   }
 
   .cd-eyebrow {
@@ -1241,6 +1363,34 @@
     box-shadow: 0 4px 24px rgba(26,61,43,0.08), inset 0 0 40px rgba(184,150,62,0.06);
   }
 
+  body[data-theme="birthday"] .setup-card {
+    background: rgba(255,255,255,0.85);
+    border: 2px solid #ffb800;
+    box-shadow: 4px 4px 0 rgba(232,41,122,0.2);
+  }
+
+  body[data-theme="anniversary"] .setup-card {
+    background: rgba(26,8,16,0.8);
+    border: 1px solid rgba(200,52,90,0.4);
+    box-shadow: 0 4px 24px rgba(200,52,90,0.15), inset 0 0 40px rgba(0,0,0,0.3);
+    color: #f5e6d0;
+  }
+  body[data-theme="anniversary"] .setup-card label,
+  body[data-theme="anniversary"] .setup-card .setup-eyebrow,
+  body[data-theme="anniversary"] .setup-card .setup-title { color: #f5e6d0 !important; }
+  body[data-theme="anniversary"] .setup-card .field input {
+    background: rgba(255,255,255,0.08) !important;
+    border-color: rgba(200,52,90,0.3) !important;
+    color: #f5e6d0 !important;
+  }
+  body[data-theme="anniversary"] .setup-card .theme-swatch { color: #c4a882 !important; }
+
+  body[data-theme="beachtrip"] .setup-card {
+    background: rgba(255,255,255,0.92);
+    border: 3px solid #1a2840;
+    box-shadow: 5px 5px 0 #e85d20;
+  }
+
   /* ====== WEDDING / CALLIGRAPHY layout ====== */
   .wedding-card { display: none; }
   body[data-theme="wedding"] .wedding-card { display: block; }
@@ -1393,6 +1543,429 @@
     color: var(--accent);
     padding: 28px 0;
     text-shadow: 1px 1px 2px rgba(26,61,43,0.2);
+  }
+
+  /* ====== BIRTHDAY layout ====== */
+  .birthday-card { display: none; }
+  body[data-theme="birthday"] .birthday-card { display: block; }
+  body[data-theme="birthday"] .wrap { max-width: 520px; }
+
+  body[data-theme="birthday"] .countdown-card {
+    background: #ffffff;
+    border: 3px solid #ffb800;
+    border-radius: 20px;
+    box-shadow: 6px 6px 0 rgba(232,41,122,0.2), 0 16px 40px rgba(42,26,62,0.12);
+    padding: 32px 28px 28px;
+    position: relative;
+    overflow: hidden;
+  }
+  /* confetti dots background */
+  body[data-theme="birthday"] .countdown-card::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(circle, #e8297a 1px, transparent 1px) 0 0 / 28px 28px,
+      radial-gradient(circle, #ffb800 1px, transparent 1px) 14px 14px / 28px 28px,
+      radial-gradient(circle, #5882ff 1px, transparent 1px) 7px 21px / 28px 28px;
+    opacity: 0.07;
+    pointer-events: none;
+  }
+
+  .bday-eyebrow {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.75rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink-faded);
+    text-align: center;
+    margin-bottom: 6px;
+  }
+  .bday-title {
+    font-family: 'Archivo Black', sans-serif;
+    font-size: clamp(1.6rem, 6vw, 2.2rem);
+    color: var(--accent);
+    text-align: center;
+    line-height: 1.15;
+    margin-bottom: 4px;
+  }
+  .bday-subtitle {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.9rem;
+    color: var(--ink-faded);
+    text-align: center;
+    margin-bottom: 22px;
+  }
+
+  /* balloon SVG row */
+  .bday-balloons {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-bottom: 6px;
+  }
+
+  /* big number */
+  .bday-days-wrap {
+    text-align: center;
+    margin: 4px 0 6px;
+    position: relative;
+  }
+  .bday-days-num {
+    font-family: 'Archivo Black', sans-serif;
+    font-size: clamp(5rem, 26vw, 8rem);
+    line-height: 0.9;
+    color: var(--accent);
+    text-shadow: 4px 4px 0 rgba(232,41,122,0.15);
+  }
+  .bday-days-label {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 600;
+    font-size: 0.82rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-top: 2px;
+  }
+
+  /* time grid */
+  .bday-log {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin: 18px 0 20px;
+  }
+  .bday-entry {
+    text-align: center;
+    background: linear-gradient(135deg, #fff9f0, #fff0f8);
+    border: 2px solid #ffb800;
+    border-radius: 12px;
+    padding: 10px 4px 8px;
+  }
+  .bday-entry .val {
+    font-family: 'Archivo Black', sans-serif;
+    font-size: clamp(1.4rem, 5vw, 1.9rem);
+    color: var(--ink);
+    font-variant-numeric: tabular-nums;
+  }
+  .bday-entry .lbl {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.6rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-faded);
+    margin-top: 2px;
+  }
+
+  .bday-footer {
+    text-align: center;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.85rem;
+    color: var(--ink-faded);
+    border-top: 2px dashed #ffb800;
+    padding-top: 14px;
+  }
+  .bday-footer strong { color: var(--accent); }
+
+  .bday-arrived {
+    text-align: center;
+    font-family: 'Archivo Black', sans-serif;
+    font-size: clamp(1.8rem, 7vw, 2.6rem);
+    color: var(--accent);
+    padding: 28px 0;
+    text-shadow: 3px 3px 0 rgba(255,184,0,0.3);
+  }
+
+  /* ====== ANNIVERSARY layout ====== */
+  .anniversary-card { display: none; }
+  body[data-theme="anniversary"] .anniversary-card { display: block; }
+  body[data-theme="anniversary"] .wrap { max-width: 520px; }
+
+  body[data-theme="anniversary"] .countdown-card {
+    background: rgba(26,8,16,0.7);
+    border: 1px solid rgba(200,52,90,0.4);
+    outline: 1px solid rgba(212,168,67,0.2);
+    outline-offset: 5px;
+    padding: 38px 30px 34px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.5), inset 0 0 80px rgba(200,52,90,0.05);
+    position: relative;
+  }
+  /* warm candlelight glow from bottom */
+  body[data-theme="anniversary"] .countdown-card::before {
+    content: "";
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 40%;
+    background: radial-gradient(ellipse at 50% 100%, rgba(212,168,67,0.12), transparent 70%);
+    pointer-events: none;
+  }
+
+  .anniv-eyebrow {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 0.82rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    text-align: center;
+    margin-bottom: 6px;
+    opacity: 0.8;
+  }
+  .anniv-rule {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 8px 0 20px;
+    color: var(--accent);
+    opacity: 0.6;
+  }
+  .anniv-rule .line {
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--accent), transparent);
+  }
+  .anniv-rule .heart { font-size: 0.9rem; }
+
+  .anniv-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 600;
+    font-size: clamp(1.8rem, 7vw, 2.6rem);
+    color: var(--ink);
+    text-align: center;
+    line-height: 1.2;
+    margin-bottom: 4px;
+    text-shadow: 0 0 20px rgba(200,52,90,0.3);
+  }
+  .anniv-subtitle {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 1rem;
+    color: var(--ink-faded);
+    text-align: center;
+    margin-bottom: 28px;
+  }
+
+  /* rose SVG accent */
+  .anniv-rose-wrap {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 18px;
+  }
+
+  .anniv-days-wrap {
+    text-align: center;
+    margin-bottom: 6px;
+  }
+  .anniv-days-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 600;
+    font-size: clamp(5rem, 26vw, 8rem);
+    line-height: 0.9;
+    color: var(--accent);
+    text-shadow: 0 0 30px rgba(200,52,90,0.4), 0 0 60px rgba(200,52,90,0.15);
+  }
+  .anniv-days-label {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 1rem;
+    letter-spacing: 0.14em;
+    color: var(--gold);
+    opacity: 0.8;
+    margin-top: 4px;
+  }
+
+  .anniv-log {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin: 20px 0 22px;
+  }
+  .anniv-entry {
+    text-align: center;
+    border: 1px solid rgba(200,52,90,0.25);
+    background: rgba(200,52,90,0.06);
+    padding: 12px 4px 10px;
+    border-radius: 6px;
+  }
+  .anniv-entry .val {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 600;
+    font-size: clamp(1.4rem, 5vw, 2rem);
+    color: var(--ink);
+    font-variant-numeric: tabular-nums;
+    text-shadow: 0 0 10px rgba(200,52,90,0.2);
+  }
+  .anniv-entry .lbl {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 0.65rem;
+    letter-spacing: 0.1em;
+    color: var(--ink-faded);
+    margin-top: 3px;
+  }
+
+  .anniv-footer {
+    text-align: center;
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 0.9rem;
+    color: var(--ink-faded);
+    border-top: 1px solid rgba(200,52,90,0.2);
+    padding-top: 16px;
+  }
+  .anniv-footer strong { color: var(--gold); font-style: normal; }
+
+  .anniv-arrived {
+    text-align: center;
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 600;
+    font-size: clamp(2rem, 8vw, 3rem);
+    color: var(--accent);
+    padding: 28px 0;
+    text-shadow: 0 0 20px rgba(200,52,90,0.4);
+  }
+
+  /* ====== BEACH TRIP (Retro Poster) layout ====== */
+  .beach-card { display: none; }
+  body[data-theme="beachtrip"] .beach-card { display: block; }
+  body[data-theme="beachtrip"] .wrap { max-width: 520px; }
+
+  body[data-theme="beachtrip"] .countdown-card {
+    background: #fdf6e8;
+    border: 4px solid #1a2840;
+    box-shadow: 7px 7px 0 #1a2840;
+    padding: 0;
+    overflow: hidden;
+    border-radius: 4px;
+  }
+
+  /* poster top band */
+  .beach-header {
+    background: #1a2840;
+    padding: 14px 20px 12px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .beach-header-label {
+    font-family: 'Archivo Black', sans-serif;
+    font-size: 0.72rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: #f0b429;
+  }
+
+  /* sun SVG illustration area */
+  .beach-illustration {
+    background: linear-gradient(180deg, #1a4060 0%, #2a7090 45%, #e85d20 70%, #f0b429 100%);
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 160px;
+    position: relative;
+    overflow: hidden;
+  }
+  .beach-illustration svg {
+    width: 100%;
+    max-width: 320px;
+  }
+
+  .beach-body { padding: 18px 20px 20px; background: #fdf6e8; }
+
+  .beach-dest {
+    font-family: 'Archivo Black', sans-serif;
+    font-size: clamp(1.5rem, 6vw, 2rem);
+    color: #1a2840;
+    text-transform: uppercase;
+    text-align: center;
+    letter-spacing: 0.06em;
+    margin-bottom: 6px;
+    text-shadow: 2px 2px 0 rgba(26,40,64,0.15);
+  }
+  .beach-tagline {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.8rem;
+    color: #e85d20;
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    text-align: center;
+    margin-bottom: 18px;
+    font-weight: 600;
+  }
+
+  .beach-days-wrap {
+    text-align: center;
+    background: #1a2840;
+    border-radius: 8px;
+    padding: 16px 20px 14px;
+    margin-bottom: 14px;
+  }
+  .beach-days-num {
+    font-family: 'Archivo Black', sans-serif;
+    font-size: clamp(4rem, 22vw, 6.5rem);
+    line-height: 0.9;
+    color: #f0b429;
+    text-shadow: 3px 3px 0 rgba(0,0,0,0.3);
+  }
+  .beach-days-label {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 600;
+    font-size: 0.75rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(240,180,41,0.7);
+    margin-top: 4px;
+  }
+
+  .beach-log {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    margin-bottom: 14px;
+  }
+  .beach-entry {
+    text-align: center;
+    background: #1a2840;
+    border-radius: 6px;
+    padding: 10px 4px 8px;
+  }
+  .beach-entry .val {
+    font-family: 'Archivo Black', sans-serif;
+    font-size: clamp(1.3rem, 4vw, 1.7rem);
+    color: #fdf6e8;
+    font-variant-numeric: tabular-nums;
+  }
+  .beach-entry .lbl {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.55rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(240,180,41,0.7);
+    margin-top: 2px;
+  }
+
+  .beach-footer {
+    text-align: center;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.82rem;
+    color: #4a6080;
+    border-top: 2px solid #1a2840;
+    padding-top: 12px;
+    font-weight: 500;
+  }
+  .beach-footer strong { color: #1a2840; }
+
+  .beach-arrived {
+    text-align: center;
+    font-family: 'Archivo Black', sans-serif;
+    font-size: clamp(1.6rem, 7vw, 2.4rem);
+    color: #1a2840;
+    text-transform: uppercase;
+    padding: 32px 20px;
+    text-shadow: 3px 3px 0 #f0b429;
+    letter-spacing: 0.04em;
   }
 
   :focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
@@ -1597,6 +2170,7 @@
   /* dark dots for light themes */
   body[data-theme="modern"] .swiper-dot,
   body[data-theme="beach"] .swiper-dot,
+  body[data-theme="beachtrip"] .swiper-dot,
   body[data-theme="comic"] .swiper-dot,
   body[data-theme="wedding"] .swiper-dot {
     background: rgba(0,0,0,0.2);
@@ -1604,6 +2178,7 @@
   }
   body[data-theme="modern"] .swiper-dot.active,
   body[data-theme="beach"] .swiper-dot.active,
+  body[data-theme="beachtrip"] .swiper-dot.active,
   body[data-theme="comic"] .swiper-dot.active,
   body[data-theme="wedding"] .swiper-dot.active {
     background: rgba(0,0,0,0.6);
@@ -1629,6 +2204,7 @@
   .card-delete-btn:hover { background: rgba(220,50,50,0.7); }
   body[data-theme="modern"] .card-delete-btn,
   body[data-theme="beach"] .card-delete-btn,
+  body[data-theme="beachtrip"] .card-delete-btn,
   body[data-theme="comic"] .card-delete-btn,
   body[data-theme="wedding"] .card-delete-btn {
     background: rgba(0,0,0,0.12);
@@ -1646,6 +2222,7 @@
   }
   body[data-theme="modern"] .card-counter,
   body[data-theme="beach"] .card-counter,
+  body[data-theme="beachtrip"] .card-counter,
   body[data-theme="comic"] .card-counter,
   body[data-theme="wedding"] .card-counter {
     color: rgba(0,0,0,0.3);
@@ -1784,6 +2361,11 @@
       <label for="date-input">Target date</label>
       <input type="date" id="date-input">
     </div>
+
+    <div class="field">
+      <label for="time-input">Start time <span style="font-weight:400; opacity:0.6;">(optional — defaults to midnight)</span></label>
+      <input type="time" id="time-input">
+    </div>
     <div class="error-msg" id="error-msg">Please enter a destination and a future date.</div>
 
     <div class="field">
@@ -1795,6 +2377,9 @@
         <div class="theme-swatch" data-theme-choice="scifi">🛸 Sci-Fi</div>
         <div class="theme-swatch" data-theme-choice="comic">📰 Comic</div>
         <div class="theme-swatch" data-theme-choice="wedding">💍 Wedding</div>
+        <div class="theme-swatch" data-theme-choice="birthday">🎂 Birthday</div>
+        <div class="theme-swatch" data-theme-choice="anniversary">♥ Anniversary</div>
+        <div class="theme-swatch" data-theme-choice="beachtrip">🌴 Beach</div>
       </div>
 
       <div class="theme-preview preview-pirate" id="theme-preview" data-active="pirate">
@@ -1838,8 +2423,24 @@
         </div>
         <!-- wedding preview -->
         <div class="tp-view tp-view-wedding" style="display:none; flex-direction:column; align-items:center; justify-content:center; gap:4px;">
-          <div style="font-family:'Great Vibes',cursive; font-size:2.6rem; color:#1a6b3c; line-height:1; text-shadow:1px 1px 2px rgba(26,61,43,0.15);">84</div>
+          <div style="font-family:'Great Vibes',cursive; font-size:2.6rem; color:#1a6b3c; line-height:1;">84</div>
           <div style="font-family:'Cormorant Garamond',serif; font-style:italic; font-size:0.72rem; letter-spacing:0.18em; text-transform:uppercase; color:#b8963e;">Days to Go</div>
+        </div>
+        <!-- birthday preview -->
+        <div class="tp-view tp-view-birthday" style="display:none; align-items:center; justify-content:center; gap:10px;">
+          <div style="font-size:1.8rem; line-height:1;">🎈</div>
+          <div style="font-family:'Archivo Black',sans-serif; font-size:2rem; color:#e8297a; text-shadow:2px 2px 0 rgba(255,184,0,0.3);">84</div>
+          <div style="font-size:1.8rem; line-height:1;">🎂</div>
+        </div>
+        <!-- anniversary preview -->
+        <div class="tp-view tp-view-anniversary" style="display:none; flex-direction:column; align-items:center; justify-content:center; gap:4px;">
+          <div style="font-family:'Cormorant Garamond',serif; font-size:2.4rem; color:#c8345a; line-height:1; text-shadow:0 0 12px rgba(200,52,90,0.5);">84</div>
+          <div style="font-size:0.9rem; color:#d4a843;">♥ ♥ ♥</div>
+        </div>
+        <!-- beach preview -->
+        <div class="tp-view tp-view-beachtrip" style="display:none; flex-direction:column; align-items:center; justify-content:center; gap:2px;">
+          <div style="font-family:'Archivo Black',sans-serif; font-size:2rem; color:#f0b429; text-shadow:2px 2px 0 rgba(0,0,0,0.3);">84</div>
+          <div style="font-family:'Space Grotesk',sans-serif; font-size:0.6rem; letter-spacing:0.16em; text-transform:uppercase; color:rgba(240,180,41,0.8);">Days</div>
         </div>
       </div>
     </div>
@@ -1856,8 +2457,10 @@
     <button class="card-delete-btn" data-action="delete">×</button>
     <div class="card-counter"></div>
     <div id="pirate-layout">
-      <div class="cd-eyebrow">Counting down to</div>
-      <div class="cd-title" id="cd-title-pirate">Destination</div>
+      <div class="cd-eyebrow">Ship&rsquo;s Log &middot; Reckoning of Days</div>
+      <div class="pirate-rule"><span class="line"></span><span class="skull-mark">&#9760;</span><span class="line"></span></div>
+      <div class="cd-title" id="cd-title-pirate">Countdown to Landfall</div>
+      <div class="cd-subtitle" id="cd-subtitle-pirate"><em>The course is set for <span id="dest-line-pirate">—</span></em></div>
 
       <div id="pirate-active">
         <div class="visual-wrap">
@@ -1914,16 +2517,16 @@
         </div>
 
         <div class="log">
-          <div class="log-entry"><div class="val" id="hours-pirate">00</div><div class="lbl">Hours</div></div>
+          <div class="log-entry"><div class="val" id="hours-pirate">00</div><div class="lbl">Bells<br>(Hrs)</div></div>
           <div class="log-entry"><div class="val" id="minutes-pirate">00</div><div class="lbl">Minutes</div></div>
           <div class="log-entry"><div class="val" id="seconds-pirate">00</div><div class="lbl">Seconds</div></div>
         </div>
 
-        <div class="destination-line">Destination: <strong id="dest-line-pirate">—</strong> &mdash; arriving <strong id="date-line-pirate">—</strong></div>
+        <div class="destination-line">Destination: <strong id="dest-line-pirate-footer">—</strong> &mdash; arriving <strong id="date-line-pirate">—</strong>. Mark it well, sailor.</div>
       </div>
 
       <div id="pirate-arrived" style="display:none;">
-        <div class="arrived-msg" id="arrived-msg-pirate">🎉 The day has come! 🎉</div>
+        <div class="arrived-msg" id="arrived-msg-pirate">⚓ Land Ho! The day has come. ⚓</div>
       </div>
     </div>
 
@@ -2120,6 +2723,246 @@
         <div class="wedding-arrived" id="arrived-msg-wedding">The day has come!</div>
       </div>
     </div>
+
+    <!-- ===== BIRTHDAY LAYOUT ===== -->
+    <div class="birthday-card" id="birthday-layout">
+      <div id="birthday-active">
+        <div class="bday-eyebrow">🎉 Celebration Countdown 🎉</div>
+        <div class="bday-title" id="cd-title-birthday">Destination</div>
+        <div class="bday-subtitle" id="cd-subtitle-birthday">Get ready to celebrate!</div>
+
+        <div class="bday-balloons">
+          <svg width="120" height="80" viewBox="0 0 120 80" aria-hidden="true">
+            <!-- balloon 1 pink -->
+            <ellipse cx="25" cy="28" rx="14" ry="18" fill="#e8297a" opacity="0.85"/>
+            <path d="M25 46 Q23 52 25 58" stroke="#e8297a" stroke-width="1.5" fill="none"/>
+            <!-- balloon 2 yellow -->
+            <ellipse cx="60" cy="22" rx="16" ry="20" fill="#ffb800" opacity="0.9"/>
+            <path d="M60 42 Q58 50 60 58" stroke="#ffb800" stroke-width="1.5" fill="none"/>
+            <!-- balloon 3 blue -->
+            <ellipse cx="95" cy="28" rx="14" ry="18" fill="#5882ff" opacity="0.85"/>
+            <path d="M95 46 Q93 52 95 58" stroke="#5882ff" stroke-width="1.5" fill="none"/>
+            <!-- highlight dots -->
+            <circle cx="19" cy="20" r="3" fill="rgba(255,255,255,0.5)"/>
+            <circle cx="54" cy="14" r="3.5" fill="rgba(255,255,255,0.5)"/>
+            <circle cx="89" cy="20" r="3" fill="rgba(255,255,255,0.5)"/>
+          </svg>
+        </div>
+
+        <div class="bday-days-wrap">
+          <div class="bday-days-num" id="days-num-birthday">--</div>
+          <div class="bday-days-label">Days to Go!</div>
+        </div>
+
+        <div class="bday-log">
+          <div class="bday-entry"><div class="val" id="hours-birthday">00</div><div class="lbl">Hours</div></div>
+          <div class="bday-entry"><div class="val" id="minutes-birthday">00</div><div class="lbl">Minutes</div></div>
+          <div class="bday-entry"><div class="val" id="seconds-birthday">00</div><div class="lbl">Seconds</div></div>
+        </div>
+
+        <div class="bday-footer">🎂 <strong id="dest-line-birthday">—</strong> · arriving <strong id="date-line-birthday">—</strong></div>
+      </div>
+      <div id="birthday-arrived" style="display:none;">
+        <div class="bday-arrived" id="arrived-msg-birthday">🎉 Happy Birthday! 🎉</div>
+      </div>
+    </div>
+
+    <!-- ===== ANNIVERSARY LAYOUT ===== -->
+    <div class="anniversary-card" id="anniversary-layout">
+      <div id="anniversary-active">
+        <div class="anniv-eyebrow">With Love &amp; Devotion</div>
+        <div class="anniv-rule"><span class="line"></span><span class="heart">♥</span><span class="line"></span></div>
+        <div class="anniv-title" id="cd-title-anniversary">Destination</div>
+        <div class="anniv-subtitle" id="cd-subtitle-anniversary">A moment worth celebrating</div>
+
+        <div class="anniv-days-wrap">
+          <div class="anniv-days-num" id="days-num-anniversary">--</div>
+          <div class="anniv-days-label">days until forever</div>
+        </div>
+
+        <div class="anniv-rose-wrap">
+          <svg width="120" height="80" viewBox="0 0 120 80" aria-hidden="true">
+            <!-- left flute -->
+            <!-- stem -->
+            <line x1="38" y1="52" x2="34" y2="74" stroke="#d4a843" stroke-width="1.5" stroke-linecap="round"/>
+            <!-- base -->
+            <line x1="28" y1="74" x2="40" y2="74" stroke="#d4a843" stroke-width="2" stroke-linecap="round"/>
+            <!-- bowl -->
+            <path d="M28 10 Q29 30 34 44 Q36 50 38 52 Q40 50 42 44 Q47 30 48 10 Z"
+                  fill="rgba(212,168,67,0.25)" stroke="#d4a843" stroke-width="1.5" stroke-linejoin="round"/>
+            <!-- champagne fill -->
+            <path d="M30 32 Q30 38 34 44 Q36 50 38 52 Q40 50 42 44 Q46 38 46 32 Z"
+                  fill="rgba(240,195,80,0.35)"/>
+            <!-- bubbles left flute -->
+            <circle cx="35" cy="44" r="1" fill="#e8c47a" opacity="0.8"/>
+            <circle cx="38" cy="38" r="1.2" fill="#e8c47a" opacity="0.7"/>
+            <circle cx="36" cy="32" r="0.8" fill="#e8c47a" opacity="0.6"/>
+            <circle cx="40" cy="42" r="0.9" fill="#e8c47a" opacity="0.75"/>
+
+            <!-- right flute -->
+            <!-- stem -->
+            <line x1="82" y1="52" x2="86" y2="74" stroke="#d4a843" stroke-width="1.5" stroke-linecap="round"/>
+            <!-- base -->
+            <line x1="80" y1="74" x2="92" y2="74" stroke="#d4a843" stroke-width="2" stroke-linecap="round"/>
+            <!-- bowl -->
+            <path d="M72 10 Q73 30 78 44 Q80 50 82 52 Q84 50 86 44 Q91 30 92 10 Z"
+                  fill="rgba(212,168,67,0.25)" stroke="#d4a843" stroke-width="1.5" stroke-linejoin="round"/>
+            <!-- champagne fill -->
+            <path d="M74 32 Q74 38 78 44 Q80 50 82 52 Q84 50 86 44 Q90 38 90 32 Z"
+                  fill="rgba(240,195,80,0.35)"/>
+            <!-- bubbles right flute -->
+            <circle cx="79" cy="44" r="1" fill="#e8c47a" opacity="0.8"/>
+            <circle cx="82" cy="38" r="1.2" fill="#e8c47a" opacity="0.7"/>
+            <circle cx="80" cy="32" r="0.8" fill="#e8c47a" opacity="0.6"/>
+            <circle cx="84" cy="42" r="0.9" fill="#e8c47a" opacity="0.75"/>
+
+            <!-- clink lines where glasses touch at top -->
+            <line x1="48" y1="10" x2="72" y2="10" stroke="rgba(212,168,67,0.4)" stroke-width="1" stroke-dasharray="2,2"/>
+            <!-- sparkle at clink point -->
+            <g stroke="#e8c47a" stroke-width="1" stroke-linecap="round" opacity="0.9">
+              <line x1="60" y1="4" x2="60" y2="8"/>
+              <line x1="60" y1="12" x2="60" y2="16"/>
+              <line x1="54" y1="10" x2="58" y2="10"/>
+              <line x1="62" y1="10" x2="66" y2="10"/>
+              <line x1="56" y1="6" x2="58" y2="8"/>
+              <line x1="62" y1="12" x2="64" y2="14"/>
+            </g>
+            <!-- floating bubbles between glasses -->
+            <circle cx="56" cy="20" r="1.2" fill="none" stroke="#d4a843" stroke-width="0.8" opacity="0.6"/>
+            <circle cx="64" cy="15" r="0.9" fill="none" stroke="#d4a843" stroke-width="0.8" opacity="0.5"/>
+            <circle cx="60" cy="25" r="1" fill="none" stroke="#d4a843" stroke-width="0.8" opacity="0.55"/>
+          </svg>
+        </div>
+
+        <div class="anniv-log">
+          <div class="anniv-entry"><div class="val" id="hours-anniversary">00</div><div class="lbl">Hours</div></div>
+          <div class="anniv-entry"><div class="val" id="minutes-anniversary">00</div><div class="lbl">Minutes</div></div>
+          <div class="anniv-entry"><div class="val" id="seconds-anniversary">00</div><div class="lbl">Seconds</div></div>
+        </div>
+
+        <div class="anniv-rule"><span class="line"></span><span class="heart">♥</span><span class="line"></span></div>
+        <div class="anniv-footer">Celebrating <strong id="dest-line-anniversary">—</strong> · <strong id="date-line-anniversary">—</strong></div>
+      </div>
+      <div id="anniversary-arrived" style="display:none;">
+        <div class="anniv-arrived" id="arrived-msg-anniversary">♥ Happy Anniversary ♥</div>
+      </div>
+    </div>
+
+    <!-- ===== BEACH TRIP (RETRO POSTER) LAYOUT ===== -->
+    <div class="beach-card" id="beach-layout">
+      <div class="beach-header">
+        <div class="beach-header-label">☀ Destination</div>
+        <div class="beach-header-label" id="date-line-beach">—</div>
+      </div>
+
+      <div id="beach-active">
+        <div class="beach-illustration">
+          <svg viewBox="0 0 320 130" aria-hidden="true">
+            <!-- sun -->
+            <circle cx="160" cy="55" r="38" fill="#f0b429" opacity="0.95"/>
+            <circle cx="160" cy="55" r="28" fill="#ffce5a"/>
+            <!-- sun rays -->
+            <g stroke="#f0b429" stroke-width="3" stroke-linecap="round" opacity="0.7">
+              <line x1="160" y1="6" x2="160" y2="16"/>
+              <line x1="160" y1="94" x2="160" y2="104"/>
+              <line x1="111" y1="55" x2="121" y2="55"/>
+              <line x1="199" y1="55" x2="209" y2="55"/>
+              <line x1="124" y1="19" x2="131" y2="26"/>
+              <line x1="189" y1="84" x2="196" y2="91"/>
+              <line x1="196" y1="19" x2="189" y2="26"/>
+              <line x1="124" y1="84" x2="131" y2="91"/>
+            </g>
+            <!-- water -->
+            <path d="M0 90 Q40 82 80 90 Q120 98 160 90 Q200 82 240 90 Q280 98 320 90 L320 130 L0 130 Z" fill="#2a7090" opacity="0.9"/>
+            <path d="M0 100 Q40 92 80 100 Q120 108 160 100 Q200 92 240 100 Q280 108 320 100 L320 130 L0 130 Z" fill="#1a5070" opacity="0.8"/>
+
+            <!-- PALM TREE LEFT — curved trunk leaning right -->
+            <!-- trunk: curved path with width via stroke -->
+            <path d="M30 132 Q34 110 40 95 Q46 80 52 68 Q55 60 58 52"
+                  stroke="#5a3a1a" stroke-width="6" fill="none" stroke-linecap="round"/>
+            <!-- trunk highlights (lighter band) -->
+            <path d="M31 128 Q35 106 41 91 Q47 76 53 64 Q56 57 59 50"
+                  stroke="#7a5230" stroke-width="2" fill="none" stroke-linecap="round" opacity="0.5"/>
+            <!-- coconuts cluster near crown -->
+            <circle cx="56" cy="58" r="4" fill="#8B5E3C"/>
+            <circle cx="62" cy="55" r="4" fill="#7a5030"/>
+            <circle cx="59" cy="62" r="3.5" fill="#8B5E3C"/>
+            <!-- fronds left tree — 6 fronds radiating from crown -->
+            <!-- frond 1: sweeping up-left -->
+            <path d="M58 52 Q44 38 28 32" stroke="#2d6a2d" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+            <path d="M58 52 Q44 38 28 32 Q38 36 48 44 Q55 48 58 52Z" fill="#2d6a2d" opacity="0.9"/>
+            <!-- frond 2: up and slightly left -->
+            <path d="M58 52 Q52 34 46 20" stroke="#3a7a2a" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+            <path d="M58 52 Q52 34 46 20 Q52 30 58 42 Q59 47 58 52Z" fill="#3a7a2a" opacity="0.85"/>
+            <!-- frond 3: straight up -->
+            <path d="M58 52 Q62 34 68 20" stroke="#2d6a2d" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+            <path d="M58 52 Q62 34 68 20 Q64 32 60 44 Q59 48 58 52Z" fill="#2d6a2d" opacity="0.85"/>
+            <!-- frond 4: up-right -->
+            <path d="M58 52 Q74 40 88 36" stroke="#347a2a" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+            <path d="M58 52 Q74 40 88 36 Q76 42 66 48 Q61 50 58 52Z" fill="#347a2a" opacity="0.9"/>
+            <!-- frond 5: right and slightly down -->
+            <path d="M58 52 Q76 54 90 58" stroke="#2d6a2d" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+            <path d="M58 52 Q76 54 90 58 Q76 52 64 52 Q60 52 58 52Z" fill="#2d6a2d" opacity="0.8"/>
+            <!-- frond 6: drooping left -->
+            <path d="M58 52 Q40 58 24 62" stroke="#347a2a" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+            <path d="M58 52 Q40 58 24 62 Q38 56 50 54 Q55 53 58 52Z" fill="#347a2a" opacity="0.8"/>
+
+            <!-- PALM TREE RIGHT — curved trunk leaning left -->
+            <path d="M290 132 Q286 110 280 95 Q274 80 268 68 Q265 60 262 52"
+                  stroke="#5a3a1a" stroke-width="6" fill="none" stroke-linecap="round"/>
+            <!-- trunk highlights -->
+            <path d="M289 128 Q285 106 279 91 Q273 76 267 64 Q264 57 261 50"
+                  stroke="#7a5230" stroke-width="2" fill="none" stroke-linecap="round" opacity="0.5"/>
+            <!-- coconuts -->
+            <circle cx="264" cy="58" r="4" fill="#8B5E3C"/>
+            <circle cx="258" cy="55" r="4" fill="#7a5030"/>
+            <circle cx="261" cy="62" r="3.5" fill="#8B5E3C"/>
+            <!-- fronds right tree -->
+            <!-- frond 1: up-right -->
+            <path d="M262 52 Q276 38 292 32" stroke="#2d6a2d" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+            <path d="M262 52 Q276 38 292 32 Q282 36 272 44 Q265 48 262 52Z" fill="#2d6a2d" opacity="0.9"/>
+            <!-- frond 2: up-right -->
+            <path d="M262 52 Q268 34 274 20" stroke="#3a7a2a" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+            <path d="M262 52 Q268 34 274 20 Q268 30 263 42 Q262 47 262 52Z" fill="#3a7a2a" opacity="0.85"/>
+            <!-- frond 3: straight up -->
+            <path d="M262 52 Q258 34 252 20" stroke="#2d6a2d" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+            <path d="M262 52 Q258 34 252 20 Q256 32 260 44 Q261 48 262 52Z" fill="#2d6a2d" opacity="0.85"/>
+            <!-- frond 4: up-left -->
+            <path d="M262 52 Q246 40 232 36" stroke="#347a2a" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+            <path d="M262 52 Q246 40 232 36 Q244 42 254 48 Q259 50 262 52Z" fill="#347a2a" opacity="0.9"/>
+            <!-- frond 5: left drooping -->
+            <path d="M262 52 Q244 54 230 58" stroke="#2d6a2d" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+            <path d="M262 52 Q244 54 230 58 Q244 52 256 52 Q260 52 262 52Z" fill="#2d6a2d" opacity="0.8"/>
+            <!-- frond 6: drooping right -->
+            <path d="M262 52 Q280 58 296 62" stroke="#347a2a" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+            <path d="M262 52 Q280 58 296 62 Q282 56 270 54 Q265 53 262 52Z" fill="#347a2a" opacity="0.8"/>
+          </svg>
+        </div>
+
+        <div class="beach-body">
+          <div class="beach-dest" id="cd-title-beach">DESTINATION</div>
+          <div class="beach-tagline">Beach Trip Countdown</div>
+
+          <div class="beach-days-wrap">
+            <div class="beach-days-num" id="days-num-beach">--</div>
+            <div class="beach-days-label">Days to Paradise</div>
+          </div>
+
+          <div class="beach-log">
+            <div class="beach-entry"><div class="val" id="hours-beach">00</div><div class="lbl">Hours</div></div>
+            <div class="beach-entry"><div class="val" id="minutes-beach">00</div><div class="lbl">Minutes</div></div>
+            <div class="beach-entry"><div class="val" id="seconds-beach">00</div><div class="lbl">Seconds</div></div>
+          </div>
+
+          <div class="beach-footer">Setting sail for <strong id="dest-line-beach">—</strong></div>
+        </div>
+      </div>
+
+      <div id="beach-arrived" style="display:none;">
+        <div class="beach-arrived" id="arrived-msg-beach">☀ YOU'RE THERE! ☀</div>
+      </div>
+    </div>
+
     <button class="edit-link" data-action="edit">Change destination or date</button>
   </div>
 </template>
@@ -2145,6 +2988,15 @@
     </button>
     <button class="theme-popup-item" data-theme-switch="wedding">
       <span class="dot" style="background:#f5efe0; border-color:#b8963e;"></span> 💍 Wedding
+    </button>
+    <button class="theme-popup-item" data-theme-switch="birthday">
+      <span class="dot" style="background:#fff9f0; border-color:#e8297a;"></span> 🎂 Birthday
+    </button>
+    <button class="theme-popup-item" data-theme-switch="anniversary">
+      <span class="dot" style="background:#1a0810; border-color:#c8345a;"></span> ♥ Anniversary
+    </button>
+    <button class="theme-popup-item" data-theme-switch="beachtrip">
+      <span class="dot" style="background:#fdf6e8; border-color:#1a2840;"></span> 🌴 Beach Trip
     </button>
   </div>
 
@@ -2288,18 +3140,20 @@
   }
 
   function populateSlide(slide, cd) {
-    const target = new Date(cd.date + 'T00:00:00');
-    const dateStr = target.toLocaleDateString(undefined, {year:'numeric', month:'long', day:'numeric'});
-    const shortDateStr = target.toLocaleDateString(undefined, {month:'short', day:'numeric', year:'numeric'});
+    const target = new Date(cd.date + 'T' + (cd.time || '00:00') + ':00');
+    const timeStr = cd.time ? ` at ${formatTime(cd.time)}` : '';
+    const dateStr = target.toLocaleDateString(undefined, {year:'numeric', month:'long', day:'numeric'}) + timeStr;
+    const shortDateStr = target.toLocaleDateString(undefined, {month:'short', day:'numeric', year:'numeric'}) + timeStr;
     const destCode = cd.destination.replace(/[^A-Za-z]/g,'').slice(0,3).toUpperCase() || 'TRP';
 
     // Helper to safely set text
     const set = (sel, val) => { const el = slide.querySelector(sel); if (el) el.textContent = val; };
 
-    set('#cd-title-pirate',    cd.destination);
-    set('#dest-line-pirate',   cd.destination);
+    set('#cd-title-pirate',    'Countdown to Landfall');
+    set('#dest-line-pirate',   `${cd.destination}, ${target.toLocaleDateString(undefined, {day:'numeric', month:'long'})}`);
+    set('#dest-line-pirate-footer', cd.destination);
     set('#date-line-pirate',   dateStr);
-    set('#arrived-msg-pirate', `🎉 You've arrived: ${cd.destination}! 🎉`);
+    set('#arrived-msg-pirate', `⚓ Land Ho! ${cd.destination} awaits. ⚓`);
 
     set('#cd-title-editorial',    cd.destination);
     set('#date-line-editorial',   dateStr);
@@ -2324,21 +3178,36 @@
     set('#cd-title-wedding',    cd.destination);
     set('#date-line-wedding',   dateStr);
     set('#arrived-msg-wedding', `The day has come — ${cd.destination}!`);
+
+    set('#cd-title-birthday',    cd.destination);
+    set('#cd-subtitle-birthday', `Get ready to celebrate!`);
+    set('#dest-line-birthday',   cd.destination);
+    set('#date-line-birthday',   dateStr);
+    set('#arrived-msg-birthday', `🎉 Happy Birthday! 🎉`);
+
+    set('#cd-title-anniversary',    cd.destination);
+    set('#cd-subtitle-anniversary', `A moment worth celebrating`);
+    set('#dest-line-anniversary',   cd.destination);
+    set('#date-line-anniversary',   dateStr);
+    set('#arrived-msg-anniversary', `♥ Happy Anniversary ♥`);
+
+    set('#cd-title-beach',    cd.destination.toUpperCase());
+    set('#date-line-beach',   shortDateStr);
+    set('#dest-line-beach',   cd.destination);
+    set('#arrived-msg-beach', `☀ YOU'RE THERE! ☀`);
   }
 
   function startTimer(idx, cd) {
     const slide = swiperTrack.children[idx];
     if (!slide) return;
 
-    const target = new Date(cd.date + 'T00:00:00');
+    const target = new Date(cd.date + 'T' + (cd.time || '00:00') + ':00');
 
     function tick() {
-      const now = new Date();
-      const diff = target - now;
 
       if (diff <= 0) {
         // Show arrived
-        ['pirate','editorial','scifi','comic','wedding'].forEach(t => {
+        ['pirate','editorial','scifi','comic','wedding','birthday','anniversary','beach'].forEach(t => {
           const a = slide.querySelector(`#${t}-active`);
           const r = slide.querySelector(`#${t}-arrived`);
           if (a) a.style.display = 'none';
@@ -2368,6 +3237,9 @@
       set('#days-num-scifi', days); set('#hours-scifi', hh); set('#minutes-scifi', mm); set('#seconds-scifi', ss);
       set('#days-num-comic', days); set('#hours-comic', hh); set('#minutes-comic', mm); set('#seconds-comic', ss);
       set('#days-num-wedding', days); set('#hours-wedding', hh); set('#minutes-wedding', mm); set('#seconds-wedding', ss);
+      set('#days-num-birthday', days); set('#hours-birthday', hh); set('#minutes-birthday', mm); set('#seconds-birthday', ss);
+      set('#days-num-anniversary', days); set('#hours-anniversary', hh); set('#minutes-anniversary', mm); set('#seconds-anniversary', ss);
+      set('#days-num-beach', days); set('#hours-beach', hh); set('#minutes-beach', mm); set('#seconds-beach', ss);
     }
 
     tick();
@@ -2433,6 +3305,7 @@
     setupOverlay.classList.add('open');
     document.getElementById('dest-input').value = '';
     document.getElementById('date-input').value = '';
+    document.getElementById('time-input').value = '';
     document.getElementById('error-msg').style.display = 'none';
     // reset swatch to pirate
     selectedTheme = 'pirate';
@@ -2447,6 +3320,7 @@
     setupOverlay.classList.add('open');
     document.getElementById('dest-input').value = cd.destination;
     document.getElementById('date-input').value = cd.date;
+    document.getElementById('time-input').value = cd.time || '';
     document.getElementById('error-msg').style.display = 'none';
     selectedTheme = cd.theme || 'pirate';
     document.querySelectorAll('.theme-swatch').forEach(s => s.classList.toggle('active', s.dataset.themeChoice === selectedTheme));
@@ -2485,21 +3359,30 @@
   const setupOverlay = document.getElementById('setup-overlay');
   const destInput    = document.getElementById('dest-input');
   const dateInput    = document.getElementById('date-input');
+  const timeInput    = document.getElementById('time-input');
   const errorMsg     = document.getElementById('error-msg');
   const startBtn     = document.getElementById('start-btn');
   const swatches     = document.querySelectorAll('.theme-swatch');
   const themePreview = document.getElementById('theme-preview');
   let selectedTheme = 'pirate';
 
+  function formatTime(t) {
+    if (!t) return '';
+    const [h, m] = t.split(':');
+    const hr = parseInt(h);
+    const ampm = hr >= 12 ? 'PM' : 'AM';
+    const hr12 = hr % 12 || 12;
+    return `${hr12}:${m} ${ampm}`;
+  }
+
   function setPreview(theme) {
-    themePreview.classList.remove('preview-pirate','preview-modern','preview-beach','preview-scifi','preview-comic','preview-wedding');
+    themePreview.classList.remove('preview-pirate','preview-modern','preview-beach','preview-scifi','preview-comic','preview-wedding','preview-birthday','preview-anniversary','preview-beach');
     themePreview.classList.add('preview-' + theme);
-    document.querySelector('.tp-view-pirate').style.display  = theme === 'pirate'  ? 'flex' : 'none';
-    document.querySelector('.tp-view-modern').style.display  = theme === 'modern'  ? 'flex' : 'none';
-    document.querySelector('.tp-view-beach').style.display   = theme === 'beach'   ? 'flex' : 'none';
-    document.querySelector('.tp-view-scifi').style.display   = theme === 'scifi'   ? 'flex' : 'none';
-    document.querySelector('.tp-view-comic').style.display   = theme === 'comic'   ? 'flex' : 'none';
-    document.querySelector('.tp-view-wedding').style.display = theme === 'wedding' ? 'flex' : 'none';
+    const views = ['pirate','modern','beach','scifi','comic','wedding','birthday','anniversary','beach'];
+    ['pirate','modern','beach','scifi','comic','wedding','birthday','anniversary','beachtrip'].forEach(t => {
+      const el = document.querySelector('.tp-view-' + t);
+      if (el) el.style.display = (t === theme) ? 'flex' : 'none';
+    });
   }
 
   swatches.forEach(sw => {
@@ -2514,18 +3397,24 @@
   startBtn.addEventListener('click', () => {
     const destination = destInput.value.trim();
     const date = dateInput.value;
+    const time = timeInput.value || '00:00';
     const todayStr = new Date().toISOString().split('T')[0];
-    if (!destination || !date || date < todayStr) {
+    const targetDateTime = new Date(date + 'T' + time + ':00');
+
+    if (!destination || !date || targetDateTime <= new Date()) {
       errorMsg.style.display = 'block';
+      errorMsg.textContent = !destination || !date
+        ? 'Please enter a destination and a future date.'
+        : 'Please choose a future date and time.';
       return;
     }
     errorMsg.style.display = 'none';
 
     if (editingId) {
       const cd = countdowns.find(c => c.id === editingId);
-      if (cd) { cd.destination = destination; cd.date = date; cd.theme = selectedTheme; }
+      if (cd) { cd.destination = destination; cd.date = date; cd.time = timeInput.value || ''; cd.theme = selectedTheme; }
     } else {
-      const newCd = { id: genId(), destination, date, theme: selectedTheme };
+      const newCd = { id: genId(), destination, date, time: timeInput.value || '', theme: selectedTheme };
       countdowns.push(newCd);
     }
 
