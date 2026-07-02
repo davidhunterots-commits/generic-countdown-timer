@@ -3399,10 +3399,24 @@
       const toHide = [fabContainer, swiperDots, document.getElementById('bday-confetti')].filter(Boolean);
       toHide.forEach(el => el.style.visibility = 'hidden');
 
+      // Explicit bg color per theme — html2canvas can't resolve CSS custom properties
+      const themeBgMap = {
+        pirate:      '#e8dcc0',
+        modern:      '#f7f5f1',
+        beach:       '#fff1e0',
+        scifi:       '#040d06',
+        comic:       '#f5f5f5',
+        wedding:     '#f5efe0',
+        birthday:    '#fff9f0',
+        anniversary: '#1a0810',
+        beachtrip:   '#fff1e0'
+      };
+      const bg = themeBgMap[cd.theme] || '#ffffff';
+
       const canvas = await html2canvas(card, {
         useCORS: true,
         scale: 2,
-        backgroundColor: null,
+        backgroundColor: bg,
         logging: false
       });
 
