@@ -2327,9 +2327,11 @@
     background: rgba(0,0,0,0.5);
     z-index: 200;
     display: none;
-    align-items: center;
+    align-items: flex-start;
     justify-content: center;
     padding: 20px;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
   }
   .setup-overlay.open {
     display: flex;
@@ -2337,6 +2339,8 @@
   .setup-overlay .wrap {
     width: 100%;
     max-width: 520px;
+    margin: auto;
+    padding-bottom: 40px;
   }
   .setup-overlay .setup-card {
     background: #ffffff !important;
