@@ -2430,82 +2430,7 @@
     </div>
     <div class="error-msg" id="error-msg">Please enter a destination and a future date.</div>
 
-    <div class="field">
-      <label>Theme</label>
-      <div class="theme-row">
-        <div class="theme-swatch active" data-theme-choice="pirate">🏴‍☠️ Pirate</div>
-        <div class="theme-swatch" data-theme-choice="modern">⬛ Modern</div>
-        <div class="theme-swatch" data-theme-choice="beach">🎫 Boarding Pass</div>
-        <div class="theme-swatch" data-theme-choice="scifi">🛸 Sci-Fi</div>
-        <div class="theme-swatch" data-theme-choice="comic">📰 Comic</div>
-        <div class="theme-swatch" data-theme-choice="wedding">💍 Wedding</div>
-        <div class="theme-swatch" data-theme-choice="birthday">🎂 Birthday</div>
-        <div class="theme-swatch" data-theme-choice="anniversary">♥ Anniversary</div>
-        <div class="theme-swatch" data-theme-choice="beachtrip">🌴 Beach</div>
-      </div>
-
-      <div class="theme-preview preview-pirate" id="theme-preview" data-active="pirate">
-        <!-- pirate preview -->
-        <div class="tp-view tp-view-pirate">
-          <svg class="tp-skull" viewBox="0 0 200 160" aria-hidden="true">
-            <g transform="translate(100,100) rotate(-38)"><rect x="-78" y="-7" width="156" height="14" rx="7" fill="#e9e1cf"/></g>
-            <g transform="translate(100,100) rotate(38)"><rect x="-78" y="-7" width="156" height="14" rx="7" fill="#e9e1cf"/></g>
-            <circle cx="100" cy="72" r="44" fill="#e9e1cf"/>
-          </svg>
-          <div class="tp-num">84</div>
-          <div class="tp-label">Days to Go</div>
-        </div>
-        <!-- modern preview -->
-        <div class="tp-view tp-view-modern" style="display:none;">
-          <div class="tp-eyebrow">Countdown</div>
-          <span class="tp-num">84</span><span class="tp-suffix">days to go</span>
-        </div>
-        <!-- boarding pass preview -->
-        <div class="tp-view tp-view-beach" style="display:none;">
-          <div class="tp-ticket-main">✈ &nbsp;YOU → DST</div>
-          <div class="tp-stub">
-            <div class="tp-num">84</div>
-            <div class="tp-label">days</div>
-          </div>
-        </div>
-        <!-- sci-fi preview -->
-        <div class="tp-view tp-view-scifi" style="display:none; align-items:center; justify-content:center; flex-direction:column;">
-          <div style="font-family:'DM Mono',monospace; font-size:2.4rem; color:#39ff14; text-shadow:0 0 14px rgba(57,255,20,0.8); line-height:1;">84</div>
-          <div style="font-family:'DM Mono',monospace; font-size:0.58rem; letter-spacing:0.24em; text-transform:uppercase; color:#4a8a3a; margin-top:4px;">DAYS REMAINING</div>
-        </div>
-        <!-- comic preview -->
-        <div class="tp-view tp-view-comic" style="display:none; align-items:center; justify-content:center; gap:10px;">
-          <div style="position:relative; width:54px; height:54px; display:flex; align-items:center; justify-content:center;">
-            <svg viewBox="0 0 190 190" style="position:absolute;inset:0;width:100%;height:100%;" aria-hidden="true">
-              <polygon points="95,5 108,68 140,20 130,78 175,52 148,100 185,108 148,128 172,165 128,142 130,185 95,155 60,185 62,142 18,165 42,128 5,108 42,100 15,52 60,78 50,20 82,68" fill="#f5c800" stroke="#111" stroke-width="4" stroke-linejoin="round"/>
-            </svg>
-            <span style="font-family:'Archivo Black',sans-serif; font-size:1.1rem; color:#e8231a; position:relative; z-index:1; -webkit-text-stroke:0.5px #111;">84</span>
-          </div>
-          <div style="font-family:'Archivo Black',sans-serif; font-size:1rem; color:#0088cc; text-transform:uppercase; -webkit-text-stroke:1px #111; text-shadow:2px 2px 0 #111;">WHAM!</div>
-        </div>
-        <!-- wedding preview -->
-        <div class="tp-view tp-view-wedding" style="display:none; flex-direction:column; align-items:center; justify-content:center; gap:4px;">
-          <div style="font-family:'Great Vibes',cursive; font-size:2.6rem; color:#1a6b3c; line-height:1;">84</div>
-          <div style="font-family:'Cormorant Garamond',serif; font-style:italic; font-size:0.72rem; letter-spacing:0.18em; text-transform:uppercase; color:#b8963e;">Days to Go</div>
-        </div>
-        <!-- birthday preview -->
-        <div class="tp-view tp-view-birthday" style="display:none; align-items:center; justify-content:center; gap:10px;">
-          <div style="font-size:1.8rem; line-height:1;">🎈</div>
-          <div style="font-family:'Archivo Black',sans-serif; font-size:2rem; color:#0e9488; text-shadow:2px 2px 0 rgba(255,184,0,0.3);">84</div>
-          <div style="font-size:1.8rem; line-height:1;">🎂</div>
-        </div>
-        <!-- anniversary preview -->
-        <div class="tp-view tp-view-anniversary" style="display:none; flex-direction:column; align-items:center; justify-content:center; gap:4px;">
-          <div style="font-family:'Cormorant Garamond',serif; font-size:2.4rem; color:#c8345a; line-height:1; text-shadow:0 0 12px rgba(200,52,90,0.5);">84</div>
-          <div style="font-size:0.9rem; color:#d4a843;">♥ ♥ ♥</div>
-        </div>
-        <!-- beach preview -->
-        <div class="tp-view tp-view-beachtrip" style="display:none; flex-direction:column; align-items:center; justify-content:center; gap:2px;">
-          <div style="font-family:'Archivo Black',sans-serif; font-size:2rem; color:#f0b429; text-shadow:2px 2px 0 rgba(0,0,0,0.3);">84</div>
-          <div style="font-family:'Space Grotesk',sans-serif; font-size:0.6rem; letter-spacing:0.16em; text-transform:uppercase; color:rgba(240,180,41,0.8);">Days</div>
-        </div>
-      </div>
-    </div>
+    <input type="hidden" id="theme-hidden" value="pirate">
 
     <button class="start-btn" id="start-btn">Start Countdown</button>
   </div>
@@ -3209,10 +3134,7 @@
     document.getElementById('date-input').value = '';
     document.getElementById('time-input').value = '';
     document.getElementById('error-msg').style.display = 'none';
-    // reset swatch to pirate
-    selectedTheme = 'pirate';
-    document.querySelectorAll('.theme-swatch').forEach(s => s.classList.toggle('active', s.dataset.themeChoice === 'pirate'));
-    setPreview('pirate');
+    selectedTheme = countdowns[activeIdx]?.theme || 'pirate';
   }
 
   function openEdit(id) {
@@ -3226,8 +3148,6 @@
     document.getElementById('time-input').value = cd.time || '';
     document.getElementById('error-msg').style.display = 'none';
     selectedTheme = cd.theme || 'pirate';
-    document.querySelectorAll('.theme-swatch').forEach(s => s.classList.toggle('active', s.dataset.themeChoice === selectedTheme));
-    setPreview(selectedTheme);
   }
 
   function deleteCountdown(id) {
@@ -3266,8 +3186,6 @@
   const timeInput    = document.getElementById('time-input');
   const errorMsg     = document.getElementById('error-msg');
   const startBtn     = document.getElementById('start-btn');
-  const swatches     = document.querySelectorAll('.theme-swatch');
-  const themePreview = document.getElementById('theme-preview');
   let selectedTheme = 'pirate';
 
   function formatTime(t) {
@@ -3278,25 +3196,6 @@
     const hr12 = hr % 12 || 12;
     return `${hr12}:${m} ${ampm}`;
   }
-
-  function setPreview(theme) {
-    themePreview.classList.remove('preview-pirate','preview-modern','preview-beach','preview-scifi','preview-comic','preview-wedding','preview-birthday','preview-anniversary','preview-beach');
-    themePreview.classList.add('preview-' + theme);
-    const views = ['pirate','modern','beach','scifi','comic','wedding','birthday','anniversary','beach'];
-    ['pirate','modern','beach','scifi','comic','wedding','birthday','anniversary','beachtrip'].forEach(t => {
-      const el = document.querySelector('.tp-view-' + t);
-      if (el) el.style.display = (t === theme) ? 'flex' : 'none';
-    });
-  }
-
-  swatches.forEach(sw => {
-    sw.addEventListener('click', () => {
-      swatches.forEach(s => s.classList.remove('active'));
-      sw.classList.add('active');
-      selectedTheme = sw.dataset.themeChoice;
-      setPreview(selectedTheme);
-    });
-  });
 
   startBtn.addEventListener('click', () => {
     const destination = destInput.value.trim();
@@ -3487,7 +3386,6 @@
   } catch(e) {}
 
   dateInput.min = new Date().toISOString().split('T')[0];
-  setPreview('pirate');
   renderSlides();
 
   if (countdowns.length === 0) openAdd();
