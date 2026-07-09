@@ -4082,7 +4082,11 @@
   dateInput.min = new Date().toISOString().split('T')[0];
   renderSlides();
 
-  if (countdowns.length === 0) openAdd();
+  renderSlides();
+
+  // Only auto-open add form if no deep link import is pending
+  const _hasImport = new URLSearchParams(location.search).get('cd');
+  if (countdowns.length === 0 && !_hasImport) openAdd();
 
   // ====== DEEP LINK IMPORT ======
   (function() {
@@ -4099,7 +4103,6 @@
       const yesBtn  = document.getElementById('import-yes');
       const noBtn   = document.getElementById('import-no');
 
-      // Format a nice preview message
       const dateStr = new Date(data.date + 'T12:00:00').toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
       const themeLabel = { pirate:'🏴‍☠️ Pirate', modern:'⬛ Modern', beach:'🎫 Boarding Pass', scifi:'🛸 Sci-Fi', comic:'💥 Comic', wedding:'💍 Wedding', birthday:'🎂 Birthday', anniversary:'♥ Anniversary', beachtrip:'🌴 Beach Trip', football:'🏈 Football', school:'🍎 School' };
       body.innerHTML = `<strong>${data.destination}</strong><br>${dateStr}<br><span style="opacity:0.7;font-size:0.82rem;">${themeLabel[data.theme] || data.theme} theme</span>`;
@@ -4123,17 +4126,19 @@
         shareToast.textContent = 'Countdown added! ✓';
         shareToast.classList.add('show');
         setTimeout(() => shareToast.classList.remove('show'), 2000);
-        // Clean URL
         history.replaceState({}, '', location.pathname);
       });
 
       noBtn.addEventListener('click', () => {
         overlay.classList.remove('open');
+        // If they dismiss and have no countdowns, open add form
+        if (countdowns.length === 0) openAdd();
         history.replaceState({}, '', location.pathname);
       });
 
     } catch(e) {
-      // Bad encoded data — ignore silently
+      // Bad encoded data — fall through to normal flow
+      if (countdowns.length === 0) openAdd();
     }
   })();
 
