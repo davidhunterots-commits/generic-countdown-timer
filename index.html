@@ -1383,6 +1383,10 @@
   .group-cruise    .group-label { color: #095560; }
   .group-grad      { border-left-color: #c9a227; background: rgba(201,162,39,0.06); }
   .group-grad      .group-label { color: #9c7d1a; }
+  .group-anniv     { border-left-color: #c8345a; background: rgba(200,52,90,0.06); }
+  .group-anniv     .group-label { color: #a02448; }
+  .group-birthday  { border-left-color: #ffb800; background: rgba(255,184,0,0.08); }
+  .group-birthday  .group-label { color: #b37e00; }
 
   .field input {
     width: 100%;
@@ -1984,6 +1988,14 @@
   .ticket::before { top: -11px; }
   .ticket::after { bottom: -11px; }
 
+  .tk-airline {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 10px;
+  }
   .tk-route {
     display: flex;
     align-items: center;
@@ -2020,11 +2032,44 @@
   }
   .tk-plane span { background: var(--panel-bg); padding: 0 8px; font-size: 1.1rem; position: relative; }
 
+  .tk-travel-strip {
+    position: relative;
+    height: 20px;
+    margin-bottom: 16px;
+    overflow: hidden;
+  }
+  .tk-travel-dashes {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    border-top: 1.5px dashed rgba(58,42,28,0.25);
+    transform: translateY(-50%);
+  }
+  .tk-travel-vehicle {
+    position: absolute;
+    top: 50%;
+    left: -10%;
+    transform: translateY(-50%);
+    font-size: 1.05rem;
+    color: var(--accent);
+    animation: tk-travel-across 6s linear infinite;
+  }
+  @keyframes tk-travel-across {
+    0%   { left: -10%; opacity: 0; }
+    8%   { opacity: 1; }
+    92%  { opacity: 1; }
+    100% { left: 105%; opacity: 0; }
+  }
+
   .tk-field-row {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 14px;
     margin-bottom: 16px;
+  }
+  #tk-field-row-2 {
+    grid-template-columns: 1fr 1fr 1fr;
   }
   .tk-field .lbl {
     font-family: 'DM Mono', monospace;
@@ -2309,6 +2354,7 @@
   .comic-card { display: none; }
   body[data-theme="comic"] .comic-card { display: block; }
   body[data-theme="comic"] .wrap { max-width: 520px; }
+  body[data-theme="comic"] .swiper-slide { align-items: flex-start; }
 
   body[data-theme="comic"] .countdown-card {
     background: #ffffff;
@@ -2321,19 +2367,21 @@
 
   /* yellow header band */
   .comic-header {
-    background: #f5c800;
+    background: #e8202a;
     border-bottom: 4px solid #111111;
-    padding: 10px 16px;
+    padding: 12px 16px;
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: center;
   }
   .comic-header-title {
     font-family: 'Archivo Black', sans-serif;
-    font-size: 1rem;
-    color: #111111;
+    font-size: clamp(0.95rem, 4.5vw, 1.25rem);
+    color: #ffffff;
     text-transform: uppercase;
-    letter-spacing: 0.04em;
+    letter-spacing: 0.03em;
+    text-align: center;
+    text-shadow: 2px 2px 0 #111111;
   }
 
   /* destination in red speed-line panel */
@@ -2384,8 +2432,8 @@
 
   .comic-starburst {
     position: relative;
-    width: 190px;
-    height: 190px;
+    width: 160px;
+    height: 160px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -2407,11 +2455,11 @@
   }
   .comic-starburst .sb-num {
     font-family: 'Archivo Black', sans-serif;
-    font-size: 5rem;
+    font-size: 3.6rem;
     line-height: 1;
     color: #e8231a;
     font-weight: 900;
-    -webkit-text-stroke: 3px #111111;
+    -webkit-text-stroke: 2.5px #111111;
     text-shadow:
       2px 2px 0 #8b0f0f,
       4px 4px 0 rgba(0,0,0,0.2);
@@ -2419,10 +2467,10 @@
   }
   .comic-starburst .sb-label {
     font-family: 'Archivo Black', sans-serif;
-    font-size: 0.72rem;
+    font-size: 0.6rem;
     color: #111111;
     text-transform: uppercase;
-    letter-spacing: 0.08em;
+    letter-spacing: 0.06em;
     white-space: nowrap;
     -webkit-text-stroke: 0.3px #111;
     display: block;
@@ -2565,6 +2613,15 @@
   body[data-theme="anniversary"] .setup-card label,
   body[data-theme="anniversary"] .setup-card .setup-eyebrow,
   body[data-theme="anniversary"] .setup-card .setup-title { color: #f5e6d0 !important; }
+  body[data-theme="anniversary"] .setup-overlay .setup-card label,
+  body[data-theme="anniversary"] .setup-overlay .setup-card .setup-eyebrow,
+  body[data-theme="anniversary"] .setup-overlay .setup-card .setup-title,
+  body[data-theme="anniversary"] .setup-overlay .setup-card .field input,
+  body[data-theme="anniversary"] .setup-overlay .setup-card .field select {
+    color: #1a1a1a !important;
+    background: #f5f5f5 !important;
+    border-color: rgba(0,0,0,0.2) !important;
+  }
   body[data-theme="anniversary"] .setup-card .field input {
     background: rgba(255,255,255,0.08) !important;
     border-color: rgba(200,52,90,0.3) !important;
@@ -2793,8 +2850,9 @@
   }
   .bday-subtitle {
     font-family: 'Space Grotesk', sans-serif;
-    font-size: 0.9rem;
-    color: var(--ink-faded);
+    font-weight: 700;
+    font-size: 1.15rem;
+    color: var(--accent);
     text-align: center;
     margin-bottom: 22px;
   }
@@ -2867,6 +2925,7 @@
     padding-top: 14px;
   }
   .bday-footer strong { color: var(--accent); }
+  .bday-footer strong#date-line-birthday { white-space: nowrap; display: inline-block; }
 
   .bday-arrived {
     text-align: center;
@@ -2907,10 +2966,29 @@
     font-size: 0.82rem;
     letter-spacing: 0.2em;
     text-transform: uppercase;
-    color: var(--gold);
     text-align: center;
     margin-bottom: 6px;
-    opacity: 0.8;
+    background: linear-gradient(
+      90deg,
+      var(--gold) 0%,
+      var(--gold) 40%,
+      var(--gold-light) 50%,
+      var(--gold) 60%,
+      var(--gold) 100%
+    );
+    background-size: 250% 100%;
+    background-position: 100% 0;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: var(--gold);
+    opacity: 0.9;
+    animation: anniv-shimmer 5s ease-in-out infinite;
+  }
+  @keyframes anniv-shimmer {
+    0%   { background-position: 100% 0; }
+    50%  { background-position: 0% 0; }
+    100% { background-position: 100% 0; }
   }
   .anniv-rule {
     display: flex;
@@ -2964,6 +3042,15 @@
     line-height: 0.9;
     color: var(--accent);
     text-shadow: 0 0 30px rgba(200,52,90,0.4), 0 0 60px rgba(200,52,90,0.15);
+    animation: anniv-heartbeat 2.4s ease-in-out infinite;
+  }
+  @keyframes anniv-heartbeat {
+    0%, 100% {
+      text-shadow: 0 0 30px rgba(200,52,90,0.4), 0 0 60px rgba(200,52,90,0.15);
+    }
+    50% {
+      text-shadow: 0 0 42px rgba(200,52,90,0.65), 0 0 80px rgba(200,52,90,0.3);
+    }
   }
   .anniv-days-label {
     font-family: 'Cormorant Garamond', serif;
@@ -3581,6 +3668,27 @@
     background: #f5f5f5 !important;
     border-color: rgba(0,0,0,0.2) !important;
   }
+  .setup-overlay .setup-card .field select {
+    background: #f5f5f5 !important;
+    border-color: rgba(0,0,0,0.2) !important;
+    color: #1a1a1a !important;
+  }
+  .setup-overlay .setup-card .field input[type="date"],
+  .setup-overlay .setup-card .field input[type="time"] {
+    background: #f5f5f5 !important;
+    border-color: rgba(0,0,0,0.2) !important;
+    color: #1a1a1a !important;
+    color-scheme: light;
+    -webkit-text-fill-color: #1a1a1a;
+  }
+  .setup-overlay .setup-card .field input[type="date"]::-webkit-date-and-time-value,
+  .setup-overlay .setup-card .field input[type="time"]::-webkit-date-and-time-value {
+    text-align: left;
+    color: #1a1a1a !important;
+  }
+  .setup-overlay .setup-card .field input::placeholder {
+    color: rgba(0,0,0,0.4) !important;
+  }
   .setup-overlay .setup-card .theme-swatch {
     color: #555 !important;
     background: rgba(0,0,0,0.06) !important;
@@ -3676,8 +3784,33 @@
     <div class="theme-field-group group-boarding" data-group="beach">
       <div class="group-label">🎫 Boarding Pass Details</div>
       <div class="field">
+        <label for="airline-input">Airline <span style="font-weight:400; opacity:0.6;">(optional)</span></label>
+        <input type="text" id="airline-input" placeholder="e.g. Delta Air Lines" maxlength="40">
+      </div>
+      <div class="field">
         <label for="passenger-input">Passenger name <span style="font-weight:400; opacity:0.6;">(optional)</span></label>
         <input type="text" id="passenger-input" placeholder="e.g. David Hunter" maxlength="40">
+      </div>
+      <div class="field">
+        <label for="departcity-input">Departing from <span style="font-weight:400; opacity:0.6;">(optional)</span></label>
+        <input type="text" id="departcity-input" placeholder="e.g. Knoxville" maxlength="30">
+      </div>
+      <div class="field">
+        <label for="gate-input">Gate <span style="font-weight:400; opacity:0.6;">(optional)</span></label>
+        <input type="text" id="gate-input" placeholder="e.g. B12" maxlength="10">
+      </div>
+      <div class="field">
+        <label for="seat-input">Seat <span style="font-weight:400; opacity:0.6;">(optional)</span></label>
+        <input type="text" id="seat-input" placeholder="e.g. 14A" maxlength="10">
+      </div>
+      <div class="field">
+        <label for="travelclass-select">Class <span style="font-weight:400; opacity:0.6;">(optional)</span></label>
+        <select id="travelclass-select">
+          <option value="Economy">Economy</option>
+          <option value="Premium Economy">Premium Economy</option>
+          <option value="Business">Business</option>
+          <option value="First Class">First Class</option>
+        </select>
       </div>
     </div>
 
@@ -3911,6 +4044,24 @@
       </div>
     </div>
 
+    <!-- Anniversary fields -->
+    <div class="theme-field-group group-anniv" data-group="anniversary">
+      <div class="group-label">♥ Anniversary Details</div>
+      <div class="field">
+        <label for="annivyear-input">Year you first celebrated <span style="font-weight:400; opacity:0.6;">(optional — e.g. year you got married)</span></label>
+        <input type="number" id="annivyear-input" placeholder="e.g. 2015" min="1900" max="2100" maxlength="4">
+      </div>
+    </div>
+
+    <!-- Birthday fields -->
+    <div class="theme-field-group group-birthday" data-group="birthday">
+      <div class="group-label">🎂 Birthday Details</div>
+      <div class="field">
+        <label for="birthyear-input">Birth year <span style="font-weight:400; opacity:0.6;">(optional — to show the age they're turning)</span></label>
+        <input type="number" id="birthyear-input" placeholder="e.g. 1994" min="1900" max="2100" maxlength="4">
+      </div>
+    </div>
+
     <button class="start-btn" id="start-btn">Start Countdown</button>
   </div>
     <button class="close-setup-btn" id="close-setup-btn">Cancel</button>
@@ -3971,7 +4122,7 @@
           <span><b id="seconds-editorial">00</b>s</span>
         </div>
 
-        <div class="ed-footer">Arriving <strong id="date-line-editorial">—</strong></div>
+        <div class="ed-footer">Scheduled for <strong id="date-line-editorial">—</strong></div>
       </div>
 
       <div id="editorial-arrived" style="display:none;">
@@ -3984,6 +4135,7 @@
     <div class="ticket-card" id="ticket-layout">
       <div class="ticket" id="ticket-active">
         <div class="ticket-main">
+          <div class="tk-airline" id="tk-airline">✈ BOARDING PASS</div>
           <div class="tk-route">
             <div class="tk-from">
               <div class="code" id="tk-from-code">YOU</div>
@@ -3996,6 +4148,11 @@
             </div>
           </div>
 
+          <div class="tk-travel-strip">
+            <div class="tk-travel-dashes"></div>
+            <div class="tk-travel-vehicle">✈</div>
+          </div>
+
           <div class="tk-field-row">
             <div class="tk-field">
               <div class="lbl">Passenger</div>
@@ -4004,6 +4161,21 @@
             <div class="tk-field">
               <div class="lbl">Date</div>
               <div class="val" id="tk-date">—</div>
+            </div>
+          </div>
+
+          <div class="tk-field-row" id="tk-field-row-2">
+            <div class="tk-field" id="tk-gate-field">
+              <div class="lbl">Gate</div>
+              <div class="val" id="tk-gate">—</div>
+            </div>
+            <div class="tk-field" id="tk-seat-field">
+              <div class="lbl">Seat</div>
+              <div class="val" id="tk-seat">—</div>
+            </div>
+            <div class="tk-field" id="tk-class-field">
+              <div class="lbl">Class</div>
+              <div class="val" id="tk-class">—</div>
             </div>
           </div>
 
@@ -4066,8 +4238,7 @@
     <!-- ===== COMIC BOOK LAYOUT ===== -->
     <div class="comic-card" id="comic-layout">
       <div class="comic-header">
-        <div class="comic-header-title">⚡ COUNTDOWN!</div>
-        <div class="comic-header-title" id="date-line-comic">—</div>
+        <div class="comic-header-title" id="comic-header-callout">⚡ ADVENTURE AWAITS! ⚡</div>
       </div>
 
       <div id="comic-active">
@@ -4081,14 +4252,14 @@
         <div class="comic-body">
           <div class="comic-starburst-wrap">
             <div class="comic-starburst">
-              <svg viewBox="0 0 190 190" aria-hidden="true">
-                <!-- comic action burst shape -->
+              <svg viewBox="0 0 160 160" aria-hidden="true">
+                <!-- comic action burst shape, scaled from original 190-unit design -->
                 <polygon points="
-                  95,5 108,68 140,20 130,78 175,52 148,100
-                  185,108 148,128 172,165 128,142 130,185
-                  95,155 60,185 62,142 18,165 42,128
-                  5,108 42,100 15,52 60,78 50,20
-                  82,68"
+                  80,4 91,57 118,17 109,66 147,44 125,84
+                  156,91 125,108 145,139 108,120 109,156
+                  80,131 51,156 52,120 15,139 35,108
+                  4,91 35,84 13,44 51,66 42,17
+                  69,57"
                   fill="#f5c800" stroke="#111111" stroke-width="4" stroke-linejoin="round"/>
               </svg>
               <div class="sb-content">
@@ -4106,7 +4277,7 @@
             <div class="comic-entry"><div class="val" id="seconds-comic">00</div><div class="lbl">Seconds</div></div>
           </div>
 
-          <div class="comic-caption">Destination: <strong id="dest-line-comic">—</strong></div>
+          <div class="comic-caption">Arriving <strong id="date-line-comic">—</strong></div>
         </div>
       </div>
 
@@ -4157,7 +4328,7 @@
         </div>
 
         <div class="wedding-rule"><span class="line"></span><span class="diamond">✦</span><span class="line"></span></div>
-        <div class="wedding-footer">Arriving <strong id="date-line-wedding">—</strong></div>
+        <div class="wedding-footer">Celebrating <strong id="date-line-wedding">—</strong></div>
       </div>
 
       <div id="wedding-arrived" style="display:none;">
@@ -4189,7 +4360,7 @@
           <div class="bday-entry"><div class="val" id="seconds-birthday">00</div><div class="lbl">Seconds</div></div>
         </div>
 
-        <div class="bday-footer">🎂 <strong id="dest-line-birthday">—</strong> · arriving <strong id="date-line-birthday">—</strong></div>
+        <div class="bday-footer">🎂 Celebrating <strong id="dest-line-birthday">—</strong> on <strong id="date-line-birthday">—</strong></div>
       </div>
       <div id="birthday-arrived" style="display:none;">
         <div class="bday-arrived" id="arrived-msg-birthday">🎉 Happy Birthday! 🎉</div>
@@ -4212,7 +4383,7 @@
 
         <div class="anniv-days-wrap">
           <div class="anniv-days-num" id="days-num-anniversary">--</div>
-          <div class="anniv-days-label">days until forever</div>
+          <div class="anniv-days-label" id="anniv-days-label">days until forever</div>
         </div>
 
         <div class="anniv-log">
@@ -4258,7 +4429,7 @@
             <div class="beach-entry"><div class="val" id="seconds-beach">00</div><div class="lbl">Seconds</div></div>
           </div>
 
-          <div class="beach-footer">Setting sail for <strong id="dest-line-beach">—</strong></div>
+          <div class="beach-footer">Putting my toes in the sand at <strong id="dest-line-beach">—</strong></div>
         </div>
       </div>
 
@@ -4833,24 +5004,40 @@
     const edToday = slide.querySelector('#ed-today');
     if (edToday) edToday.textContent = new Date().toLocaleDateString(undefined, {month:'short', day:'numeric'});
 
-    const passengerCode = cd.passenger
-      ? cd.passenger.trim().split(/\s+/).map(w => w[0]).join('').toUpperCase().slice(0,3)
-      : 'YOU';
-    set('#tk-from-code',   passengerCode);
-    set('#tk-from-city',   'Home');
+    const departCode = cd.departcity
+      ? cd.departcity.replace(/[^A-Za-z]/g,'').slice(0,3).toUpperCase()
+      : 'HOM';
+    set('#tk-airline',     cd.airline ? `✈ ${cd.airline.toUpperCase()}` : '✈ BOARDING PASS');
+    set('#tk-from-code',   departCode);
+    set('#tk-from-city',   cd.departcity || 'Home');
     set('#tk-dest-code',   destCode);
     set('#tk-dest-city',   cd.destination);
     set('#tk-date',        shortDateStr);
     set('#tk-passenger',   cd.passenger || 'You');
     set('#arrived-msg-ticket', `Welcome to ${cd.destination}!`);
 
+    // Deterministic fallback gate/seat so the ticket always looks complete
+    function seededNum(str, mod) {
+      let hash = 0;
+      for (let i = 0; i < str.length; i++) hash = (hash * 31 + str.charCodeAt(i)) >>> 0;
+      return hash % mod;
+    }
+    const seedBase = cd.id || cd.destination || 'x';
+    const fallbackGateLetter = String.fromCharCode(65 + seededNum(seedBase + 'g', 6));
+    const fallbackGateNum = seededNum(seedBase + 'gn', 40) + 1;
+    const fallbackSeatNum = seededNum(seedBase + 's', 30) + 1;
+    const fallbackSeatLetter = String.fromCharCode(65 + seededNum(seedBase + 'sl', 6));
+    set('#tk-gate',  cd.gate || `${fallbackGateLetter}${fallbackGateNum}`);
+    set('#tk-seat',  cd.seat || `${fallbackSeatNum}${fallbackSeatLetter}`);
+    set('#tk-class', cd.travelclass || 'Economy');
+
     set('#cd-title-scifi',    cd.destination.toUpperCase());
     set('#date-line-scifi',   dateStr.toUpperCase());
     set('#arrived-msg-scifi', `TARGET REACHED: ${cd.destination.toUpperCase()}`);
 
     set('#cd-title-comic',    cd.destination.toUpperCase());
+    set('#comic-header-callout', `⚡ ${cd.destination.toUpperCase()} AWAITS! ⚡`);
     set('#date-line-comic',   shortDateStr);
-    set('#dest-line-comic',   cd.destination);
     set('#arrived-msg-comic', `POW! Welcome to ${cd.destination}!`);
 
     set('#cd-title-wedding',    cd.destination);
@@ -4858,7 +5045,14 @@
     set('#arrived-msg-wedding', `The day has come — ${cd.destination}!`);
 
     set('#cd-title-birthday',    cd.destination);
-    set('#cd-subtitle-birthday', `Get ready to celebrate!`);
+    if (cd.birthyear) {
+      const birthYearNum = parseInt(cd.birthyear, 10);
+      const targetYear = target.getFullYear();
+      const turningAge = targetYear - birthYearNum;
+      set('#cd-subtitle-birthday', turningAge > 0 ? `is turning ${turningAge}!` : `Get ready to celebrate!`);
+    } else {
+      set('#cd-subtitle-birthday', `Get ready to celebrate!`);
+    }
     set('#dest-line-birthday',   cd.destination);
     set('#date-line-birthday',   dateStr);
     set('#arrived-msg-birthday', `🎉 Happy Birthday! 🎉`);
@@ -4868,6 +5062,20 @@
     set('#dest-line-anniversary',   cd.destination);
     set('#date-line-anniversary',   dateStr);
     set('#arrived-msg-anniversary', `♥ Happy Anniversary ♥`);
+    if (cd.annivyear) {
+      const targetYear = target.getFullYear();
+      const n = targetYear - parseInt(cd.annivyear, 10);
+      if (n > 0) {
+        const suffix = (n % 10 === 1 && n % 100 !== 11) ? 'st' :
+                       (n % 10 === 2 && n % 100 !== 12) ? 'nd' :
+                       (n % 10 === 3 && n % 100 !== 13) ? 'rd' : 'th';
+        set('#anniv-days-label', `days until our ${n}${suffix} anniversary`);
+      } else {
+        set('#anniv-days-label', `days until forever`);
+      }
+    } else {
+      set('#anniv-days-label', `days until forever`);
+    }
 
     set('#cd-title-beach',    cd.destination.toUpperCase());
     set('#date-line-beach',   shortDateStr);
@@ -5158,6 +5366,13 @@
     document.getElementById('degree-select').value = '';
     document.getElementById('gradschool-input').value = '';
     document.getElementById('gradfield-input').value = '';
+    document.getElementById('annivyear-input').value = '';
+    document.getElementById('birthyear-input').value = '';
+    document.getElementById('airline-input').value = '';
+    document.getElementById('departcity-input').value = '';
+    document.getElementById('gate-input').value = '';
+    document.getElementById('seat-input').value = '';
+    document.getElementById('travelclass-select').value = 'Economy';
     document.getElementById('date-input').value = '';
     document.getElementById('time-input').value = '';
     document.getElementById('error-msg').style.display = 'none';
@@ -5190,6 +5405,13 @@
     document.getElementById('degree-select').value = cd.degree || '';
     document.getElementById('gradschool-input').value = cd.gradschool || '';
     document.getElementById('gradfield-input').value = cd.gradfield || '';
+    document.getElementById('annivyear-input').value = cd.annivyear || '';
+    document.getElementById('birthyear-input').value = cd.birthyear || '';
+    document.getElementById('airline-input').value = cd.airline || '';
+    document.getElementById('departcity-input').value = cd.departcity || '';
+    document.getElementById('gate-input').value = cd.gate || '';
+    document.getElementById('seat-input').value = cd.seat || '';
+    document.getElementById('travelclass-select').value = cd.travelclass || 'Economy';
     document.getElementById('date-input').value = cd.date;
     document.getElementById('time-input').value = cd.time || '';
     document.getElementById('error-msg').style.display = 'none';
@@ -5247,6 +5469,13 @@
   const degreeSelect     = document.getElementById('degree-select');
   const gradschoolInput  = document.getElementById('gradschool-input');
   const gradfieldInput   = document.getElementById('gradfield-input');
+  const annivyearInput   = document.getElementById('annivyear-input');
+  const birthyearInput   = document.getElementById('birthyear-input');
+  const airlineInput     = document.getElementById('airline-input');
+  const departcityInput  = document.getElementById('departcity-input');
+  const gateInput        = document.getElementById('gate-input');
+  const seatInput        = document.getElementById('seat-input');
+  const travelclassSelect = document.getElementById('travelclass-select');
   const dateInput      = document.getElementById('date-input');
   const timeInput    = document.getElementById('time-input');
   const errorMsg     = document.getElementById('error-msg');
@@ -5296,6 +5525,13 @@
     const degree      = degreeSelect.value;
     const gradschool  = gradschoolInput.value.trim();
     const gradfield   = gradfieldInput.value.trim();
+    const annivyear   = annivyearInput.value.trim();
+    const birthyear   = birthyearInput.value.trim();
+    const airline     = airlineInput.value.trim();
+    const departcity  = departcityInput.value.trim();
+    const gate        = gateInput.value.trim();
+    const seat        = seatInput.value.trim();
+    const travelclass = travelclassSelect.value;
     const date = dateInput.value;
     const time = timeInput.value || '00:00';
     const todayStr = new Date().toISOString().split('T')[0];
@@ -5315,9 +5551,9 @@
 
     if (editingId) {
       const cd = countdowns.find(c => c.id === editingId);
-      if (cd) { cd.destination = destination; cd.passenger = passenger; cd.hometeam = hometeam; cd.awayteam = awayteam; cd.gametype = gametype; cd.schoolname = schoolname; cd.schoolevent = schoolevent; cd.babyname = babyname; cd.babygender = babygender; cd.venue = venue; cd.showtype = showtype; cd.departport = departport; cd.cruiseline = cruiseline; cd.shipname = shipname; cd.gradname = gradname; cd.degree = degree; cd.gradschool = gradschool; cd.gradfield = gradfield; cd.date = date; cd.time = timeInput.value || ''; cd.theme = selectedTheme; }
+      if (cd) { cd.destination = destination; cd.passenger = passenger; cd.hometeam = hometeam; cd.awayteam = awayteam; cd.gametype = gametype; cd.schoolname = schoolname; cd.schoolevent = schoolevent; cd.babyname = babyname; cd.babygender = babygender; cd.venue = venue; cd.showtype = showtype; cd.departport = departport; cd.cruiseline = cruiseline; cd.shipname = shipname; cd.gradname = gradname; cd.degree = degree; cd.gradschool = gradschool; cd.gradfield = gradfield; cd.annivyear = annivyear; cd.birthyear = birthyear; cd.airline = airline; cd.departcity = departcity; cd.gate = gate; cd.seat = seat; cd.travelclass = travelclass; cd.date = date; cd.time = timeInput.value || ''; cd.theme = selectedTheme; }
     } else {
-      const newCd = { id: genId(), destination, passenger, hometeam, awayteam, gametype, schoolname, schoolevent, babyname, babygender, venue, showtype, departport, cruiseline, shipname, gradname, degree, gradschool, gradfield, date, time: timeInput.value || '', theme: selectedTheme };
+      const newCd = { id: genId(), destination, passenger, hometeam, awayteam, gametype, schoolname, schoolevent, babyname, babygender, venue, showtype, departport, cruiseline, shipname, gradname, degree, gradschool, gradfield, annivyear, birthyear, airline, departcity, gate, seat, travelclass, date, time: timeInput.value || '', theme: selectedTheme };
       countdowns.push(newCd);
     }
 
@@ -5448,7 +5684,7 @@
         const file = new File([blob], `countdown-${cd.destination.replace(/\s+/g,'-')}.png`, { type: 'image/png' });
 
         // Build deep link
-        const shareData = { destination: cd.destination, date: cd.date, time: cd.time, theme: cd.theme, passenger: cd.passenger, hometeam: cd.hometeam, awayteam: cd.awayteam, gametype: cd.gametype, schoolname: cd.schoolname, schoolevent: cd.schoolevent, babyname: cd.babyname, babygender: cd.babygender, venue: cd.venue, showtype: cd.showtype, departport: cd.departport, cruiseline: cd.cruiseline, shipname: cd.shipname, gradname: cd.gradname, degree: cd.degree, gradschool: cd.gradschool, gradfield: cd.gradfield };
+        const shareData = { destination: cd.destination, date: cd.date, time: cd.time, theme: cd.theme, passenger: cd.passenger, hometeam: cd.hometeam, awayteam: cd.awayteam, gametype: cd.gametype, schoolname: cd.schoolname, schoolevent: cd.schoolevent, babyname: cd.babyname, babygender: cd.babygender, venue: cd.venue, showtype: cd.showtype, departport: cd.departport, cruiseline: cd.cruiseline, shipname: cd.shipname, gradname: cd.gradname, degree: cd.degree, gradschool: cd.gradschool, gradfield: cd.gradfield, annivyear: cd.annivyear, birthyear: cd.birthyear, airline: cd.airline, departcity: cd.departcity, gate: cd.gate, seat: cd.seat, travelclass: cd.travelclass };
         const encoded = btoa(unescape(encodeURIComponent(JSON.stringify(shareData))));
         // Use real hosted URL for sharing — location.origin is Capacitor's internal
         // scheme (capacitor://localhost) inside the native app, not a real web address
@@ -5643,7 +5879,14 @@
           gradname:    data.gradname || '',
           degree:      data.degree || '',
           gradschool:  data.gradschool || '',
-          gradfield:   data.gradfield || ''
+          gradfield:   data.gradfield || '',
+          annivyear:   data.annivyear || '',
+          birthyear:   data.birthyear || '',
+          airline:     data.airline || '',
+          departcity:  data.departcity || '',
+          gate:        data.gate || '',
+          seat:        data.seat || '',
+          travelclass: data.travelclass || ''
         };
 
         countdowns.push(newCd);
